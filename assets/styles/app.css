@@ -1,9 +1,64 @@
 body {
-    overflow-x: hidden;
-    overflow-y: hidden;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  background-color: #3B3B3B; /* Dark gray */
+}
 
-    background-color: rgb(85, 85, 85);
+a,p,h1,h2,h3,h4,h5,h6 {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #FFFFFF;
+}
 
-    width: 100%;
-    min-height: 100vh;
-  }
+
+.main-color {
+  color: #6F1B6F; 
+}
+.main-bg {
+  background-color: #6F1B6F; ;
+}
+.dark-main {
+  color: #4D114D;
+}
+.dark-main-bg {
+  background-color: #220f22;
+}
+.light-main {
+  color: #cfa6cb;
+}
+.light-main-bg {
+  background-color: #A957A0;
+}
+.accent-color {
+  color: #aa843c;
+}
+
+
+/* Link color */
+.a {
+  color: #cfa6cb; /* Purple */
+}
+
+/* Link hover color */
+.a:hover {
+  color: #aa843c; /* Darker shade of purple */
+}
+
+/* Button styles */
+.button {
+  background-color: #6F1B6F; /* Purple */
+  color: #FFFFFF; /* White */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.button:hover {
+  background-color: #af3aaf; /* Darker shade of purple */
+}
