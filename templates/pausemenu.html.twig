@@ -1,52 +1,69 @@
 <!-- Collapsible Navbar -->
-<div class="collapse navbar-collapse show collapse sticky-top" id="navbarCollapse">
-	<nav class="navbar navbar-light bg-light">
+<div class="collapse navbar-collapse collapse position-fixed" id="navbarCollapse" style="width:100%;">
+	<nav class="navbar navbar-dark main-bg">
 		<div class="container-fluid" style="height: 10vh;">
-			<div class="d-none d-sm-block col-auto " style="height: 100%;">
-				<img src="bannerPanda.png" alt="Other Image" style="height: 100%;">
-			</div>
-
 			<a class="navbar-brand col-auto" href="#">
 				FoundTexas
 			</a>
+			<div class="d-none d-sm-block col-auto " style="width:100%;">
+				<img src="bannerPandaold.png" alt="Other Image">
+			</div>
 		</div>
 	</nav>
 </div>
 
-<button type="button" class="button dark-main-bg position-fixed" style="z-index: 1050; top: 10px; left: 7px; height:3rem; width: 3rem;" data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
-	<i class="fa-solid fa-pause fa-beat" style="color: #ffffff; "></i>
+<button type="button" class="custom-btn position-fixed rounded-4 accent-bg " onclick="playSound('audiopress')" style="z-index: 1050; top: 10px; right: 7px; " data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
+	<i class="fa fa-pause fa-lg my-3 mx-2" style="color: #ffffff; "></i>
 </button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="pauseMenuModal" tabindex="-1" aria-labelledby="pauseMenuModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content dark-main-bg">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content accent-bg-dark">
 			<div class="modal-header">
 				<h2 class="modal-title text-center" id="pauseMenuModalLabel">Pause Menu</h2>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<button type="button" class="btn-close" onclick="playSound('audioback')" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body main-bg">
 				<div class="row main-bg">
-					<h5 class="col ">
-						Toggle NavBar
-					</h5>
-					<button type="button" class="col-auto btn btn-primary " id="collapseOnButton" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-						ON
-					</button>
-					<button type="button" class="col-auto btn btn-danger" id="collapseOffButton" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-						Off
-					</button>
+					<!-- About Me button -->
+					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#aboutme')" data-bs-dismiss="modal">About Me</button>
+					<!-- Timeline button -->
+					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#timeline')" data-bs-dismiss="modal">Timeline</button>
+					<!-- Projects button -->
+					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#projects')" data-bs-dismiss="modal">Projects</button>
 				</div>
+
+				<!-- Navbar toggle -->
+				<div class="row main-bg">
+					<h5 class="col">Classic NavBar:</h5>
+					<button type="button" class="col-auto btn btn-success" id="collapseOnButton">ON</button>
+					<button type="button" class="col-auto btn btn-danger" id="collapseOffButton">Off</button>
+				</div>
+
+				<!-- Volume Slider -->
+				<div class="row main-bg">
+					<label for="volumeRange" class="form-label col-auto">Volume:</label>
+					<input type="range" class="form-range col-auto" style="width:100%;" id="volumeRange" min="0" max="1" step="0.01" value="0.25">
+				</div>
+
 			</div>
-			<div class="modal-footer dark-main-bg">
-				<button type="button" class="btn btn-danger">Quit</button>
-			</div>
+			<div class="modal-footer dark-main-bg"></div>
 		</div>
 	</div>
 </div>
 
 <script>
-	// JavaScript to toggle the collapse state
+	// Function to navigate to section and close the modal
+function navigateToSectionAndCloseModal(sectionId) { // Navigate to section
+document.querySelector(sectionId).scrollIntoView({behavior: 'smooth'});
+co
+// Close the modal
+$('#pauseMenuModal').modal('hide');
+}
+
+// JavaScript to toggle the collapse state
 const collapseOnButton = document.getElementById("collapseOnButton");
 const collapseOffButton = document.getElementById("collapseOffButton");
 
@@ -63,5 +80,6 @@ collapseOffButton.disabled = true;
 });
 
 // Initially, start with "On" enabled and "Off" disabled
-collapseOnButton.disabled = true;
+collapseOnButton.disabled = false;
+collapseOffButton.disabled = true;
 </script>

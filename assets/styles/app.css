@@ -2,63 +2,91 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
-  background-color: #3B3B3B; /* Dark gray */
+  background-color: #1e2f2d;
 }
 
-a,p,h1,h2,h3,h4,h5,h6 {
+a,
+label,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6, h7 {
   font-family: "Pixelify Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
+  line-height: 1.60rem;
+  word-spacing: 0.3rem;
+  letter-spacing: 0.1rem;
   font-style: normal;
   color: #FFFFFF;
 }
 
 
 .main-color {
-  color: #6F1B6F; 
+  color: #6F1B6F;
 }
-.main-bg {
-  background-color: #6F1B6F; ;
-}
-.dark-main {
+
+.main-color-dark {
   color: #4D114D;
 }
-.dark-main-bg {
-  background-color: #220f22;
+
+.accent-color {
+  color: #3caa8b;
 }
-.light-main {
+
+.accent-color-dark {
+  color: #1f2020;
+}
+
+.main-bg {
+  background-color: #6F1B6F;
+  ;
+}
+
+.main-bg-dark {
+  background-color: #211e22;
+}
+
+.main-bg-dark-translucent {
+  background-color: #2c1631e8;
+}
+
+.main-bg-light {
   color: #cfa6cb;
 }
-.light-main-bg {
-  background-color: #A957A0;
+
+.accent-bg {
+  background-color: #57a9a1;
 }
-.accent-color {
-  color: #aa843c;
+
+.accent-bg-dark {
+  background-color: #252b29;
 }
 
 
 /* Link color */
 .a {
-  color: #cfa6cb; /* Purple */
+  color: #cfa6cb;
+  /* Purple */
 }
 
 /* Link hover color */
 .a:hover {
-  color: #aa843c; /* Darker shade of purple */
+  color: #aa843c;
+  /* Darker shade of purple */
 }
 
 /* Button styles */
-.button {
-  background-color: #6F1B6F; /* Purple */
-  color: #FFFFFF; /* White */
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+.custom-btn {
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.3s ease;
+  /* Smooth transition for the transform property */
 }
 
-/* Button hover effect */
-.button:hover {
-  background-color: #af3aaf; /* Darker shade of purple */
+.custom-btn:hover {
+  transform: scale(1.1);
+  /* Increase scale on hover */
 }
