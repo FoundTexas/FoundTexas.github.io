@@ -1,5 +1,5 @@
 <!-- Collapsible Navbar -->
-<div class="collapse navbar-collapse show collapse sticky-top" id="navbarCollapse">
+<div class="collapse navbar-collapse collapse sticky-top" id="navbarCollapse">
 	<nav class="navbar navbar-light bg-light">
 		<div class="container-fluid" style="height: 10vh;">
 			<div class="d-none d-sm-block col-auto " style="height: 100%;">
@@ -13,7 +13,7 @@
 	</nav>
 </div>
 
-<button type="button" class="button dark-main-bg position-fixed" style="z-index: 1050; top: 10px; left: 7px; height:3rem; width: 3rem;" data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
+<button type="button" class="button light-main-bg position-fixed" style="z-index: 1050; top: 10px; left: 7px; height:3rem; width: 3rem;" data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
 	<i class="fa-solid fa-pause fa-beat" style="color: #ffffff; "></i>
 </button>
 
@@ -63,5 +63,6 @@ collapseOffButton.disabled = true;
 });
 
 // Initially, start with "On" enabled and "Off" disabled
-collapseOnButton.disabled = true;
+collapseOnButton.disabled = false;
+collapseOffButton.disabled = true;
 </script>

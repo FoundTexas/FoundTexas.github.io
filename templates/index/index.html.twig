@@ -6,42 +6,82 @@
 {% block body %}
 
 	{# {% include 'yaocalli.html.twig' %} #}
-	<div class=" d-flex justify-content-center align-items-center" style="max-height: 15rem; overflow: hidden;">
+	<div class=" d-flex justify-content-center align-items-center" style="max-height: 13rem; overflow: hidden;">
 		<img src="{{ asset('pandabanner.png') }}" style="width: 100%; height: auto;" alt="Banner">
 	</div>
 
-	<div class="container">
+	<section id="aboutme">
+		<div class="container">
 
-		<h2 class=" m-3 text-center accent-color">Computer Scientist | Game & Web Developer</h2>
+			<h2 class=" m-3 text-center accent-color">Computer Scientist | Game & Web Developer</h2>
 
-		<h5 class="container px-4 white-text">
-			Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León, a passionate computer scientist specializing in 
-												3D Graphics and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading 
-												to captivating user experiences that resonate across cultures.
-		</h5>
-
-	</div>
-
-	{% include 'timeline.twig' %}
-
-	<!-- Image Gallery -->
-	<div class="container mt-5 light-main-bg rounded-5">
-		<h2 class="text-center mt-3 main-color">Image Gallery</h2>
-		<div class="row">
-			<div class="col-6 col-md-3">
-				<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 1">
-			</div>
-			<div class="col-6 col-md-3">
-				<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 2">
-			</div>
-			<div class="col-6 col-md-3">
-				<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
-			</div>
-			<div class="col-6 col-md-3">
-				<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
-			</div>
+			<h5 class="container px-4 white-text">
+				Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León, a passionate computer scientist specializing in 
+																																										3D Graphics and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading 
+																																										to captivating user experiences that resonate across cultures.
+			</h5>
 		</div>
-	</div>
+	</section>
+
+	<section
+		id="clients"><!-- Contact section content goes here -->
+	</section>
+
+	<section id="projects">
+		<section id="Games">
+			<div class="container mt-5 light-main-bg rounded-5">
+				<h2 class="text-center mt-3 main-color">Game Hightlight Gallery</h2>
+				<div class="row">
+					<div class="col-6 col-md-3">
+						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 1">
+					</div>
+					<div class="col-6 col-md-3">
+						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 2">
+					</div>
+					<div class="col-6 col-md-3">
+						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
+					</div>
+					<div class="col-6 col-md-3">
+						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="Games">
+			<div class="container mt-5 light-main-bg rounded-5">
+				<h2 class="text-center mt-3 main-color">Peojects Hightlights</h2>
+				<div class="row">
+					<div class="col-6 col-md-3">
+						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 1">
+					</div>
+					<div class="col-6 col-md-3">
+						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 2">
+					</div>
+					<div class="col-6 col-md-3">
+						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
+					</div>
+					<div class="col-6 col-md-3">
+						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
+
+	<section
+		id="timeline">
+		<!-- Contact section content goes here -->
+		{% include 'timeline.twig' %}
+	</section>
+
+
+	<section
+		id="contact">
+		<!-- Contact section content goes here -->
+		{% include 'contact.twig' %}
+	</section>
+
 
 	<!-- Footer -->
 	<footer class="bg-dark text-white text-center py-3 mt-5">

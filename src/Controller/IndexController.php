@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Email;
 
 class IndexController extends AbstractController
 {
@@ -45,5 +48,27 @@ class IndexController extends AbstractController
             'controller_name' => 'IndexController',
             'timeline_events' => $timelineEvents,
         ]);
+    }
+
+    #[Route('/email', name: 'app_email')]
+    public function handleContactForm(Request $request, MailerInterface $mailer): Response
+    {
+        $name = $request->request->get('name');
+        $email = $request->request->get('email');
+        $message = $request->request->get('message');
+        
+        // Build the email content
+        $emailContent = "Name: $name\nEmail: $email\nMessage: $message";
+
+        // Send the email
+        $email = (new Email())
+            ->from('your@example.com')
+            ->to('your-email@example.com')
+            ->subject('New Contact Form Submission')
+            ->text($emailContent);
+
+        $mailer->send($email);
+
+        return new Response('Message sent successfully!');
     }
 }
