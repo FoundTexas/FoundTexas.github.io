@@ -11,7 +11,17 @@ function playSound(elementId) {
         audio.play();
     } else {
         // Pause and reset the audio to the beginning
-        
+
         audio.currentTime = 0;
+    }
+}
+
+// Function to set the volume of all audio elements
+function setVolume(value, group) {
+    const audioElements = document.getElementsByClassName(group);
+    const volume = Math.pow((value), 1.5);
+
+    for (let i = 0; i < audioElements.length; i++) {
+        audioElements[i].volume = volume;
     }
 }

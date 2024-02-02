@@ -4,27 +4,30 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('audioPlayer.js') }}"></script>
+	{{ parent() }}
+	<script src="{{ asset('audioPlayer.js') }}"></script>
 {% endblock %}
 
 {% block body %}
 
-	{# {% include 'yaocalli.html.twig' %} #}
-	<div class=" d-flex justify-content-center align-items-center" style="max-height: 13rem; overflow: hidden;">
-		<img src="{{ asset('pandabanner.png') }}" style="width: 100%; height: auto;" alt="Banner">
-	</div>
+	{# {% include 'yaocalli.html.twig' %} 
+			<div class=" d-flex justify-content-center align-items-center" style="max-height: 13rem; overflow: hidden;">
+				<img src="{{ asset('pandabanner.png') }}" style="width: 100%; height: auto;" alt="Banner">
+			</div>#}
 
-	<section id="aboutme">
-		<div class="container">
-
-			<h2 class=" m-3 text-center accent-color">Computer Scientist | Game & Web Developer</h2>
-
-			<h5 class="container px-4 white-text">
-				Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León, a passionate computer scientist specializing in 3D Graphics and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading to captivating user experiences that resonate across cultures.
-			</h5>
+	<section id="aboutme" class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
+		<div class="row">
+			<div class="col-12 text-center mb-4">
+				<h2 class="m-3 accent-color">Game & Web Developer</h2>
+			</div>
+			<div class="col-12 col-md-8 mx-auto">
+				<p class="white-text text-justify">
+					Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León, a passionate computer scientist specializing in 3D Graphics and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading to captivating user experiences that resonate across cultures.
+				</p>
+			</div>
 		</div>
 	</section>
+
 
 	<section
 		id="clients"><!-- Contact section content goes here -->
@@ -85,12 +88,12 @@
 		{% include 'contact.twig' %}
 	</section>
 
+	<iframe class="position-fixed" style="z-index: 2050; border-radius: 12px;" src="https://open.spotify.com/embed/playlist/5pS9v5OBw1KYqPo4XtPoEu?utm_source=generator&theme=0" width="25%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 	<!-- Footer -->
 	<footer class="bg-dark text-white text-center py-3 mt-5">
 		<p>&copy; 2024 . All Rights Reserved.</p>
 	</footer>
 
-	<iframe class="position-fixed" style="z-index: 1050; border-radius: 12px;" src="https://open.spotify.com/embed/playlist/5pS9v5OBw1KYqPo4XtPoEu?utm_source=generator&theme=0" width="25%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 {% endblock %}
