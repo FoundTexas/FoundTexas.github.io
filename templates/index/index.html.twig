@@ -3,6 +3,11 @@
 {% block title %}index
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('audioPlayer.js') }}"></script>
+{% endblock %}
+
 {% block body %}
 
 	{# {% include 'yaocalli.html.twig' %} #}
@@ -16,9 +21,7 @@
 			<h2 class=" m-3 text-center accent-color">Computer Scientist | Game & Web Developer</h2>
 
 			<h5 class="container px-4 white-text">
-				Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León, a passionate computer scientist specializing in 
-																																										3D Graphics and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading 
-																																										to captivating user experiences that resonate across cultures.
+				Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León, a passionate computer scientist specializing in 3D Graphics and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading to captivating user experiences that resonate across cultures.
 			</h5>
 		</div>
 	</section>

@@ -13,9 +13,17 @@
 	</nav>
 </div>
 
-<button type="button" class="button light-main-bg position-fixed" style="z-index: 1050; top: 10px; left: 7px; height:3rem; width: 3rem;" data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
+<button 
+	type="button" 
+	class="custom-btn light-main-bg position-fixed" 
+	onclick="playSound('audiopress')"
+	style="z-index: 1050; top: 10px; left: 7px; height:3rem; width: 3rem;" 
+	data-bs-toggle="modal" 
+	data-bs-target="#pauseMenuModal"
+>
 	<i class="fa-solid fa-pause fa-beat" style="color: #ffffff; "></i>
 </button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="pauseMenuModal" tabindex="-1" aria-labelledby="pauseMenuModalLabel" aria-hidden="true">
@@ -23,7 +31,7 @@
 		<div class="modal-content dark-main-bg">
 			<div class="modal-header">
 				<h2 class="modal-title text-center" id="pauseMenuModalLabel">Pause Menu</h2>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<button type="button" onclick="playSound('audioback')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body main-bg">
 				<div class="row main-bg">
@@ -46,23 +54,34 @@
 </div>
 
 <script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const buttons = document.getElementsByClassName('custom-btn');
+
+		// Loop through all elements with class 'custom-btn' and attach event listener
+		for (let i = 0; i < buttons.length; i++) {
+			buttons[i].addEventListener('mouseover', function() {
+			playSound('audiobloop');
+			});
+		}
+	});
+
 	// JavaScript to toggle the collapse state
-const collapseOnButton = document.getElementById("collapseOnButton");
-const collapseOffButton = document.getElementById("collapseOffButton");
+	const collapseOnButton = document.getElementById("collapseOnButton");
+	const collapseOffButton = document.getElementById("collapseOffButton");
 
-collapseOnButton.addEventListener("click", function () {
-document.querySelector(".navbar-collapse").classList.add("show");
-collapseOnButton.disabled = true;
-collapseOffButton.disabled = false;
-});
+	collapseOnButton.addEventListener("click", function () {
+	document.querySelector(".navbar-collapse").classList.add("show");
+	collapseOnButton.disabled = true;
+	collapseOffButton.disabled = false;
+	});
 
-collapseOffButton.addEventListener("click", function () {
-document.querySelector(".navbar-collapse").classList.remove("show");
-collapseOnButton.disabled = false;
-collapseOffButton.disabled = true;
-});
+	collapseOffButton.addEventListener("click", function () {
+	document.querySelector(".navbar-collapse").classList.remove("show");
+	collapseOnButton.disabled = false;
+	collapseOffButton.disabled = true;
+	});
 
-// Initially, start with "On" enabled and "Off" disabled
-collapseOnButton.disabled = false;
-collapseOffButton.disabled = true;
+	// Initially, start with "On" enabled and "Off" disabled
+	collapseOnButton.disabled = false;
+	collapseOffButton.disabled = true;
 </script>
