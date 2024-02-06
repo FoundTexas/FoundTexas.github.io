@@ -11,9 +11,19 @@
 {% block body %}
 
 	{# {% include 'yaocalli.html.twig' %} 
-			<div class=" d-flex justify-content-center align-items-center" style="max-height: 13rem; overflow: hidden;">
-				<img src="{{ asset('pandabanner.png') }}" style="width: 100%; height: auto;" alt="Banner">
-			</div>#}
+							<div class=" d-flex justify-content-center align-items-center" style="max-height: 13rem; overflow: hidden;">
+								<img src="{{ asset('pandabanner.png') }}" style="width: 100%; height: auto;" alt="Banner">
+							</div>#}
+
+	<!-- Background Image Div -->
+
+	<div class="container-fluid position-fixed"> 
+		<img class=" mx-auto" style="z-index: -1; height: 100vh; width: auto;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
+	</div>
+
+	<button type="button" class="custom-btn position-fixed rounded-4 accent-bg " onclick="playSound('audiopress')" style="z-index: 1050; top: 10px; left: 7px; " data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
+		<i class="fa fa-pause fa-lg my-3 mx-2" style="color: #ffffff; "></i>
+	</button>
 
 	<section id="aboutme" class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
 		<div class="row">
