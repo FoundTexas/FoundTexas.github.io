@@ -10,15 +10,9 @@
 
 {% block body %}
 
-	{# {% include 'yaocalli.html.twig' %} 
-		<div class=" d-flex justify-content-center align-items-center" style="max-height: 13rem; overflow: hidden;">
-			<img src="{{ asset('pandabanner.png') }}" style="width: 100%; height: auto;" alt="Banner">
-		</div>#}
 
-	<!-- Background Image Div -->
-
-	<div class="container-fluid position-fixed"> 
-		<img class=" mx-auto" style="z-index: -1; height: 100vh; width: auto;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
+	<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+		<img class="mx-auto position-fixed" style="z-index: -1000000; height: 100%;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
 	</div>
 
 	<button type="button" class="custom-btn position-fixed rounded-4 accent-bg " onclick="playSound('audiopress')" style="z-index: 1050; top: 10px; left: 7px; " data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
