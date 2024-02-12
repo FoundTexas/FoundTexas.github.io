@@ -2,7 +2,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
-  /* Dark gray */
+  background-color: #1e2f2d;
 }
 
 a,
@@ -13,12 +13,12 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6, h7 {
   font-family: "Pixelify Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
-  line-height: 2rem;
-  word-spacing: 0.5rem;
+  line-height: 1.60rem;
+  word-spacing: 0.3rem;
   letter-spacing: 0.1rem;
   font-style: normal;
   color: #FFFFFF;
@@ -38,7 +38,7 @@ h6 {
 }
 
 .accent-color-dark {
-  color: #3B3B3B;
+  color: #1f2020;
 }
 
 .main-bg {
@@ -47,7 +47,11 @@ h6 {
 }
 
 .main-bg-dark {
-  background-color: #341a3a;
+  background-color: #211e22;
+}
+
+.main-bg-dark-translucent {
+  background-color: #2c1631e8;
 }
 
 .main-bg-light {
@@ -59,7 +63,7 @@ h6 {
 }
 
 .accent-bg-dark {
-  background-color: #1e2f2d;
+  background-color: #252b29;
 }
 
 

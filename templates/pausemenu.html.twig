@@ -6,7 +6,7 @@
 				FoundTexas
 			</a>
 			<div class="d-none d-sm-block col-auto " style="width:100%;">
-				<img src="bannerPanda.png" alt="Other Image">
+				<img src="bannerPandaold.png" alt="Other Image">
 			</div>
 		</div>
 	</nav>
@@ -23,27 +23,23 @@
 		<div class="modal-content accent-bg-dark">
 			<div class="modal-header">
 				<h2 class="modal-title text-center" id="pauseMenuModalLabel">Pause Menu</h2>
-
-				<div type="button" onclick="playSound('audioback')" data-bs-dismiss="modal">
-					<i class="fa fa-times fa-lg" style="color: #ff0000;"></i>
-				</div>
-
+				<button type="button" class="btn-close" onclick="playSound('audioback')" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body main-bg">
-				<a type="button" href="#aboutme" class="d-block mb-3" data-bs-dismiss="modal">About Me</a>
-                <a type="button" href="#projects" class="d-block mb-3" data-bs-dismiss="modal">Projects</a>
-
-				<!-- navbar toggle -->
 				<div class="row main-bg">
-					<h5 class="col ">
-						Clasic NavBar:
-					</h5>
-					<button type="button" class="col-auto custom-btn btn-primary " id="collapseOnButton" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-						ON
-					</button>
-					<button type="button" class="col-auto custom-btn btn-danger" id="collapseOffButton" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-						Off
-					</button>
+					<!-- About Me button -->
+					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#aboutme')" data-bs-dismiss="modal">About Me</button>
+					<!-- Timeline button -->
+					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#timeline')" data-bs-dismiss="modal">Timeline</button>
+					<!-- Projects button -->
+					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#projects')" data-bs-dismiss="modal">Projects</button>
+				</div>
+
+				<!-- Navbar toggle -->
+				<div class="row main-bg">
+					<h5 class="col">Classic NavBar:</h5>
+					<button type="button" class="col-auto btn btn-success" id="collapseOnButton">ON</button>
+					<button type="button" class="col-auto btn btn-danger" id="collapseOffButton">Off</button>
 				</div>
 
 				<!-- Volume Slider -->
@@ -59,27 +55,12 @@
 </div>
 
 <script>
-    // Get the range input element
-    var volumeRange = document.getElementById('volumeRange');
-
-	setVolume(volumeRange.value, 'audio-sfx-group');
-
-    // Add event listener for the 'input' event
-    volumeRange.addEventListener('input', function() {
-        // Call the setVolume function with the current value and the 'audio-sfx-group' parameter
-        setVolume(this.value, 'audio-sfx-group');
-    });
-</script>
-
-<script>
-
-	const buttons = document.getElementsByClassName('custom-btn');
-
-// Loop through all elements with class 'custom-btn' and attach event listener
-for (let i = 0; i < buttons.length; i++) {
-buttons[i].addEventListener('mouseenter', function () {
-playSound('audiobloop');
-});
+	// Function to navigate to section and close the modal
+function navigateToSectionAndCloseModal(sectionId) { // Navigate to section
+document.querySelector(sectionId).scrollIntoView({behavior: 'smooth'});
+co
+// Close the modal
+$('#pauseMenuModal').modal('hide');
 }
 
 // JavaScript to toggle the collapse state

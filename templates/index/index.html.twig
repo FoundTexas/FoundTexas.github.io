@@ -10,92 +10,69 @@
 
 {% block body %}
 
-
-	<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-		<img class="mx-auto position-fixed" style="z-index: -1000000; height: 100%;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
-	</div>
-
-	<button type="button" class="custom-btn position-fixed rounded-4 accent-bg " onclick="playSound('audiopress')" style="z-index: 1050; top: 10px; left: 7px; " data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
-		<i class="fa fa-pause fa-lg my-3 mx-2" style="color: #ffffff; "></i>
-	</button>
-
-	<section id="aboutme" class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
-		<div class="row">
-			<div class="col-12 text-center mb-4">
-				<h2 class="m-3 accent-color">Game & Web Developer</h2>
+	<section id="aboutme" class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+		<img class="mx-auto position-fixed" style="z-index: -1000000; filter: blur(7px) brightness(70%); height: 103%; width: 111%;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
+		<img class="mx-auto position-fixed" style="z-index: -100000; filter: blur(5px); height: 103vh; width: auto;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
+		<div class="container main-bg-dark-translucent rounded-5 border border-light d-flex flex-column justify-content-center" style="min-height: 50vh;">
+			<div class="row m-2">
+				<h2 class="text-center accent-color">Game & Web Developer</h2>
 			</div>
-			<div class="col-12 col-md-8 mx-auto">
-				<p class="white-text text-justify">
-					Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León, a passionate computer scientist specializing in 3D Graphics and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading to captivating user experiences that resonate across cultures.
-				</p>
+			<div class="row my-4 mx-1">
+				<h7 class="white-text text-justify text-lg">
+					Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León also known by my mote FoundTexas. I'm a passionate computer scientist specialized in 3D Graphics, Project Management and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading to captivating and innovative experiences that will resonate across many users.
+				</h7>
 			</div>
 		</div>
 	</section>
 
+	<section id="timeline" class="accent-bg-dark px-2 rounded-top-5 " style="min-height: 100vh; margin-top: -4rem;">
 
-	<section
-		id="clients"><!-- Contact section content goes here -->
-	</section>
+		{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
 
-	<section id="projects">
-		<section id="Games">
-			<div class="container mt-5 light-main-bg rounded-5">
-				<h2 class="text-center mt-3 main-color">Game Hightlight Gallery</h2>
-				<div class="row">
-					<div class="col-6 col-md-3">
-						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 1">
-					</div>
-					<div class="col-6 col-md-3">
-						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 2">
-					</div>
-					<div class="col-6 col-md-3">
-						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
-					</div>
-					<div class="col-6 col-md-3">
-						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section id="Games">
-			<div class="container mt-5 light-main-bg rounded-5">
-				<h2 class="text-center mt-3 main-color">Peojects Hightlights</h2>
-				<div class="row">
-					<div class="col-6 col-md-3">
-						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 1">
-					</div>
-					<div class="col-6 col-md-3">
-						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 2">
-					</div>
-					<div class="col-6 col-md-3">
-						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
-					</div>
-					<div class="col-6 col-md-3">
-						<img src="https://via.placeholder.com/300" class="img-fluid mb-3 rounded-5" alt="Gallery Image 3">
-					</div>
-				</div>
-			</div>
-		</section>
-	</section>
-
-	<section
-		id="timeline">
-		<!-- Contact section content goes here -->
 		{% include 'timeline.twig' %}
 	</section>
 
+	<section id="projects" class="main-bg-dark px-2 rounded-top-5 " style="min-height: 100vh;  margin-top: -4rem;">
+		<section id="Games">
 
-	<section
-		id="contact">
-		<!-- Contact section content goes here -->
+			{% include 'index/IndexHeader.twig' with {'upRef': 'timeline', 'textRef': 'projects', 'headText': '🕹️Games Gallery', 'darkbg': true} %}
+
+			<div class="row mx-auto main-bg rounded-5 p-2">
+				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
+					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; width: 35vh;">
+						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
+					</div>
+				</div>
+				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
+					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; height: 35vh; width: 35vh;">
+						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
+					</div>
+				</div>
+				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
+					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; height: 35vh; width: 35vh;">
+						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
+					</div>
+				</div>
+				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
+					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; height: 35vh; width: 35vh;">
+						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
+					</div>
+				</div>
+				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
+					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; height: 35vh; width: 35vh;">
+						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
+
+	<section id="contact" class="accent-bg-dark px-3 rounded-top-5 border border-light" style="min-height: 100vh;  margin-top: -4rem;">
 		{% include 'contact.twig' %}
 	</section>
 
-	<iframe class="position-fixed" style="z-index: 2050; border-radius: 12px;" src="https://open.spotify.com/embed/playlist/5pS9v5OBw1KYqPo4XtPoEu?utm_source=generator&theme=0" width="25%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
 	<!-- Footer -->
-	<footer class="bg-dark text-white text-center py-3 mt-5">
+	<footer class="bg-dark text-white text-center py-3" style="min-height: 25vh; margin-top: -25vh;">
 		<p>&copy; 2024 . All Rights Reserved.</p>
 	</footer>
 
