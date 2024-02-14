@@ -15,34 +15,54 @@ class IndexController extends AbstractController
     public function index(): Response
     {
         $timelineEvents = [
-            '2024' => [
+            '2018' => [
                 [
-                    'title' => 'Event 1',
-                    'description' => 'Description of event 1',
-                    'date' => '2024-01-01',
+                    'title' => 'GameTec',
+                    'description' => 'Company launches new product line aimed at eco-friendly consumers.',
+                    'date' => '2018-03-15',
+                    'tags' => ['business', 'product launch'],
                 ],
                 [
-                    'title' => 'Event 2',
-                    'description' => 'Description of event 2',
-                    'date' => '2024-02-01',
+                    'title' => 'International Conference on Climate Change',
+                    'description' => 'Keynote speakers discuss the latest research and policies related to climate change.',
+                    'date' => '2018-06-20',
+                    'tags' => ['environment', 'conference'],
                 ],
-                // More events for 2024
+                // More events for 2018
             ],
-            '2025' => [
+            '2019' => [
                 [
-                    'title' => 'Event 3',
-                    'description' => 'Description of event 3',
-                    'date' => '2025-01-01',
+                    'title' => 'Expansion into New Markets',
+                    'description' => 'Company announces expansion into Asian markets, targeting emerging economies.',
+                    'date' => '2019-02-10',
+                    'tags' => ['business', 'expansion'],
                 ],
                 [
-                    'title' => 'Event 4',
-                    'description' => 'Description of event 4',
-                    'date' => '2025-02-01',
+                    'title' => 'World Health Day Campaign',
+                    'description' => 'Global campaign promoting awareness about mental health and well-being.',
+                    'date' => '2019-04-07',
+                    'tags' => ['health', 'campaign'],
                 ],
-                // More events for 2025
+                // More events for 2019
+            ],
+            '2020' => [
+                [
+                    'title' => 'Olympic Games',
+                    'description' => 'Tokyo hosts the Summer Olympic Games with athletes from around the world competing.',
+                    'date' => '2020-07-24',
+                    'tags' => ['sports', 'international'],
+                ],
+                [
+                    'title' => 'COVID-19 Pandemic Declaration',
+                    'description' => 'World Health Organization declares COVID-19 outbreak a global pandemic.',
+                    'date' => '2020-03-11',
+                    'tags' => ['health', 'pandemic'],
+                ],
+                // More events for 2020
             ],
             // Add more years as needed
         ];
+        
         
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
