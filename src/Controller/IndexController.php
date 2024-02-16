@@ -14,49 +14,62 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(): Response
     {
-        $timelineEvents = [
+        $experiences = [
             [
-                'title' => 'GameTec',
-                'description' => 'Company launches new product line aimed at eco-friendly consumers.',
-                'date' => '2018-03-15',
-                'tags' => ['business', 'product launch'],
+                'title' => 'Word Games | Unity Developer',
+                'description' => [
+                    'Implemented an event-driven input check system, optimizing performance and enabling precise actions detection.',
+                    'Developed a frustum occlusion feature adjusted to the project needs, improving frame rate from 15 to 60 FPS.',
+                    'Used technical solutions to achieve the game\'s artistic vision with post-processing, shaders, and asset management.',
+                    'Implemented efficient animation systems using behavior scripts, parameters, layers, and blend trees.'
+                ],
+                'date' => '2022-10',
+                'endDate' => '2023-09',
+                'tags' => ['Unity', 'Game Development']
             ],
             [
-                'title' => 'International Conference on Climate Change',
-                'description' => 'Keynote speakers discuss the latest research and policies related to climate change.',
-                'date' => '2018-06-20',
-                'tags' => ['environment', 'conference'],
+                'title' => 'TagWizz | Unity Developer Apprenticeship',
+                'description' => [
+                    'Collaborated to develop a 3D platformer with shooter mechanics, featuring a customization and progression system.',
+                    'Implemented a 4-player cooperative online multiplayer, enabling players to engage in the game together.',
+                    'Designed and developed Enemy AI systems with varied roles, to ensure an engaging gameplay experience.',
+                    'Integrated artistic and visual elements to achieve the desired artistic vision for the game.',
+                    'Utilized Unity to implement gameplay mechanics, optimize performance, and ensure a smooth gaming experience.'
+                ],
+                'date' => '2022-08',
+                'endDate' => '2022-12',
+                'tags' => ['Unity', 'Game Development']
             ],
             [
-                'title' => 'Expansion into New Markets',
-                'description' => 'Company announces expansion into Asian markets, targeting emerging economies.',
-                'date' => '2018-02-10',
-                'tags' => ['business', 'expansion'],
+                'title' => 'CORKBRICK EUROPE | Unity Developer Intern',
+                'description' => [
+                    'Designed and developed systems using standard design patterns to achieve the desired functionality.',
+                    'Managed optimized visuals via 3D shaders, particles, LODs, Frustum rendering, and illumination and asset settings.',
+                    'Implemented database services between Firebase and Unity to store relevant user data structures in JSON format.',
+                    'Worked with a multicultural and multidisciplinary team on a daily basis using agile development communication tools.'
+                ],
+                'date' => '2022-02',
+                'endDate' => '2022-09',
+                'tags' => ['Unity', 'Internship']
             ],
             [
-                'title' => 'World Health Day Campaign',
-                'description' => 'Global campaign promoting awareness about mental health and well-being.',
-                'date' => '2019-04-07',
-                'tags' => ['health', 'campaign'],
-            ],
-            [
-                'title' => 'Olympic Games',
-                'description' => 'Tokyo hosts the Summer Olympic Games with athletes from around the world competing.',
-                'date' => '2020-07-24',
-                'tags' => ['sports', 'international'],
-            ],
-            [
-                'title' => 'COVID-19 Pandemic Declaration',
-                'description' => 'World Health Organization declares COVID-19 outbreak a global pandemic.',
-                'date' => '2020-03-11',
-                'tags' => ['health', 'pandemic'],
-            ],
-        ];
+                'title' => 'Movimiento STEM | Unity Developer Apprenticeship',
+                'description' => [
+                    'Successfully programmed mechanics via C# scripting ensuring a good modular SOLID design.',
+                    'Mounted Django service database communication using Python ensuring communication with Unity.',
+                    'Generated SQL DataBase service to store relevant user information using Unity\'s JSON.',
+                    'Implemented Unit Tests to assure the quality of the system by testing the methods functionality.'
+                ],
+                'date' => '2021-02',
+                'endDate' => '2021-06',
+                'tags' => ['Unity', 'Game Development']
+            ]
+        ];        
 
 
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
-            'timeline_events' => $timelineEvents,
+            'timeline_events' => $experiences,
         ]);
     }
 
