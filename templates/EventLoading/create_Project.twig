@@ -1,0 +1,13 @@
+<h1>Create Project</h1>
+
+{{ form_start(projectForm, {'attr': {'id': 'projectForm'}}) }}
+
+{{ form_row(projectForm.name) }}
+{{ form_row(projectForm.description) }}
+{{ form_row(projectForm.fileref) }}
+{{ form_row(projectForm.iconref) }}
+{{ form_row(projectForm.mileStone) }}
+
+<button type="button" onclick="submitForm('{{path('project_new')}}', 'projectForm', {{projectcur.id}})">Create</button>
+
+{{ form_end(projectForm) }}

@@ -1,129 +1,73 @@
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-auto py-3">
-			<h3>Filter by Year:</h3>
-			<div class="btn-group" role="group" aria-label="Year buttons">
-				{% set years = [] %}
+
+{{ dump(timeline_events) }}
+<section id="timeline" class="bg-accent-dark px-2 rounded-top-5" style="min-height: 100vh; margin-top: -4rem;">
+	{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
+	<div class=" m-md-4">
+		<div class="row m-2">
+			<div class="col-12 col-md mt-2">
+				<h6>Filter by Year:</h6>
+				<div class="btn-group" role="group" aria-label="Year buttons">
+					{% set years = [] %}
+					{% for event in timeline_events %}
+						{% if event.startDate|date('Y') not in years %}
+							{% set years = years|merge([event.startDate|date('Y')]) %}
+							<button type="button" class="btn btn-primary" onclick="showEvents('{{ event.startDate|date('Y') }}')">{{ event.startDate|date('Y') }}</button>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-12 col-md mt-2">
+				<h6>Filter by Tags:</h6>
+				{% set all_tags = [] %}
 				{% for event in timeline_events %}
-					{% if event.date|date('Y') not in years %}
-						{% set years = years|merge([event.date|date('Y')]) %}
-						<button type="button" class="btn btn-primary" onclick="showEvents('{{ event.date|date('Y') }}')">{{ event.date|date('Y') }}</button>
-					{% endif %}
+					{% for tag in event.tags %}
+						{% if tag not in all_tags %}
+							{% set all_tags = all_tags|merge([tag]) %}
+						{% endif %}
+					{% endfor %}
 				{% endfor %}
+				<div class="row">
+					<button type="button" class="col-auto btn btn-success" onclick="selectAllTags(true)">Select All</button>
+					<button type="button" class="col-auto btn btn-secondary" onclick="selectAllTags(false)">Deselect All</button>
+				</div>
+				<div class="row">
+					{% for tag in all_tags %}
+						<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag }}" name="tags" value="{{ tag }}" checked>
+						<label class="col-auto btn btn-outline-primary" for="btn-check-outlined-{{ tag }}">{{ tag }}</label><br>
+					{% endfor %}
+
+				</div>
 			</div>
 		</div>
+		<div class="row ">
+			{% for year in years %}
+				<div class="events-wrapper  mb-5" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
+					<h4 class="text-center py-2 border border-light">{{ year }}</h4>
+					<div class="border border-light" style="overflow-y: auto; overflow-x: hidden; height: 50vh; width: 100%;">
+						{% set events_in_year = timeline_events|filter(e => e.startDate|date('Y') == year) %}
+						{% for event in events_in_year %}
+							<div class="timeline-event border rounded-4 border-light bg-dark mx-auto" data-tags="{{ event.tags|join(',') }}" style="height: 100%;">
 
-		<div class="col py-3">
-			<h3>Filter by Tags:</h3>
-			{% set all_tags = [] %}
-			{% for event in timeline_events %}
-				{% for tag in event.tags %}
-					{% if tag not in all_tags %}
-						{% set all_tags = all_tags|merge([tag]) %}
-					{% endif %}
-				{% endfor %}
-			{% endfor %}
-			<button type="button" class="btn btn-primary" onclick="selectAllTags()">Select All</button>
-			{% for tag in all_tags %}
-				<div class="form-check form-check-inline ">
-					<input type="checkbox" class="btn-check" id="btn-check-outlined {{ tag }}" name="tags" value="{{ tag }}" checked>
-					<label class="btn btn-outline-primary" for="btn-check-outlined {{ tag }}">{{ tag }}</label><br>
+								<div class="bg-main row">
+									<h6 class="col-12 col-md accent-color m-2">{{ event.name }}</h6>
+									<span class="col-12 col-md white-text m-2">{{ event.startDate|date('Y-m') ~ ' - ' ~ event.endDate|date('Y-m') }}</span>
+								</div>
+								<div class="col-12 list-group" style="overflow-y: auto; overflow-x: hidden; height: auto; ">
+									{% for point in event.bulletpoints %}
+										<P style="font-size: 14px;" class="list-group-item list-group-item-action bg-dark text-light">{{ point }}</P>
+									{% endfor %}
+								</div>
+
+								{# Assign tags to the card as a data attribute #}
+								<div class="tags" style="display: none;">{{ event.tags|json_encode|raw }}</div>
+							</div>
+						{% endfor %}
+					</div>
 				</div>
 			{% endfor %}
 		</div>
 	</div>
+</section>
 
-	{% for index, year in years %}
-		<div class="row">
 
-			<div class="events-wrapper" id="events-{{ year }}" {% if index == 0 %} style="display: block;" {% else %} style="display: none;" {% endif %}>
-				<h2>{{ year }}</h2>
-				<div class="container-fluid" style="overflow-x: hidden; white-space: nowrap;">
-					{% set events_in_year = timeline_events|filter(e => e.date|date('Y') == year) %}
-					{% for event in events_in_year %}
-						<div class="card" style="display: inline-block; margin-right: 10px;" data-tags="{{ event.tags|join(',') }}">
-							<h4>{{ event.title }}</h4>
-							<p>{{ event.description }}</p>
-							<span>{{ event.date }}</span>
-							{# Assign tags to the card as a data attribute #}
-							<div class="tags" style="display: none;">{{ event.tags|json_encode|raw }}</div>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
-		</div>
-	{% endfor %}
-</div>
-
-<script>
-	function showEvents(year) {
-var allEvents = document.querySelectorAll('.events-wrapper');
-for (var i = 0; i < allEvents.length; i++) {
-allEvents[i].style.display = 'none';
-}
-document.getElementById('events-' + year).style.display = 'block';
-checkScrollButtons();
-}
-
-function scrollToEvent(year, index) {
-var eventCard = document.querySelectorAll('#events-' + year + ' .card')[index];
-eventCard.scrollIntoView({behavior: 'smooth', block: 'center'});
-}
-
-function checkScrollButtons() {
-var allEvents = document.querySelectorAll('.events-wrapper');
-allEvents.forEach(function (eventsWrapper) {
-var scrollable = eventsWrapper.scrollWidth > eventsWrapper.clientWidth;
-var scrollButtons = eventsWrapper.querySelector('.scroll-buttons');
-if (scrollable) {
-scrollButtons.style.display = 'block';
-} else {
-scrollButtons.style.display = 'none';
-}
-});
-}
-
-function filterEvents() {
-var selectedTags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(function (tag) {
-return tag.value;
-});
-
-var events = document.querySelectorAll('.card');
-events.forEach(function (event) {
-var tags = JSON.parse(event.querySelector('.tags').textContent);
-var year = event.closest('.events-wrapper').id.split('-')[1];
-if (selectedTags.some(function (tag) {
-return tags.includes(tag);
-})) {
-event.style.display = 'inline-block';
-} else {
-event.style.display = 'none';
-}
-});
-}
-
-function selectAllTags() {
-document.querySelectorAll('input[name="tags"]').forEach(function (checkbox) {
-checkbox.checked = true;
-});
-filterEvents();
-}
-
-window.addEventListener('resize', function () {
-checkScrollButtons();
-});
-
-window.addEventListener('load', function () {
-checkScrollButtons();
-// Automatically select the first year
-var firstYearButton = document.querySelector('.btn-group .btn');
-var firstYear = firstYearButton.textContent;
-showEvents(firstYear);
-});
-
-document.querySelectorAll('input[name="tags"]').forEach(function (checkbox) {
-checkbox.addEventListener('change', function () {
-filterEvents();
-});
-});
-</script>
+<script src="{{ asset('js/timeLine.js') }}"></script>

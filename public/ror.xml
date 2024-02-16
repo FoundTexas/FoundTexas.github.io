@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:ror="http://rorweb.com/0.1/" >
+<channel>
+  <title>ROR Sitemap for http://foundtexas.net/</title>
+  <link>http://foundtexas.net/</link>
+
+<item>
+     <link>https://foundtexas.net/</link>
+     <title>
+			FoundTexas.net -
+			main page
+		</title>
+     <description>Explore a diverse collection of my work in web development, showcasing responsive designs, interactive projects, and innovative solutions. Get inspired by my portfolio and discover how I can bring your ideas to life.</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>0</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://foundtexas.net/timeline</link>
+     <title>
+			FoundTexas.net -
+				Timeline CV
+		</title>
+     <description>Explore a diverse collection of my work in web development, showcasing responsive designs, interactive projects, and innovative solutions. Get inspired by my portfolio and discover how I can bring your ideas to life.</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://foundtexas.net/login</link>
+     <title>
+			FoundTexas.net -
+			Log in
+		</title>
+     <description>Explore a diverse collection of my work in web development, showcasing responsive designs, interactive projects, and innovative solutions. Get inspired by my portfolio and discover how I can bring your ideas to life.</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://foundtexas.net/register</link>
+     <title>
+			FoundTexas.net -
+			Register
+		</title>
+     <description>Explore a diverse collection of my work in web development, showcasing responsive designs, interactive projects, and innovative solutions. Get inspired by my portfolio and discover how I can bring your ideas to life.</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+</channel>
+</rss>
+  

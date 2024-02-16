@@ -1,66 +1,113 @@
 <!-- Collapsible Navbar -->
-<div class="collapse navbar-collapse collapse position-fixed" id="navbarCollapse" style="width:100%;">
-	<nav class="navbar navbar-dark main-bg">
-		<div class="container-fluid" style="height: 10vh;">
-			<a class="navbar-brand col-auto" href="#">
-				FoundTexas
-			</a>
-			<div class="d-none d-sm-block col-auto " style="width:100%;">
-				<img src="bannerPandaold.png" alt="Other Image">
+<div class="collapse navbar-collapse collapse position-sticky fixed-top" id="navbarCollapse" style="width:100%; z-index: 1040;">
+
+	<nav class="navbar navbar-dark navbar-expand-md bg-main p-0 m-0" style="min-height:10vh;">
+		<div class="d-flex w-75 align-items-center  justify-content-md-between justify-align-content-start row p-0 m-0">
+
+			<button class=" col-auto navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="col-3 d-none d-md-block">
+				<img class="img-fluid" src="bannerPandaold.png" alt="Other Image">
+			</div>
+			<a class="col-4 p-0 m-0 navbar-brand text-center" href="/">FoundTexas</a>
+
+
+			<div class="col-12 col-md-6">
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav">
+						<a class="nav-link active" aria-current="page" href="/">Games</a>
+						<a class="nav-link active" href="#">Projects</a>
+						<a class="nav-link active" href="/timeline">CV</a>
+						<a class="nav-link active" href="/login">Account</a>
+
+					</div>
+				</div>
 			</div>
 		</div>
 	</nav>
 </div>
 
-<button type="button" class="custom-btn position-fixed rounded-4 accent-bg " onclick="playSound('audiopress')" style="z-index: 1050; top: 10px; right: 7px; " data-bs-toggle="modal" data-bs-target="#pauseMenuModal">
-	<i class="fa fa-pause fa-lg my-3 mx-2" style="color: #ffffff; "></i>
+<button class="custom-btn position-fixed rounded-4 bg-accent d-flex align-items-center" style="z-index: 1050; top: 5px; right: 5px;" onclick="playSound('audiopress')" data-bs-target="#pauseMenuModal" aria-label="Pause menu button" data-bs-toggle="modal" type="button">
+	<i class="fa fa-home my-2 mx-1 fa-2xl" aria-hidden="true" style="color: #ffffff;"></i>
+	<p class="p-0 m-0 d-none d-md-block">MENU</p>
 </button>
 
 
 <!-- Modal -->
-<div class="modal fade" id="pauseMenuModal" tabindex="-1" aria-labelledby="pauseMenuModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content accent-bg-dark">
+<div class="modal fade" id="pauseMenuModal" tabindex="-1" aria-label="Pause menu modal" aria-labelledby="pauseMenuModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content bg-accent-dark">
 			<div class="modal-header">
 				<h2 class="modal-title text-center" id="pauseMenuModalLabel">Pause Menu</h2>
 				<button type="button" class="btn-close" onclick="playSound('audioback')" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body main-bg">
-				<div class="row main-bg">
-					<!-- About Me button -->
-					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#aboutme')" data-bs-dismiss="modal">About Me</button>
-					<!-- Timeline button -->
-					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#timeline')" data-bs-dismiss="modal">Timeline</button>
-					<!-- Projects button -->
-					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#projects')" data-bs-dismiss="modal">Projects</button>
+			<div
+				class="modal-body bg-main" style="overflow-y: auto; height: 50vh; ">
+
+				<!-- Navigation Buttons -->
+				<div class="row bg-main">
+					{% for button in buttons %}
+						<button type="button" class="btn btn-primary col m-1" onclick="navigateToSectionAndCloseModal('{{ button.id }}')" data-bs-dismiss="modal">{{ button.label }}</button>
+					{% endfor %}
 				</div>
 
-				<!-- Navbar toggle -->
-				<div class="row main-bg">
-					<h5 class="col">Classic NavBar:</h5>
+				<!-- Classic Navbar Toggle -->
+				<div class="row bg-main align-items-center">
+					<h5 class="col">Classic Navbar:</h5>
 					<button type="button" class="col-auto btn btn-success" id="collapseOnButton">ON</button>
 					<button type="button" class="col-auto btn btn-danger" id="collapseOffButton">Off</button>
 				</div>
 
 				<!-- Volume Slider -->
-				<div class="row main-bg">
+				<div class="row bg-main align-items-center">
 					<label for="volumeRange" class="form-label col-auto">Volume:</label>
-					<input type="range" class="form-range col-auto" style="width:100%;" id="volumeRange" min="0" max="1" step="0.01" value="0.25">
+					<input type="range" class="form-range col" id="volumeRange" min="0" max="1" step="0.01" value="0.25">
+					<span class="col-auto" id="volumeValue">25%</span>
 				</div>
 
 			</div>
-			<div class="modal-footer dark-main-bg"></div>
+			<div class="modal-footer text-center dark-bg-main text-white">
+				{% if app.user %}
+					<p>You are logged in as
+						{{ app.user.userIdentifier }}</p>
+					<a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
+				{% else %}
+					<a href="{{ path('app_login') }}">log in</a> or <a href="{{ path('app_register') }}"> Sign up</a>
+				{% endif %}
+			</div>
 		</div>
 	</div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+
 <script>
 	// Function to navigate to section and close the modal
-function navigateToSectionAndCloseModal(sectionId) { // Navigate to section
-document.querySelector(sectionId).scrollIntoView({behavior: 'smooth'});
-co
+function navigateToSectionAndCloseModal(sectionId) { // Check if the section exists
+if (sectionId != '') {
+var section = document.querySelector(sectionId);
+}
+
+if (section) { // Scroll to the section
+section.scrollIntoView({behavior: 'smooth'});
+} else { // If section is not found, change window href to sectionId
+window.location.href = '/' + sectionId;
+}
+
 // Close the modal
 $('#pauseMenuModal').modal('hide');
+}
+
+// Function to set the collapse state on a cookie
+function setNavbarCollapseState(state) {
+Cookies.set('navbarCollapseState', state);
+}
+
+// Function to get the collapse state from the cookie
+function getNavbarCollapseState() {
+return Cookies.get('navbarCollapseState');
 }
 
 // JavaScript to toggle the collapse state
@@ -71,15 +118,25 @@ collapseOnButton.addEventListener("click", function () {
 document.querySelector(".navbar-collapse").classList.add("show");
 collapseOnButton.disabled = true;
 collapseOffButton.disabled = false;
+setNavbarCollapseState('on');
 });
 
 collapseOffButton.addEventListener("click", function () {
 document.querySelector(".navbar-collapse").classList.remove("show");
 collapseOnButton.disabled = false;
 collapseOffButton.disabled = true;
+setNavbarCollapseState('off');
 });
 
 // Initially, start with "On" enabled and "Off" disabled
+const savedState = getNavbarCollapseState();
+if (savedState === 'on') {
+document.querySelector(".navbar-collapse").classList.add("show");
+collapseOnButton.disabled = true;
+collapseOffButton.disabled = false;
+} else if (savedState === 'off') {
+document.querySelector(".navbar-collapse").classList.remove("show");
 collapseOnButton.disabled = false;
 collapseOffButton.disabled = true;
+}
 </script>

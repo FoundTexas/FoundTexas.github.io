@@ -1,0 +1,33 @@
+<h1>Create Milestone</h1>
+
+{{ form_start(mileStoneForm, {'attr': {'id': 'mileStoneForm'}}) }}
+
+{{ form_row(mileStoneForm.name) }}
+{{ form_row(mileStoneForm.description) }} projectForm
+{{ form_row(mileStoneForm.startDate) }}
+{{ form_row(mileStoneForm.endDate) }}
+
+<div id="mile_stone_form_tags">
+    {% for tagForm in mileStoneForm.tags %}
+        <div>
+            {{ form_widget(tagForm, {'attr': {'class': ''}}) }}
+            <button type="button" class="delete-btn" onclick="deleteField(this, 'mile_stone_form_tags')">Delete</button>
+        </div>
+    {% endfor %}
+</div>
+<button type="button" onclick="addField('mile_stone_form', 'tags')">Add Tag</button>
+
+<div id="mile_stone_form_bullets">
+    {% for bulletform in mileStoneForm.bullets %}
+        <div>
+            {{ form_widget(bulletform, {'attr': {'class': ''}}) }}
+            <button type="button" class="delete-btn" onclick="deleteField(this, 'mile_stone_form_bullets')">Delete</button>
+        </div>
+    {% endfor %}
+</div>
+<button type="button" onclick="addField('mile_stone_form', 'bullets')">Add BulletPoint</button>
+
+
+<button type="button" onclick="submitForm('{{path('milestone_new')}}', 'mileStoneForm', {{mileStonecur.id}})">Create</button>
+
+{{ form_end(mileStoneForm) }}

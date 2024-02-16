@@ -1,0 +1,91 @@
+<style type="text/css">
+	.wrapper {
+		height: 100%;
+		margin: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		perspective: 1000px;
+		background-color: #f0f0f0;
+	}
+
+	.carousel {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transform-style: preserve-3d;
+		transition: transform 0.66s;
+	}
+
+	.item {
+		width: 100px;
+		height: 100px;
+		background-size: cover; /* Cover the entire div with the background image */
+		background-position: center;
+
+		border: 1px solid #ccc;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform-origin: center center 0;
+		transition: transform 0.5s;
+	}
+</style>
+
+<div class="row justify-content-center bg-main-dark p-0 m-0">
+	<h3 class='text-center py-3 m-0'>Game Highlights</h3>
+</div>
+
+<section id="test" class="bg-main-dark p-0 m-0 d-flex justify-content-evenly" style="min-height: 80vh; align-items: center; overflow: hidden; perspective: 3000px;">
+
+	<button class="carousel-control-prev" type="button" onclick="rotateCarousel(-{{games|length}})">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+
+	<div class="carousel row">
+
+		{% for game in games %}
+			<div class="item bg-dark border-3 rounded-4" style="width: 50vw; height: 50vh; position: absolute; top: 50%; left: 50%; background-image: url('{{ game.iconref }}'); transform: translate(-50%, -50%) rotateY({{ ((loop.index - 1 ) * ( (360 / games|length)) ) }}deg) translateZ(1000px);">
+				<div class="container m-5 row justify-content-center bg-main-dark-translucent p-3 rounded-4" >
+					<h5 class="text-white text-center" style="margin: 0; text-align:">{{ game.name }}</h5>
+
+					<button type="button" class="col-auto custom-btn rounded-2 p-1 mt-4 mb-2 bg-accent text-white" onclick="window.location.href='{{ path('app_project_detail', {'id': game.id}) }}'" data-bs-dismiss="modal">
+					&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;
+					</button>
+				</div>
+			</div>
+		{% endfor %}
+
+	</div>
+
+	<button class="carousel-control-next" type="button" onclick="rotateCarousel({{games|length}})">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+
+</section>
+
+<div class="row justify-content-center bg-main-dark p-0 m-0">
+	<button type="button" class="col-auto custom-btn rounded-2 p-1 mt-3 mb-5 bg-accent text-white" onclick="window.location.href='{{ path('app_game_projects', {'type': type}) }}'" data-bs-dismiss="modal">&nbsp;&nbsp;All
+		{{type}}...&nbsp;&nbsp;</button>
+</div>
+
+
+<script>
+	let currentRotation = 0;
+
+function rotateCarousel(direction) {
+const rotationIncrement = 360 / direction; // Degrees to rotate per step
+
+const carousel = document.querySelector('.carousel');
+currentRotation += rotationIncrement;
+carousel.style.transform = `rotateY(${currentRotation}deg)`;
+}
+</script>

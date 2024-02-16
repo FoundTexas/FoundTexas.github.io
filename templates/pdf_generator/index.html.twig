@@ -1,0 +1,220 @@
+<style type="text/css">
+	.tg {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+	.tg td {
+		border-color: black;
+		border-style: solid;
+		border-width: 1px;
+		font-family: Arial, sans-serif;
+		font-size: 14px;
+		overflow: hidden;
+		padding: 10px 5px;
+		word-break: normal;
+	}
+	.tg th {
+		border-color: black;
+		border-style: solid;
+		border-width: 1px;
+		font-family: Arial, sans-serif;
+		font-size: 14px;
+		font-weight: normal;
+		overflow: hidden;
+		padding: 10px 5px;
+		word-break: normal;
+	}
+	.tg .tg-0lax {
+		text-align: center;
+		vertical-align: top
+	}
+</style>
+
+<table class="tg" width="100%" border="1">
+	<thead></thead>
+	<tbody>
+		<tr>
+			<td colspan="5">
+
+				<div style="width: 100%;">
+					<div style="float: left;">
+						<img src="{{ logo }}" alt="logo" style="height:20px; margin: 3;">
+					</div>
+
+					<div style="float: left; margin-left: 20%;">
+						<h4 style="margin: 0;">Orden de Laboratorio</h4>
+					</div>
+
+					<div style="float: right; margin-right:5%;">
+						<h4 style="margin: 0;">PRO-19-A</h4>
+					</div>
+
+					<div style="clear: both;"></div>
+					<!-- Clear the floats -->
+				</div>
+
+				<h5 style="margin: 3; text-align: right;">Folio Ticket:</h5>
+
+				<div style="width: 100%;">
+					<div style="float: left;">
+						<h5 style="margin: 3;">Sucursal:</h5>
+					</div>
+
+					<div style="float: left; margin: 0px 30% 0px;">
+						<h5 style="margin: 3;">Procedencia:</h5>
+					</div>
+
+					<div style="float: right;">
+						<h5 style="margin: 3;">Fecha:</h5>
+					</div>
+
+					<div style="clear: both;"></div>
+					<!-- Clear the floats -->
+				</div>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="5">
+
+				<div style="width: 100%;">
+					<div style="float: left;">
+						<h5 style="margin: 3;">Titular:</h5>
+					</div>
+
+					<div style="float: right;">
+						<h5 style="margin: 3;">Edad:</h5>
+					</div>
+
+					<div style="clear: both;"></div>
+					<!-- Clear the floats -->
+				</div>
+
+				<h5 style="margin: 3; text-align: left;">Beneficiario (*1):</h5>
+
+				<div style="width: 100%;">
+					<div style="float: left;">
+						<h5 style="margin: 3;">N° (*1):</h5>
+					</div>
+
+					<div style="float: right;">
+						<h5 style="margin: 3;">Unidad:(*z):</h5>
+					</div>
+
+					<div style="clear: both;"></div>
+					<!-- Clear the floats -->
+				</div>
+
+			</td>
+		</tr>
+		<tr>
+			<th class="tg-0lax" style="width: 5%;"></th>
+			<th class="tg-0lax" style="width: 20%;">Esfera</th>
+			<th class="tg-0lax" style="width: 20%;">Cilindro</th>
+			<th class="tg-0lax" style="width: 20%;">Eje</th>
+			<th class="tg-0lax" style="width: 35%;">Add</th>
+		</tr>
+		<tr>
+			<td class="tg-0lax">OD</td>
+			<td class="tg-0lax">{{ol.esferaod}}</td>
+			<td class="tg-0lax">{{ol.cilindrood}}</td>
+			<td class="tg-0lax">{{ol.ejeod}}</td>
+			<td class="tg-0lax" rowspan="2">
+				<p>
+					{{ol.avcercacaddod}}</p>
+				<p>{{ol.avcercacaddoi}}</p>
+			</td>
+		</tr>
+		<tr>
+			<td class="tg-0lax">OI</td>
+			<td class="tg-0lax">{{ol.esferaoi}}</td>
+			<td class="tg-0lax">{{ol.cilindrooi}}</td>
+			<td class="tg-0lax">{{ol.ejeoi}}</td>
+		</tr>
+		<tr>
+			<td class="tg-0lax" colspan="5">
+				<div style="width: 100%; ">
+					<div style="float: left; margin-left:5%;">
+						<h5 style="margin: 3;">DIP</h5>
+					</div>
+
+					<div style="float: left;  margin: 0px 25% 0px;">
+						<h5 style="margin: 3;">AO</h5>
+					</div>
+
+					<div style="float: right; margin-right:35%;">
+						<h5 style="margin: 3;">ACO</h5>
+					</div>
+
+					<div style="clear: both;"></div>
+					<!-- Clear the floats -->
+				</div>
+
+				<div style="width: 100%;">
+					<div style="float: left; ">
+						<h5 style="margin: 2;">Marca de Armazón:</h5>
+					</div>
+
+					<div style="float: left;  ">
+						<h5 style="margin: 2;">Modelo:</h5>
+					</div>
+
+					<div style="float: left; ">
+						<h5 style="margin: 2;">Color:</h5>
+					</div>
+
+					<div style="clear: both;"></div>
+					<!-- Clear the floats -->
+				</div>
+
+				<h5 style="margin: 3; text-align: left;">Diseño, material y tx:</h5>
+
+			</td>
+		</tr>
+		<tr>
+			<td class="tg-0lax" colspan="5">
+				<div style="width: 100%; margin: 3;">
+					<div style="float: left;">
+						<h4 style="margin-top: 3;">REPARACIÓN O AJUSTE:</h4>
+					</div>
+
+					<div style="float: right;">
+
+						<label for="no" style=" margin: 5px;">Si</label>
+						<input type="checkbox" id="no" name="reparacion_ajuste" value="Si" style="transform: scale(2);  margin-right: 100px;" >
+
+						<label for="no" style=" margin: 5px;">No</label>
+						<input type="checkbox" id="no" name="reparacion_ajuste" value="No" style="transform: scale(2);  margin-right: 100px;">
+
+					</div>
+
+					<div style="clear: both;"></div>
+					<!-- Clear the floats -->
+				</div>
+
+				<h4 style="margin: 2; text-align: left;">SI (Describir):</h4>
+
+				<div style="width: 100%;">
+					<div style="float: left; ">
+						<h3 style="margin: 2;">Marca de Armazón:</h3>
+					</div>
+
+					<div style="float: left;  ">
+						<h3 style="margin: 2;">Modelo:</h3>
+					</div>
+
+					<div style="float: left; ">
+						<h3 style="margin: 2;">Color:</h3>
+					</div>
+
+					<div style="clear: both;"></div>
+					<!-- Clear the floats -->
+				</div>
+
+			</td>
+		</tr>
+		<tr>
+			<td class="tg-0lax" colspan="5"></td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,48 @@
+<section id="projects" class="bg-main-dark p-0" style="min-height: 100vh;">
+
+	{% include 'index/IndexHeader.twig' with {'textRef': textRef, 'headText': headText, 'darkbg': true} %}
+
+	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
+
+		<div class="container rounded-5 {{ color ?? 'bg-main-gradient' }}  m-3 my-md-4 p-3 shadow-custom">
+			<div class="row justify-content-center">
+
+				{% for project in projects %}
+
+					{% for i in 0..0 %}
+
+						<div class="col-sm-6 col-lg-4 col-xl-3 px-3 py-2  {{ loop.index > 6 ? (loop.index > 10 ? 'd-none d-lg-block' : 'd-none d-md-block') : '' }} ">
+							<div class="rounded-4 row justify-content-center bg-dark mx-auto shadow-custom " style="overflow:hidden; aspect-ratio: 0.75;">
+								<div class=" w-100 h-50 p-0 d-flex align-items-center" style="overflow:hidden;">
+									<img src="{{ project.iconref }}" style="width:100%;" alt="project not loading">
+								</div>
+								<div class='px-1'>
+									<h5 class="p-0 m-0 accent-color text-center">Card title</h5>
+									<p class=" m-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								</div>
+								<a href="{{project.linkref ?? '#' }}" class="btn btn-main"></a>
+							</div>
+						</div>
+
+					{% endfor %}
+
+				{% endfor %}
+			</div>
+			<div class="row justify-content-center">
+				<button type="button" class="col-auto custom-btn rounded-2 p-1 mt-4 mb-2 bg-accent text-white" onclick="window.location.href='{{ path('app_game_projects', {'type': type}) }}'" data-bs-dismiss="modal">&nbsp;&nbsp;All
+					{{type}}...&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	/* Add custom style for changing text on hover */
+	.btn-main::before {
+		content: "more info.";
+	}
+
+	.btn-main:hover::before {
+		content: "Let's Go!";
+	}
+</style>
