@@ -5,7 +5,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('audioPlayer.js') }}"></script>
+	<script src="{{ asset('js/audioPlayer.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -26,46 +26,11 @@
 	</section>
 
 	<section id="timeline" class="accent-bg-dark px-2 rounded-top-5 " style="min-height: 100vh; margin-top: -4rem;">
-
 		{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
-
 		{% include 'timeline.twig' %}
 	</section>
 
-	<section id="projects" class="main-bg-dark px-2 rounded-top-5 " style="min-height: 100vh;  margin-top: -4rem;">
-		<section id="Games">
-
-			{% include 'index/IndexHeader.twig' with {'upRef': 'timeline', 'textRef': 'projects', 'headText': '🕹️Games Gallery', 'darkbg': true} %}
-
-			<div class="row mx-auto main-bg rounded-5 p-2">
-				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
-					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; width: 35vh;">
-						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
-					</div>
-				</div>
-				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
-					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; height: 35vh; width: 35vh;">
-						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
-					</div>
-				</div>
-				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
-					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; height: 35vh; width: 35vh;">
-						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
-					</div>
-				</div>
-				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
-					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; height: 35vh; width: 35vh;">
-						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
-					</div>
-				</div>
-				<div class="col-6 col-md-3 p-2 d-flex align-items-center justify-content-center">
-					<div class="container-fluid rounded-5 d-flex align-items-center justify-content-center" style="overflow: hidden; height: 35vh; width: 35vh;">
-						<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%;" alt="Gallery Image 2">
-					</div>
-				</div>
-			</div>
-		</section>
-	</section>
+	{% include 'gameGallery.twig' %}
 
 	<section id="contact" class="accent-bg-dark px-3 rounded-top-5" style="min-height: 100vh;  margin-top: -4rem;">
 		{% include 'contact.twig' %}
@@ -76,5 +41,6 @@
 		<p>&copy; 2024 . All Rights Reserved.</p>
 	</footer>
 
-
 {% endblock %}
+
+
