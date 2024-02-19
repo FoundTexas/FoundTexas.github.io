@@ -25,7 +25,7 @@ class IndexController extends AbstractController
                 ],
                 'date' => '2022-10',
                 'endDate' => '2023-09',
-                'tags' => ['Unity', 'Game Development']
+                'tags' => ['Unity', 'C#', 'NoSQL']
             ],
             [
                 'title' => 'TagWizz | Unity Developer Apprenticeship',
@@ -38,7 +38,7 @@ class IndexController extends AbstractController
                 ],
                 'date' => '2022-08',
                 'endDate' => '2022-12',
-                'tags' => ['Unity', 'Game Development']
+                'tags' => ['Unity', 'C#', 'SCRUM']
             ],
             [
                 'title' => 'CORKBRICK EUROPE | Unity Developer Intern',
@@ -50,7 +50,7 @@ class IndexController extends AbstractController
                 ],
                 'date' => '2022-02',
                 'endDate' => '2022-09',
-                'tags' => ['Unity', 'Internship']
+                'tags' => ['Unity', 'C#', 'SCRUM']
             ],
             [
                 'title' => 'Movimiento STEM | Unity Developer Apprenticeship',
@@ -62,7 +62,7 @@ class IndexController extends AbstractController
                 ],
                 'date' => '2021-02',
                 'endDate' => '2021-06',
-                'tags' => ['Unity', 'Game Development']
+                'tags' => ['Unity', 'C#', 'SCRUM']
             ]
         ];        
 

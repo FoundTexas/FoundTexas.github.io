@@ -10,25 +10,67 @@
 
 {% block body %}
 
+	<style>
+		/* CSS for the typing animation */
+		.typing-effect {
+			overflow: hidden;
+			white-space: wrap;
+			margin: 0 auto;
+		}
+
+		/* Keyframes for the typing animation */
+		@keyframes typing {
+			from {
+				width: 0;
+			}
+			to {
+				width: 100%;
+			}
+		}
+	</style>
+
 	<section id="aboutme" class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 		<img class="mx-auto position-fixed" style="z-index: -1000000; filter: blur(7px) brightness(70%); height: 103%; width: 111%;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
 		<img class="mx-auto position-fixed" style="z-index: -100000; filter: blur(5px); height: 103vh; width: auto;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
-		<div class="container main-bg-dark-translucent rounded-5 border border-light d-flex flex-column justify-content-between justify-content-around" style="min-height: 40vh;">
+		<div class="container main-bg-dark-translucent rounded-5 border border-light d-flex flex-column justify-content-between justify-content-around" style="min-height: 35vh;">
 			<div class="row mt-md-0 mt-3">
-				<h2 class="text-center accent-color">Web & Game Dev</h2>
+				<h2 class="typing-effect text-center accent-color">Web & Game Dev</h2>
 			</div>
-			<div class="row mx-md-5 mx-1">
-				<h6 class="white-text text-justify text-lg mb-md-5 mb-3">
+			<div class="row mx-md-5 ">
+				<p class="typing-effect white-text text-justify text-lg mb-md-5 mb-3" style="font-size: 14px;">
 					Greetings! Welcome to my corner of the digital universe. I'm Rodolfo León also known as FoundTexas. I'm a passionate computer scientist specialized in 3D Graphics, Project Management and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading to significant and innovative experiences across many users.
-				</h6>
+				</p>
 			</div>
 		</div>
 	</section>
 
-	<section id="timeline" class="accent-bg-dark px-2 rounded-top-5 " style="min-height: 100vh; margin-top: -4rem;">
-		{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
-		{% include 'timeline.twig' %}
-	</section>
+	<script>
+    window.onload = function () {
+        var elements = document.getElementsByClassName('typing-effect');
+        for (var i = 0; i < elements.length; i++) {
+            typeWriter(elements[i].textContent, elements[i]);
+        }
+    };
+
+    // Function to create the typing effect
+    function typeWriter(text, targetElement) {
+        var speed = 15; // Adjust typing speed here (lower value for faster typing)
+        var i = 0;
+        targetElement.textContent = ""; // Clear existing text
+        function type() {
+            if (i < text.length) {
+                targetElement.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed * (text.charAt(i) == ' ' ? 5 : 1));
+            }
+        }
+        type();
+    }
+</script>
+
+
+
+	{% include 'timeline.twig' %}
 
 	{% include 'gameGallery.twig' %}
 
@@ -42,5 +84,3 @@
 	</footer>
 
 {% endblock %}
-
-

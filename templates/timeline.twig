@@ -1,70 +1,67 @@
-
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-auto py-3">
-			<h3>Filter by Year:</h3>
-			<div class="btn-group" role="group" aria-label="Year buttons">
-				{% set years = [] %}
-				{% for event in timeline_events %}
-					{% if event.date|date('Y') not in years %}
-						{% set years = years|merge([event.date|date('Y')]) %}
-						<button type="button" class="btn btn-primary" onclick="showEvents('{{ event.date|date('Y') }}')">{{ event.date|date('Y') }}</button>
-					{% endif %}
-				{% endfor %}
-			</div>
-		</div>
-
-		<div class="col py-3">
-			<h3>Filter by Tags:</h3>
-			{% set all_tags = [] %}
-			{% for event in timeline_events %}
-				{% for tag in event.tags %}
-					{% if tag not in all_tags %}
-						{% set all_tags = all_tags|merge([tag]) %}
-					{% endif %}
-				{% endfor %}
-			{% endfor %}
-			<div class="col-auto" role="group" aria-label="options">
-				<button type="button" class="btn btn-success" onclick="selectAllTags(true)">Select All</button>
-				<button type="button" class="btn btn-secondary" onclick="selectAllTags(false)">deselect All</button>
-			</div>
-			{% for tag in all_tags %}
-				<div class="form-check form-check-inline ">
-					<input type="checkbox" class="btn-check" id="btn-check-outlined {{ tag }}" name="tags" value="{{ tag }}" checked>
-					<label class="btn btn-outline-primary" for="btn-check-outlined {{ tag }}">{{ tag }}</label><br>
-				</div>
-			{% endfor %}
-		</div>
-	</div>
-
-	{% for index, year in years %}
+<section id="timeline" class="accent-bg-dark px-2 rounded-top-5" style="height: 100vh; margin-top: -4rem;">
+	{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
+	<div class="container">
 		<div class="row">
-
-			<div class="events-wrapper" id="events-{{ year }}" {% if index == 0 %} style="display: block;" {% else %} style="display: none;" {% endif %}>
-				<h2>{{ year }}</h2>
-				<div class="container-fluid" style="overflow-x: hidden; white-space: nowrap;">
-					{% set events_in_year = timeline_events|filter(e => e.date|date('Y') == year) %}
-					{% for event in events_in_year %}
-						<div class="card" style="display: inline-block; margin-right: 10px;" data-tags="{{ event.tags|join(',') }}">
-							<div class="row">
-								<h4 class="col">{{ event.title }}</h4>
-								<span class="col">{{ event.date }}
-									-
-									{{ event.endDate }}</span>
-							</div>
-							<ul>
-								{% for point in event.description %}
-									<li>{{ point }}</li>
-								{% endfor %}
-							</ul>
-							{# Assign tags to the card as a data attribute #}
-							<div class="tags" style="display: none;">{{ event.tags|json_encode|raw }}</div>
-						</div>
+			<div class="col-5">
+				<h5>Filter by Year:</h5>
+				<div class="btn-group" role="group" aria-label="Year buttons">
+					{% set years = [] %}
+					{% for event in timeline_events %}
+						{% if event.date|date('Y') not in years %}
+							{% set years = years|merge([event.date|date('Y')]) %}
+							<button type="button" class="btn btn-primary" onclick="showEvents('{{ event.date|date('Y') }}')">{{ event.date|date('Y') }}</button>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-7">
+				<h5>Filter by Tags:</h5>
+				{% set all_tags = [] %}
+				{% for event in timeline_events %}
+					{% for tag in event.tags %}
+						{% if tag not in all_tags %}
+							{% set all_tags = all_tags|merge([tag]) %}
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+				<div class="row">
+					<button type="button" class="col-auto btn btn-success" onclick="selectAllTags(true)">Select All</button>
+					<button type="button" class="col-auto btn btn-secondary" onclick="selectAllTags(false)">Deselect All</button>
+					{% for tag in all_tags %}
+						<input type="checkbox" class="btn-check" id="btn-check-outlined-{{ tag }}" name="tags" value="{{ tag }}" checked>
+						<label class="col-auto btn btn-outline-primary" for="btn-check-outlined-{{ tag }}">{{ tag }}</label><br>
 					{% endfor %}
 				</div>
 			</div>
 		</div>
-	{% endfor %}
-</div>
+		<div class="row pl-md-4">
+			{% for year in years %}
+				<div class="events-wrapper" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
+					<h4 class="text-center m-2 m-md-4">{{ year }}</h4>
+					<div style="overflow-y: hidden; overflow-x: auto; white-space: nowrap;">
+						{% set events_in_year = timeline_events|filter(e => e.date|date('Y') == year) %}
+						{% for event in events_in_year %}
+							<div class="timeline-event container rounded-4 col-12 p-2 bg-dark" style="overflow-y: auto; overflow-x: hidden; display: inline-block; height: 50vh;" data-tags="{{ event.tags|join(',') }}">
+								<div class="row ml-md-3" style="white-space: wrap;">
+									<h5 class="col-auto p-md-3 accent-color">{{ event.title }}
+										<span class="col main-color">{{ event.date ~ ' - ' ~ event.endDate }}</span>
+									</h5>
+									<div class="list-group px-md-5 col-auto">
+										{% for point in event.description %}
+											<a href="#" class="list-group-item list-group-item-action bg-dark text-light">{{ point }}</a>
+										{% endfor %}
+									</div>
+								</div>
+								{# Assign tags to the card as a data attribute #}
+								<div class="tags" style="display: none;">{{ event.tags|json_encode|raw }}</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
 
 <script src="{{ asset('js/timeLine.js') }}"></script>

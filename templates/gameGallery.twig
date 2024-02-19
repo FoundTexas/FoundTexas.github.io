@@ -1,10 +1,20 @@
-<section id="projects" class="main-bg-dark px-2 rounded-top-5 " style="min-height: 100vh;  margin-top: -4rem;">
+<section id="projects" class="main-bg-dark px-2 rounded-top-5 " style="min-height: 100vh; ">
 
 	{% include 'index/IndexHeader.twig' with {'upRef': 'timeline', 'textRef': 'projects', 'headText': '🕹️Games Gallery', 'darkbg': true} %}
 
-	<div class="row mx-auto main-bg rounded-5 p-2 align-items-center">
+	<div class="container row mx-auto main-bg rounded-5 justify-content-center">
 		<div class="col-6 col-md-3 p-3 d-flex justify-content-center">
-			<div class="container-fluid rounded-5 d-flex justify-content-center game-item" data-src="https://itch.io/embed-upload/3703497?color=000000">
+			<div class="container-fluid rounded-5 d-flex justify-content-center game-item" style="overflow: hidden; width: 100%; aspect-ratio: 1;" data-src="https://itch.io/embed-upload/3703497?color=000000">
+				<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%; width: auto;" alt="Gallery Image 1">
+			</div>
+		</div>
+		<div class="col-6 col-md-3 p-3 d-flex justify-content-center">
+			<div class="container-fluid rounded-5 d-flex justify-content-center game-item" style="overflow: hidden; width: 100%; aspect-ratio: 1;" data-src="https://example.com/page1.html">
+				<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%; width: auto;" alt="Gallery Image 1">
+			</div>
+		</div>
+		<div class="col-6 col-md-3 p-3 d-flex justify-content-center">
+			<div class="container-fluid rounded-5 d-flex justify-content-center game-item" style="overflow: hidden; width: 100%; aspect-ratio: 1;" data-src="https://example.com/page1.html">
 				<img src="https://img.itch.zone/aW1nLzE1MDEzOTUwLmpwZw==/180x143%23c/zX75lK.jpg" style="height: 100%; width: auto;" alt="Gallery Image 1">
 			</div>
 		</div>
@@ -12,11 +22,11 @@
 </section>
 
 <!-- Modal Game -->
-<div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-xl modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="galleryModalLabel">Gallery Image</h5>
+<div class="modal fade" id="gameModal" tabindex="-1" aria-labelledby="gameModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-fullscreen modal-dialog-centered">
+		<div class="modal-content bg-dark">
+			<div class="modal-header accent-bg-dark">
+				<h5 class="modal-title" id="gameModalLabel">Gallery Image</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body d-flex justify-content-center">
@@ -28,7 +38,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var galleryModal = document.getElementById('galleryModal');
+        var gameModal = document.getElementById('gameModal');
         var galleryIframe = document.getElementById('galleryIframe');
 
         var galleryItems = document.querySelectorAll('.game-item');
@@ -36,12 +46,12 @@
             item.addEventListener('click', function () {
                 var src = this.getAttribute('data-src');
                 galleryIframe.src = src;
-                var modal = new bootstrap.Modal(galleryModal);
+                var modal = new bootstrap.Modal(gameModal);
                 modal.show();
             });
         });
 
-        galleryModal.addEventListener('hidden.bs.modal', function () {
+        gameModal.addEventListener('hidden.bs.modal', function () {
             galleryIframe.src = ''; // Clear iframe source when modal is closed
         });
     });

@@ -33,7 +33,7 @@ function filterEvents() {
         return tag.value;
     });
 
-    var events = document.querySelectorAll('.card');
+    var events = document.querySelectorAll('.timeline-event');
     events.forEach(function (event) {
         var tags = JSON.parse(event.querySelector('.tags').textContent);
         var year = event.closest('.events-wrapper').id.split('-')[1];

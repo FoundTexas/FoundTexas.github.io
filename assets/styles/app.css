@@ -90,3 +90,17 @@ h6, li, span {
   transform: scale(1.1);
   /* Increase scale on hover */
 }
+
+/* Style for WebKit-based browsers (e.g., Chrome, Safari) */
+::-webkit-scrollbar {
+  background-color: #000000; /* Sets the background color of the scrollbar to transparent */
+}
+
+/* Style for the scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background-color: #812181; /* Sets the color of the scrollbar handle to red */
+}
+
+html {
+  scrollbar-color: #812181 #000000; /* Sets the scrollbar handle color to red */
+}
