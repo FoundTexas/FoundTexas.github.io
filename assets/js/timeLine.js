@@ -58,14 +58,6 @@ window.addEventListener('resize', function () {
     checkScrollButtons();
 });
 
-window.addEventListener('load', function () {
-    checkScrollButtons();
-    // Automatically select the first year
-    var firstYearButton = document.querySelector('.btn-group .btn');
-    var firstYear = firstYearButton.textContent;
-    showEvents(firstYear);
-});
-
 document.querySelectorAll('input[name="tags"]').forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
         filterEvents();

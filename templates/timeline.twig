@@ -1,7 +1,7 @@
 <section id="timeline" class="accent-bg-dark px-2 rounded-top-5" style="height: 100vh; margin-top: -4rem;">
 	{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
 	<div class="container">
-		<div class="row">
+		<div class="row mt-3">
 			<div class="col-5">
 				<h5>Filter by Year:</h5>
 				<div class="btn-group" role="group" aria-label="Year buttons">
@@ -27,6 +27,8 @@
 				<div class="row">
 					<button type="button" class="col-auto btn btn-success" onclick="selectAllTags(true)">Select All</button>
 					<button type="button" class="col-auto btn btn-secondary" onclick="selectAllTags(false)">Deselect All</button>
+				</div>
+				<div class="row">
 					{% for tag in all_tags %}
 						<input type="checkbox" class="btn-check" id="btn-check-outlined-{{ tag }}" name="tags" value="{{ tag }}" checked>
 						<label class="col-auto btn btn-outline-primary" for="btn-check-outlined-{{ tag }}">{{ tag }}</label><br>
@@ -38,11 +40,11 @@
 			{% for year in years %}
 				<div class="events-wrapper" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
 					<h4 class="text-center m-2 m-md-4">{{ year }}</h4>
-					<div style="overflow-y: hidden; overflow-x: auto; white-space: nowrap;">
+					<div style="overflow-y: auto; height: 50vh;">
 						{% set events_in_year = timeline_events|filter(e => e.date|date('Y') == year) %}
 						{% for event in events_in_year %}
-							<div class="timeline-event container rounded-4 col-12 p-2 bg-dark" style="overflow-y: auto; overflow-x: hidden; display: inline-block; height: 50vh;" data-tags="{{ event.tags|join(',') }}">
-								<div class="row ml-md-3" style="white-space: wrap;">
+							<div class="timeline-event container rounded-4 p-2 bg-dark" data-tags="{{ event.tags|join(',') }}">
+								<div class="row ml-md-3">
 									<h5 class="col-auto p-md-3 accent-color">{{ event.title }}
 										<span class="col main-color">{{ event.date ~ ' - ' ~ event.endDate }}</span>
 									</h5>
