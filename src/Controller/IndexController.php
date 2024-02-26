@@ -64,7 +64,7 @@ class IndexController extends AbstractController
                 'endDate' => '2021-06',
                 'tags' => ['Unity', 'C#', 'SCRUM']
             ]
-        ];        
+        ];
 
 
         return $this->render('index/index.html.twig', [
@@ -80,17 +80,19 @@ class IndexController extends AbstractController
         $email = $request->request->get('email');
         $message = $request->request->get('message');
 
-        // Build the email content
-        $emailContent = "Name: $name\nEmail: $email\nMessage: $message";
-
-        // Send the email
-        $email = (new Email())
-            ->from('your@example.com')
-            ->to('your-email@example.com')
+        $sendmail = (new Email())
+            ->from('rolega01@gmail.com')
+            ->to('rolega01@gmail.com')
             ->subject('New Contact Form Submission')
-            ->text($emailContent);
+            ->html("<html><body>
+                        <img src='https://masoftcode.com/img/ico/MasoftcodeICO.png' alt='Masoftcode Icon' style='height: 300px; width: auto;' />
+                        <h1>CONTACT FORM</h1>
+                        <p>Name: $name</p>
+                        <p>Email: $email</p>
+                        <p>Message: $message</p>
+                    </body></html>");
 
-        $mailer->send($email);
+        $mailer->send($sendmail);
 
         return new Response('Message sent successfully!');
     }
