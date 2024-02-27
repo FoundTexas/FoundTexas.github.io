@@ -11,15 +11,10 @@
 {% block body %}
 
 	{% include 'AboutMe.twig' %}
-
 	{% include 'ProjectsHighlights.twig' with {'textRef': 'GamesHighlights', 'headText': 'Games Highlights', 'darkbg': true} %}
 	{% include 'ProjectsHighlights.twig' with {'textRef': 'GameJamsHighlights', 'headText': 'Game Jams Highlights', 'darkbg': true} %}
 	{% include 'timeline.twig' %}
-
-
-	<section id="contact" class="accent-bg-dark px-3 rounded-top-5" style="min-height: 100vh;  margin-top: -4rem;">
-		{% include 'contact.twig' %}
-	</section>
+	{% include 'contact.twig' %}
 
 	<!-- Footer -->
 	<footer class="bg-dark text-white text-center py-3" style="min-height: 25vh; margin-top: -25vh;">

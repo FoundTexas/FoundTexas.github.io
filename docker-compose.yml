@@ -9,7 +9,7 @@ services:
     networks:
       database: {}
     volumes:
-      - ./public_html:/var/www/html/public_html
+      - ./public:/var/www/html/public
       - ./src:/var/www/html/src
       - ./templates:/var/www/html/templates
       - ./config:/var/www/html/config

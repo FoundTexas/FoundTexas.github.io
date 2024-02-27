@@ -23,7 +23,7 @@
     # If it's an existing file or directory, do nothing.
     RewriteRule ^ - [NC,L]
 
-    # Rewrite all other requests to index.php in the public_html directory.
+    # Rewrite all other requests to index.php in the public directory.
     RewriteRule ^(.*) public/index.php [NC,L]
 </IfModule>
 
