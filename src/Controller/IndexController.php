@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\MileStone;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,8 +14,13 @@ use Symfony\Component\Mime\Email;
 class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
+
+        $product = $entityManager->getRepository(MileStone::class)->findAll();
+
+        var_dump($product);
+        
         $experiences = [
             [
                 'title' => 'Word Games | Unity Developer',
@@ -70,6 +77,7 @@ class IndexController extends AbstractController
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
             'timeline_events' => $experiences,
+            'product'=> $product,
         ]);
     }
 

@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+{{ dump(product) }}
 
 	{% include 'AboutMe.twig' %}
 	{% include 'ProjectsHighlights.twig' with {'textRef': 'GamesHighlights', 'headText': 'Games Highlights', 'darkbg': true} %}

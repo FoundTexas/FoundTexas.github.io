@@ -20,14 +20,17 @@ class MileStone
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $start_date = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $end_date = null;
-
     #[ORM\Column(nullable: true)]
     private ?array $bulletpoints = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $startDate = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $endDate = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $tags = null;
 
     public function getId(): ?int
     {
@@ -58,30 +61,6 @@ class MileStone
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeInterface
-    {
-        return $this->start_date;
-    }
-
-    public function setStartDate(\DateTimeInterface $start_date): static
-    {
-        $this->start_date = $start_date;
-
-        return $this;
-    }
-
-    public function getEndDate(): ?\DateTimeInterface
-    {
-        return $this->end_date;
-    }
-
-    public function setEndDate(\DateTimeInterface $end_date): static
-    {
-        $this->end_date = $end_date;
-
-        return $this;
-    }
-
     public function getBulletpoints(): ?array
     {
         return $this->bulletpoints;
@@ -90,6 +69,42 @@ class MileStone
     public function setBulletpoints(?array $bulletpoints): static
     {
         $this->bulletpoints = $bulletpoints;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(\DateTimeInterface $startDate): static
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(?\DateTimeInterface $endDate): static
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?array $tags): static
+    {
+        $this->tags = $tags;
 
         return $this;
     }
