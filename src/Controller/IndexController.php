@@ -15,12 +15,19 @@ class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager): Response
+    {   
+        $experiences = $entityManager->getRepository(MileStone::class)->findAll();
+
+        return $this->render('index/index.html.twig', [
+            'controller_name' => 'IndexController',
+            'timeline_events' => $experiences,
+        ]);
+    }
+
+    #[Route('/email', name: 'app_email')]
+    public function handleContactForm(Request $request, MailerInterface $mailer): Response
     {
-
-        $product = $entityManager->getRepository(MileStone::class)->findAll();
-
-        var_dump($product);
-        
+        /*
         $experiences = [
             [
                 'title' => 'Word Games | Unity Developer',
@@ -72,18 +79,7 @@ class IndexController extends AbstractController
                 'tags' => ['Unity', 'C#', 'SCRUM']
             ]
         ];
-
-
-        return $this->render('index/index.html.twig', [
-            'controller_name' => 'IndexController',
-            'timeline_events' => $experiences,
-            'product'=> $product,
-        ]);
-    }
-
-    #[Route('/email', name: 'app_email')]
-    public function handleContactForm(Request $request, MailerInterface $mailer): Response
-    {
+        */
         $name = $request->request->get('name');
         $email = $request->request->get('email');
         $message = $request->request->get('message');

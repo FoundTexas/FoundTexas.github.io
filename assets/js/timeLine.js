@@ -29,7 +29,12 @@ function checkScrollButtons() {
 }
 
 function filterEvents() {
-    var selectedTags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(function (tag) {
+
+    var tags = Array.from(document.querySelectorAll('input[name="tags"]:checked'));
+
+    if(tags.length <= 0){ return; }
+
+    var selectedTags = tags.map(function (tag) {
         return tag.value;
     });
 
