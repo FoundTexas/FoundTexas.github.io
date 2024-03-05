@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MileStoneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,14 @@ class MileStone
 
     #[ORM\Column(nullable: true)]
     private ?array $tags = null;
+
+    #[ORM\OneToMany(mappedBy: 'mileStone', targetEntity: Project::class)]
+    private Collection $asociatedprojects;
+
+    public function __construct()
+    {
+        $this->asociatedprojects = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +115,36 @@ class MileStone
     public function setTags(?array $tags): static
     {
         $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getAsociatedproject(): Collection
+    {
+        return $this->asociatedprojects;
+    }
+
+    public function addAsociatedproject(Project $asociatedproject): static
+    {
+        if (!$this->asociatedprojects->contains($asociatedproject)) {
+            $this->asociatedprojects->add($asociatedproject);
+            $asociatedproject->setMileStone($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAsociatedproject(Project $asociatedproject): static
+    {
+        if ($this->asociatedprojects->removeElement($asociatedproject)) {
+            // set the owning side to null (unless already changed)
+            if ($asociatedproject->getMileStone() === $this) {
+                $asociatedproject->setMileStone(null);
+            }
+        }
 
         return $this;
     }

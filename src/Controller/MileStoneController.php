@@ -29,7 +29,7 @@ class MileStoneController extends AbstractController
         }
 
         return $this->render('mile_stone/index.html.twig', [
-            'milestone_form' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 }
