@@ -11,8 +11,8 @@
 {% block body %}
 
 	{% include 'AboutMe.twig' %}
-	{% include 'ProjectsHighlights.twig' with {'textRef': 'GamesHighlights', 'headText': 'Games Highlights', 'darkbg': true} %}
-	{% include 'ProjectsHighlights.twig' with {'textRef': 'GameJamsHighlights', 'headText': 'Game Jams Highlights', 'darkbg': true} %}
+	{% include 'ProjectsHighlights.twig' with {'projects': Project, 'textRef': 'GamesHighlights', 'headText': 'Games Highlights', 'darkbg': true} %}
+	{% include 'ProjectsHighlights.twig' with {'projects': [], 'textRef': 'GameJamsHighlights', 'headText': 'Game Jams Highlights', 'darkbg': true} %}
 	{% include 'timeline.twig' %}
 	{% include 'contact.twig' %}
 

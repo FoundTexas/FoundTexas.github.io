@@ -30,9 +30,10 @@ function checkScrollButtons() {
 
 function filterEvents() {
 
+    var exsisttags = Array.from(document.querySelectorAll('input[name="tags"]'));
+    
+    if(exsisttags.length <= 0){ return; }
     var tags = Array.from(document.querySelectorAll('input[name="tags"]:checked'));
-
-    if(tags.length <= 0){ return; }
 
     var selectedTags = tags.map(function (tag) {
         return tag.value;

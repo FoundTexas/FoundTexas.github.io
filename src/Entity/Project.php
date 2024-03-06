@@ -26,6 +26,9 @@ class Project
     #[ORM\ManyToOne(inversedBy: 'asociatedproject')]
     private ?MileStone $mileStone = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $iconref = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Project
     public function setMileStone(?MileStone $mileStone): static
     {
         $this->mileStone = $mileStone;
+
+        return $this;
+    }
+
+    public function getIconref(): ?string
+    {
+        return $this->iconref;
+    }
+
+    public function setIconref(?string $iconref): static
+    {
+        $this->iconref = $iconref;
 
         return $this;
     }
