@@ -19,20 +19,18 @@
 
 <!-- Modal -->
 <div class="modal fade" id="pauseMenuModal" tabindex="-1" aria-labelledby="pauseMenuModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
 		<div class="modal-content accent-bg-dark">
 			<div class="modal-header">
 				<h2 class="modal-title text-center" id="pauseMenuModalLabel">Pause Menu</h2>
 				<button type="button" class="btn-close" onclick="playSound('audioback')" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body main-bg">
+			<div class="modal-body main-bg" style="overflow-y: auto; height: 50vh; ">
+
 				<div class="row main-bg">
-					<!-- About Me button -->
-					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#aboutme')" data-bs-dismiss="modal">About Me</button>
-					<!-- Timeline button -->
-					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#timeline')" data-bs-dismiss="modal">CV</button>
-					<!-- Projects button -->
-					<button type="button" class="btn btn-primary col" onclick="navigateToSectionAndCloseModal('#projects')" data-bs-dismiss="modal">Projects</button>
+					{% for button in buttons %}
+						<button type="button" class="btn btn-primary col m-1" onclick="navigateToSectionAndCloseModal('{{ button.id }}')" data-bs-dismiss="modal">{{ button.label }}</button>
+					{% endfor %}
 				</div>
 
 				<!-- Navbar toggle -->
@@ -56,11 +54,21 @@
 
 <script>
 	// Function to navigate to section and close the modal
-function navigateToSectionAndCloseModal(sectionId) { // Navigate to section
-document.querySelector(sectionId).scrollIntoView({behavior: 'smooth'});
-co
-// Close the modal
-$('#pauseMenuModal').modal('hide');
+function navigateToSectionAndCloseModal(sectionId) {
+    // Check if the section exists
+	if(sectionId != '')
+    {var section = document.querySelector(sectionId);}
+
+    if (section) {
+        // Scroll to the section
+        section.scrollIntoView({behavior: 'smooth'});
+    } else {
+        // If section is not found, change window href to sectionId
+        window.location.href = '/'+sectionId;
+    }
+
+    // Close the modal
+    $('#pauseMenuModal').modal('hide');
 }
 
 // JavaScript to toggle the collapse state
