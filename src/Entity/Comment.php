@@ -24,6 +24,9 @@ class Comment
     #[ORM\Column(type: Types::TEXT)]
     private ?string $textdata = null;
 
+    #[ORM\ManyToOne(targetEntity: self::class)]
+    private ?self $parentComment = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class Comment
     public function setTextdata(string $textdata): static
     {
         $this->textdata = $textdata;
+
+        return $this;
+    }
+
+    public function getParentComment(): ?self
+    {
+        return $this->parentComment;
+    }
+
+    public function setParentComment(?self $parentComment): static
+    {
+        $this->parentComment = $parentComment;
 
         return $this;
     }

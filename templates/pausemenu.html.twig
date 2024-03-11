@@ -47,28 +47,34 @@
 				</div>
 
 			</div>
-			<div class="modal-footer dark-main-bg"></div>
+			<div class="modal-footer dark-main-bg">
+				{% if app.user %}
+					<div class="mb-3">
+						<p>You are logged in as
+						{{ app.user.userIdentifier }},</p>
+						<a href="{{ path('app_logout') }}">Logout</a>
+					</div>
+				{% endif %}
+			</div>
 		</div>
 	</div>
 </div>
 
 <script>
 	// Function to navigate to section and close the modal
-function navigateToSectionAndCloseModal(sectionId) {
-    // Check if the section exists
-	if(sectionId != '')
-    {var section = document.querySelector(sectionId);}
+function navigateToSectionAndCloseModal(sectionId) { // Check if the section exists
+if (sectionId != '') {
+var section = document.querySelector(sectionId);
+}
 
-    if (section) {
-        // Scroll to the section
-        section.scrollIntoView({behavior: 'smooth'});
-    } else {
-        // If section is not found, change window href to sectionId
-        window.location.href = '/'+sectionId;
-    }
+if (section) { // Scroll to the section
+section.scrollIntoView({behavior: 'smooth'});
+} else { // If section is not found, change window href to sectionId
+window.location.href = '/' + sectionId;
+}
 
-    // Close the modal
-    $('#pauseMenuModal').modal('hide');
+// Close the modal
+$('#pauseMenuModal').modal('hide');
 }
 
 // JavaScript to toggle the collapse state
