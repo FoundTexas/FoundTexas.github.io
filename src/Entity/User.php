@@ -17,23 +17,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(length: 250, unique: true)]
     private ?string $email = null;
 
+    
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
     private array $roles = [];
-
+    
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
-
+    
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+    
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $name = null;
+
+    #[ORM\Column(type: 'string', length: 355, nullable: true)]
+    private $googleId;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $avatar;
+
+    #[ORM\Column(type: 'string', length: 355, nullable: true)]
+    private $hostedDomain;
 
     public function getId(): ?int
     {
@@ -118,6 +131,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(string $googleId): static
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getHostedDomain(): ?string
+    {
+        return $this->hostedDomain;
+    }
+
+    public function setHostedDomain(string $hostedDomain): static
+    {
+        $this->hostedDomain = $hostedDomain;
 
         return $this;
     }

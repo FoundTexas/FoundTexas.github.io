@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ project.name }}</h3>
+                </div>
+                <div class="card-body">
+                    <p>{{ project.description }}</p>
+                    <img src="{{ project.fileref }}" alt="Project Image" class="img-fluid mb-3">
+                    <p>Milestone: {{ project.mileStone.name }}</p>
+                    <!-- Add icon if available -->
+                    {% if project.iconref is not empty %}
+                        <img src="{{ project.iconref }}" alt="Project Icon" class="img-fluid" style="max-width: 50px;">
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h4>Comments</h4>
+                </div>
+                <div class="card-body">
+                    {% if app.user %}
+                        <form action="{{ path('comment_create', {'projectId': project.id}) }}" method="post">
+                            <div class="form-group">
+                                <textarea class="form-control" name="comment" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    {% else %}
+                        <p>Please <a href="{{ path('app_login') }}">log in</a> to leave a comment.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

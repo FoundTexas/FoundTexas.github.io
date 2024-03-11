@@ -33,8 +33,10 @@
 							</div>
 							<div class="row">
 								<button type="submit" class="btn btn-primary col-auto text-center mx-auto">Register</button>
-								{{ form_end(registrationForm) }}
 							</div>
+							{{ form_end(registrationForm) }}
+
+							<button className="btn btn-outline-success" type="submit" onClick={() => { window.location.href = "connect/google" }}> google sign in </button>
 						</div>
 					</div>
 				</div>
