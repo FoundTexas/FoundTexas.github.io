@@ -29,7 +29,7 @@ class ProjectController extends AbstractController
 
         $parentComments = $qb->select('c')
             ->from(Comment::class, 'c')
-            ->where('c.project_id = :projectId')
+            ->where('c.project = :projectId')
             ->andWhere($qb->expr()->isNull('c.parentComment'))
             ->orderBy('c.id', 'ASC')
             ->setParameter('projectId', $project->getId())
@@ -40,7 +40,10 @@ class ProjectController extends AbstractController
         $commentsWithSubcomments = [];
 
         foreach ($parentComments as $parentComment) {
-            $subComments = $qb->select('sc')
+            // Create a new QueryBuilder instance for each subquery
+            $qbSub = $entityManager->createQueryBuilder();
+
+            $subComments = $qbSub->select('sc')
                 ->from(Comment::class, 'sc')
                 ->where('sc.parentComment = :parentCommentId')
                 ->orderBy('sc.id', 'ASC')
@@ -54,7 +57,7 @@ class ProjectController extends AbstractController
             ];
         }
 
-        return $this->render('project_detail.twig', [
+        return $this->render('projectDetail.twig', [
             'project' => $project,
             'commentsWithSubcomments' => $commentsWithSubcomments,
         ]);
@@ -78,9 +81,18 @@ class ProjectController extends AbstractController
         $comment = new Comment();
 
         // Assuming your Comment entity setters are appropriately defined, set the comment properties
-        $comment->setUserId($user);
-        $comment->setProjectId($project);
+        $comment->setUser($user);
+        $comment->setProject($project);
         $comment->setTextData($request->request->get('comment'));
+
+        $parentId = $request->request->get('parentId');
+        if ($parentId) {
+            $parentComment = $entityManager->getRepository(Comment::class)->find($parentId);
+
+            if ($parentComment) {
+                $comment->setParentComment($parentComment);
+            }
+        }
 
         // Persist the new comment to the database
         $entityManager->persist($comment);

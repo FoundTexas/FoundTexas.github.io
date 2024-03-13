@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ project.name }}
+{% endblock %}
+
+{% block head %}
+	{% set buttons = [
+				{ id: '#aboutme', label: 'About Me' },
+				{ id: '#timeline', label: 'CV' },
+				{ id: '#projects', label: 'Projects' }
+			] %}
+	{% include 'pausemenu.html.twig' with {'buttons': buttons} %}
+
+{% endblock %}
+
+{% block body %}
+	<div class="container mb-5">
+
+		<div class="card">
+			<div class="card-header">
+				<h3>{{ project.name }}</h3>
+			</div>
+			<div class="card-body">
+				<p>{{ project.description }}</p>
+				<img src="{{ project.fileref }}" alt="Project Image" class="img-fluid mb-3">
+				<p>Milestone:
+					{{ project.mileStone ? project.mileStone.name : 'no Milestone asociated.' }}</p>
+				<!-- Add icon if available -->
+				{% if project.iconref is not empty %}
+					<img src="{{ project.iconref }}" alt="Project Icon" class="img-fluid" style="max-width: 50px;">
+				{% endif %}
+			</div>
+		</div>
+
+		<section id="comments container my-4" class="container-fluid" style="height: 80vh; width: 100%; overflow-y: auto;">
+			<div class="card mt-3">
+				<div class="card-header bg-dark">
+					<h4>Comments</h4>
+				</div>
+				<div class="card-body bg-dark">
+					{% if app.user %}
+						<form class="row" action="{{ path('comment_create', {'projectId': project.id}) }}" method="post">
+							<img class="rounded-circle shadow-1-strong col-auto" src="{% if app.user.avatar is not null %}{{ app.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="65" height="65"/>
+							<textarea class="col-auto" name="comment" rows="1" required></textarea>
+							<button type="submit" class="btn btn-primary col-auto">Submit</button>
+						</form>
+					{% else %}
+						<p>Please
+							<a href="{{ path('app_login') }}">log in</a>
+							to leave a comment.</p>
+					{% endif %}
+
+					<!-- Display comments -->
+					{% if commentsWithSubcomments %}
+						{% for commentWithSubcomments in commentsWithSubcomments %}
+
+							<div class="row">
+								<div class="col">
+									<div class="d-flex flex-start">
+										<img class="rounded-circle shadow-1-strong me-3" src="{% if commentWithSubcomments.parentComment.user.avatar is not null %}{{ commentWithSubcomments.parentComment.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="65" height="65"/>
+										<div class="flex-grow-1 flex-shrink-1">
+
+											<div class="d-flex justify-content-between align-items-center">
+												<p class="mb-1">
+													{{ commentWithSubcomments.parentComment.user.name }}
+													<span class="small">-</span>
+												</p>
+											</div>
+											<p class="small mb-0">{{ commentWithSubcomments.parentComment.textdata }}</p>
+											{% if commentWithSubcomments.subComments %}
+
+												{% for subComment in commentWithSubcomments.subComments %}
+													<div class="d-flex flex-start mt-4">
+														<a class="me-3" href="#">
+															<img class="rounded-circle shadow-1-strong me-3" src="{% if commentWithSubcomments.parentComment.user.avatar is not null %}{{ commentWithSubcomments.parentComment.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="65" height="65"/>
+														</a>
+														<div class="flex-grow-1 flex-shrink-1">
+															<div>
+																<div class="d-flex justify-content-between align-items-center">
+																	<p class="mb-1">
+																		{{ subComment.user.name }}
+																		<span class="small">-
+																		</span>
+																	</p>
+																</div>
+																<p class="small mb-0">
+																	{{ subComment.textdata }}
+																</p>
+															</div>
+														</div>
+													</div>
+												{% endfor %}
+
+											{% endif %}
+											<form action="{{ path('comment_create', {'projectId': project.id}) }}" method="post">
+												<div class="form-group mt-3">
+													<input type="text" class="form-control" name="comment" placeholder="Add a subcomment">
+												</div>
+
+												<input type="hidden" name="parentId" value="{{ commentWithSubcomments.parentComment.id }}">
+												<button type="submit" class="btn btn-sm btn-primary">Submit</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						{% endfor %}
+					{% else %}
+						<p>No comments yet.</p>
+					{% endif %}
+
+				</div>
+			</div>
+		</section>
+
+	</div>
+{% endblock %}

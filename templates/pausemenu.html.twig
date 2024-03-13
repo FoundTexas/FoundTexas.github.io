@@ -47,13 +47,11 @@
 				</div>
 
 			</div>
-			<div class="modal-footer dark-main-bg">
+			<div class="modal-footer text-center dark-main-bg">
 				{% if app.user %}
-					<div class="mb-3">
-						<p>You are logged in as
+					<p>You are logged in as
 						{{ app.user.userIdentifier }},</p>
-						<a href="{{ path('app_logout') }}">Logout</a>
-					</div>
+					<a href="{{ path('app_logout') }}">Logout</a>
 				{% endif %}
 			</div>
 		</div>
