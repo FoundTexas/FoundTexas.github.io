@@ -6,7 +6,7 @@
 
 	<div class="container row mx-auto main-bg rounded-5 justify-content-center">
 		{% for project in projects %}
-			<div class="col-6 col-md-3 p-3 d-flex justify-content-center">
+			<div class="col-6 col-md-2 p-3 d-flex justify-content-center" style="aspect-ratio: 1;">
 				<div class="container-fluid rounded-5 d-flex justify-content-center game-item" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'" style="overflow: hidden; width: 100%; aspect-ratio: 1;" data-src="https://itch.io/embed-upload/3703497?color=000000">
 					<img src=" {{project.iconref}}" style="height: 100%; width: auto;" alt="Gallery Image 1">
 				</div>
