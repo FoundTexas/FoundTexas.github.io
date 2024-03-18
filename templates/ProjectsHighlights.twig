@@ -1,22 +1,24 @@
-
-<section id="projects" class="main-bg-dark px-2 rounded-top-5 " style="min-height: 100vh; ">
+<section id="projects" class="main-bg-dark px-2 rounded-top-5" style="min-height: 100vh;">
 
 	{% include 'index/IndexHeader.twig' with {'textRef': textRef, 'headText': headText, 'darkbg': true} %}
 
+	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
 
-	<div class="container row mx-auto main-bg rounded-5 justify-content-center">
-		{% for project in projects %}
-			<div class="col-6 col-md-2 p-3 d-flex justify-content-center" style="aspect-ratio: 1;">
-				<div class="container-fluid rounded-5 d-flex justify-content-center game-item" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'" style="overflow: hidden; width: 100%; aspect-ratio: 1;" data-src="https://itch.io/embed-upload/3703497?color=000000">
-					<img src=" {{project.iconref}}" style="height: 100%; width: auto;" alt="Gallery Image 1">
-				</div>
-			</div>
-		{% endfor %}
+		<div class="container rounded-5 main-bg" >
+			<div class=" m-1 row justify-content-center">
+				{% for _ in range(0,9) %}
+					{% for project in projects %}
+						<div class="col-6 col-md-4 col-lg-3 d-flex p-3 justify-content-center ">
+							<div class="container-fluid rounded-5 d-flex justify-content-center bg-dark m-2" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'" style="overflow: hidden; aspect-ratio: 1; max-height: 70vw; max-width: 70vw; min-height: 10vw; min-width: 10vw;" data-src="https://itch.io/embed-upload/3703497?color=000000">
+								<img src=" {{project.iconref}}" style="height: 100%; width: auto;" alt="Gallery Image 1">
+							</div>
+						</div>
+					{% endfor %}
+				{% endfor %}
 
-		<div class="col-6 col-md-3 p-3 d-flex justify-content-center">
-			<div class="container-fluid rounded-5 d-flex justify-content-center game-item" style="overflow: hidden; width: 100%; aspect-ratio: 1;" data-src="https://example.com/page1.html">
-				<img src="https://www.masoftcode.com/img/logos/masoftcode.png" style=" width: auto; height: auto;" alt="Gallery Image 1">
 			</div>
 		</div>
+
 	</div>
+
 </section>
