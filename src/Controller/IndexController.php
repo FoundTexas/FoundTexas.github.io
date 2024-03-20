@@ -17,12 +17,10 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager): Response
     {   
-        $experiences = $entityManager->getRepository(MileStone::class)->findAll();
         $Project = $entityManager->getRepository(Project::class)->findAll();
 
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
-            'timeline_events' => $experiences,
             'Project' => $Project,
         ]);
     }

@@ -22,8 +22,8 @@
 	<img class="mx-auto position-fixed bg-dark" style="z-index: -100000; filter: blur(5px); height: 102vh; width: auto;" src="{{ asset('gridbg.gif') }}" alt="Other Image"/>
 
 	<div class="rounded-circle bg-dark border border-light">
-        <img class="m-2" style="height: 15vh; width: auto;" src="{{ asset('foundtexaspanda.svg') }}" alt="foundtexaspanda"/>
-    </div>
+		<img class="m-2" style="height: 15vh; width: auto;" src="{{ asset('foundtexaspanda.svg') }}" alt="foundtexaspanda"/>
+	</div>
 	<div class="container m-1 p-2 main-bg-dark-translucent rounded-5 border border-light d-flex flex-column justify-content-between justify-content-around" style="min-height: 30%;">
 		<div class="row mt-md-0 mt-md-3">
 			<h2 class="p-md-2 typing-effect text-center accent-color">Web & Game Dev</h2>
@@ -33,29 +33,32 @@
 				Greetings! Welcome to my corner of web. I'm Rodolfo León also known as FoundTexas. I'm a passionate computer scientist specialized in 3D Graphics, Project Management and Game Development. I thrive on collaboration and believe that diverse perspectives fuel innovation, leading to significant and innovative experiences for all users.
 			</p>
 		</div>
+		<div >
+			<button type="button" class="btn btn-primary text-center" onclick="navigateToSectionAndCloseModal('timeline')" data-bs-dismiss="modal">CV</button>
+		</div>
 	</div>
 </section>
 
 <script>
-    window.onload = function () {
-        var elements = document.getElementsByClassName('typing-effect');
-        for (var i = 0; i < elements.length; i++) {
-            typeWriter(elements[i].textContent, elements[i]);
-        }
-    };
+	window.onload = function () {
+var elements = document.getElementsByClassName('typing-effect');
+for (var i = 0; i < elements.length; i++) {
+typeWriter(elements[i].textContent, elements[i]);
+}
+};
 
-    // Function to create the typing effect
-    function typeWriter(text, targetElement) {
-        var speed = 15; // Adjust typing speed here (lower value for faster typing)
-        var i = 0;
-        targetElement.textContent = ""; // Clear existing text
-        function type() {
-            if (i < text.length) {
-                targetElement.textContent += text.charAt(i);
-                i++;
-                setTimeout(type, speed * (text.charAt(i) == ' ' ? 5 : 1));
-            }
-        }
-        type();
-    }
+// Function to create the typing effect
+function typeWriter(text, targetElement) {
+var speed = 15; // Adjust typing speed here (lower value for faster typing)
+var i = 0;
+targetElement.textContent = ""; // Clear existing text
+function type() {
+if (i < text.length) {
+targetElement.textContent += text.charAt(i);
+i++;
+setTimeout(type, speed * (text.charAt(i) == ' ' ? 5 : 1));
+}
+}
+type();
+}
 </script>
