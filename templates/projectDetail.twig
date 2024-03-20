@@ -14,17 +14,20 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+<hr>
+    <div class="mx-3">
         <div class="card bg-dark">
             <div class="card-header text-center main-bg-dark">
                 <h3>{{ project.name }}</h3>
             </div>
-            <div class="card-body container-fluid bg-dark d-flex justify-content-center align-items-center">
+            <div class="card-body bg-dark d-flex justify-content-center align-items-center"  style="overflow: hidden;">
                 <div>
                     {{ project.fileref|raw }}
                 </div>
             </div>
         </div>
+
+        <hr>
 
         <div class="row">
             <section id="comments container bg-dark" class="col-md-4">
@@ -43,14 +46,14 @@
             <div id="comments container bg-dark" class="col-md-8">
                 <div class="card bg-dark">
                     <div class="card-header bg-dark m-3 text-center">
-                        <h4>COMMENTS</h4>
+                        <h5>COMMENTS</h5>
                     </div>
                     <div class="card-body bg-dark">
                         {% if app.user %}
                             <form action="{{ path('comment_create', {'projectId': project.id}) }}" method="post">
                                 <div class="row align-items-center mb-4">
                                     <div class="col-auto">
-                                        <img class="rounded-circle shadow-1-strong" src="{% if app.user.avatar is not null %}{{ app.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="65" height="65">
+                                        <img class="rounded-circle shadow-1-strong" src="{% if app.user.avatar is not null %}{{ app.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="40vw" height="40vw">
                                     </div>
                                     <div class="col">
                                         <input type="text" class="form-control" name="comment" placeholder="Add a comment">
@@ -61,14 +64,14 @@
                                 </div>
                             </form>
                         {% else %}
-                            <h5>Please <a href="{{ path('app_login') }}">log in</a> to leave a comment.</h5>
+                            <p>Please <a href="{{ path('app_login') }}">log in</a> to leave a comment.</p>
                         {% endif %}
 
                         <!-- Display comments -->
                         {% if commentsWithSubcomments %}
                             {% for commentWithSubcomments in commentsWithSubcomments %}
                                 <div class="d-flex flex-start my-3">
-                                    <img class="rounded-circle shadow-1-strong me-3" src="{% if commentWithSubcomments.parentComment.user.avatar is not null %}{{ commentWithSubcomments.parentComment.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="65" height="65">
+                                    <img class="rounded-circle shadow-1-strong me-3" src="{% if commentWithSubcomments.parentComment.user.avatar is not null %}{{ commentWithSubcomments.parentComment.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="40vw" height="40vw">
                                     <div class="flex-grow-1 flex-shrink-1">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p class="mb-1">
@@ -85,7 +88,7 @@
                                             {% for subComment in commentWithSubcomments.subComments %}
                                                 <div class="d-flex flex-start my-3">
                                                     <a class="me-3" href="#">
-                                                        <img class="rounded-circle shadow-1-strong me-3" src="{% if commentWithSubcomments.parentComment.user.avatar is not null %}{{ commentWithSubcomments.parentComment.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="65" height="65">
+                                                        <img class="rounded-circle shadow-1-strong me-3" src="{% if commentWithSubcomments.parentComment.user.avatar is not null %}{{ commentWithSubcomments.parentComment.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="40vh" height="40vw">
                                                     </a>
                                                     <div class="flex-grow-1 flex-shrink-1">
                                                         <div>
@@ -139,7 +142,7 @@
 
 	<footer class="footer bg-dark text-center">
         <div class="container">
-            <span class="text-muted">Your footer content goes here.</span>
+            <span class="text-muted text-white">Your footer content goes here.</span>
         </div>
     </footer>
 
