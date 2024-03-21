@@ -4,21 +4,20 @@
 
 	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
 
-		<div class="container rounded-5 main-bg" >
-			<div class=" m-1 row justify-content-center">
-				{% for _ in range(0,9) %}
-					{% for project in projects %}
-						<div class="col-6 col-md-4 col-lg-3 d-flex p-3 justify-content-center ">
-							<div class="container-fluid rounded-5 d-flex justify-content-center bg-dark m-2" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'" style="overflow: hidden; aspect-ratio: 1; max-height: 70vw; max-width: 70vw; min-height: 10vw; min-width: 10vw;" data-src="https://itch.io/embed-upload/3703497?color=000000">
-								<img src=" {{project.iconref}}" style="height: 100%; width: auto;" alt="Gallery Image 1">
+			<div class="container rounded-5 main-bg my-2 my-md-4">
+				<div class="row justify-content-center m-2">
+					{% for _ in range(0,9) %}
+						{% for project in projects %}
+							<div class="col-6 col-md-3 col-lg-2 my-2">
+								<div class=" rounded-5 d-flex justify-content-center bg-dark mx-auto" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'" style="overflow: hidden; aspect-ratio: 1; max-height: 200vw; max-width: 200vw; min-height: 10vw; min-width: 10vw;" data-src="https://itch.io/embed-upload/3703497?color=000000">
+									<img src=" {{project.iconref}}" style="height: 100%; width: auto;" alt="Gallery Image 1">
+								</div>
 							</div>
-						</div>
+						{% endfor %}
 					{% endfor %}
-				{% endfor %}
 
+				</div>
 			</div>
-		</div>
-
 	</div>
 
 </section>
