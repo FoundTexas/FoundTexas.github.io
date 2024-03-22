@@ -48,7 +48,7 @@
 				{% for year in years %}
 					<div class="events-wrapper  mb-5" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
 						<h4 class="text-center py-2 border border-light">{{ year }}</h4>
-						<div class="border border-light" style="overflow-y: auto; overflow-x: hidden; height: 50vh; width: 100%;">
+						{#<div class="border border-light" style="overflow-y: auto; overflow-x: hidden; height: 50vh; width: 100%;"#}>
 							{% set events_in_year = timeline_events|filter(e => e.startDate|date('Y') == year) %}
 							{% for event in events_in_year %}
 								<div class="timeline-event border rounded-4 border-light bg-dark mx-auto" data-tags="{{ event.tags|join(',') }}" style="height: 100%;">
@@ -67,7 +67,7 @@
 									<div class="tags" style="display: none;">{{ event.tags|json_encode|raw }}</div>
 								</div>
 							{% endfor %}
-						</div>
+						{#</div>#}
 					</div>
 				{% endfor %}
 			</div>
