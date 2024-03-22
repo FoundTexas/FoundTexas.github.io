@@ -45,6 +45,13 @@ h6, li, span {
   background-color: #6F1B6F;
   ;
 }
+.main-bg-gradient {
+  background: linear-gradient(to bottom right, #6F1B6F, #57a9a1);
+}
+
+.main-bg-gradient-alter {
+  background: linear-gradient(to bottom right, #57a9a1, #6F1B6F);
+}
 
 .main-bg-dark {
   background-color: #211e22;
@@ -103,4 +110,8 @@ h6, li, span {
 
 html {
   scrollbar-color: #812181 #000000; /* Sets the scrollbar handle color to red */
+}
+
+.shadow-custom {
+  box-shadow: 0 0.75rem 1rem rgba(0, 0, 0, 0.8) !important;
 }

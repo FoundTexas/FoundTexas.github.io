@@ -11,7 +11,8 @@
 {% block body %}
 
 	{% include 'AboutMe.twig' %}
-	{% include 'ProjectsHighlights.twig' with {'projects': Project, 'textRef': 'GamesHighlights', 'headText': 'Games Highlights', 'darkbg': true} %}
+	{% include 'ProjectsHighlights.twig' with {'projects': Project, 'type': 'games','textRef': 'GamesPortfolio', 'headText': 'Games Portfolio', 'darkbg': true} %}
+	{% include 'ProjectsHighlights.twig' with {'projects': Project, 'type': 'web-projects','textRef': 'WebPortfolio', 'headText': 'Web Portfolio', 'darkbg': true, 'color': 'main-bg-gradient-alter'} %}
 	{% include 'contact.twig' %}
 
 {% endblock %}

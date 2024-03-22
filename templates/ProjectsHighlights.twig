@@ -1,23 +1,25 @@
-<section id="projects" class="main-bg-dark px-2 rounded-top-5" style="min-height: 100vh;">
+<section id="projects" class="main-bg-dark px-2" style="min-height: 100vh;">
 
 	{% include 'index/IndexHeader.twig' with {'textRef': textRef, 'headText': headText, 'darkbg': true} %}
 
 	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
 
-			<div class="container rounded-5 main-bg my-2 my-md-4">
-				<div class="row justify-content-center m-2">
-					{% for _ in range(0,9) %}
-						{% for project in projects %}
-							<div class="col-6 col-md-3 col-lg-2 my-2">
-								<div class=" rounded-5 d-flex justify-content-center bg-dark mx-auto" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'" style="overflow: hidden; aspect-ratio: 1; max-height: 200vw; max-width: 200vw; min-height: 10vw; min-width: 10vw;" data-src="https://itch.io/embed-upload/3703497?color=000000">
-									<img src=" {{project.iconref}}" style="height: 100%; width: auto;" alt="Gallery Image 1">
-								</div>
-							</div>
-						{% endfor %}
-					{% endfor %}
+		<div class="container rounded-5 {{ color ?? 'main-bg-gradient' }}  m-3 my-md-4 shadow-custom">
+			<div class="row justify-content-center m-2">
 
-				</div>
+				{% for project in projects %}
+
+					<div class="col-6 col-md-3 col-lg-2 my-2 {{ loop.index > 8 ? (loop.index > 12 ? 'd-none d-lg-block' : 'd-none d-md-block') : '' }} ">
+						<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow-custom" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'" style="overflow: hidden; aspect-ratio: 1; cursor: pointer;">
+							<img src="{{ project.iconref }}" style="height: 100%; width: auto;" alt="Gallery Image 1">
+						</div>
+					</div>
+
+				{% endfor %}
 			</div>
+			<div class="row justify-content-center">
+				<button type="button" class="col-auto custom-btn rounded-2 p-1 m-2 accent-bg text-white" onclick="window.location.href='{{ path('app_game_projects', {'type': type}) }}'" data-bs-dismiss="modal">&nbsp;&nbsp;All {{type}}...&nbsp;&nbsp;</button>
+			</div>
+		</div>
 	</div>
-
 </section>

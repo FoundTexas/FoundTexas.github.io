@@ -15,6 +15,20 @@ use Symfony\Component\Mime\Email;
 class ProjectController extends AbstractController
 {
 
+
+    #[Route('/projects/{type}', name: 'app_game_projects')]
+    public function gameProjects(Request $request, EntityManagerInterface $entityManager,string $type =null): Response
+    {
+        $projects = $entityManager->getRepository(Project::class)->findAll();
+
+        return $this->render('Projects.twig', [
+            'controller_name' => 'IndexController',
+            'projects' => $projects,
+            'textRef'=> $type, 
+            'headText'=> $type.' Portfolio'
+        ]);
+    }
+
     #[Route('/project/{id}', name: 'app_project_detail')]
     public function projectDetail(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
