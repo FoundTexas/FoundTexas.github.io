@@ -1,9 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Timeline CV
+{% block title %}
+	Timeline CV
 {% endblock %}
 
 {% block body %}
+
+	<style>
+		.timeline {
+			position: relative;
+			padding: 20px 0;
+			margin-top: 20px;
+		}
+		.timeline:before {
+			content: '';
+			position: absolute;
+			left: 50%;
+			top: 0;
+			bottom: 0;
+			width: 10px;
+			background: #ccc;
+		}
+		.timeline-item-dot {
+			content: '';
+			position: absolute;
+			left: 50%;
+			top: 0;
+			width: 10rem;
+			height: 10rem;
+			border-radius: 50%;
+			background: #007bff;
+			z-index: 1000;
+			transform: translateX(-50%);
+		}
+	</style>
 
 	<section id="timeline" class="accent-bg-dark px-2 rounded-top-5" style="min-height: 100vh;">
 		{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
@@ -48,25 +78,54 @@
 				{% for year in years %}
 					<div class="events-wrapper  mb-5" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
 						<h4 class="text-center py-2 border border-light">{{ year }}</h4>
-						{#<div class="border border-light" style="overflow-y: auto; overflow-x: hidden; height: 50vh; width: 100%;"#}>
-							{% set events_in_year = timeline_events|filter(e => e.startDate|date('Y') == year) %}
-							{% for event in events_in_year %}
-								<div class="timeline-event border rounded-4 border-light bg-dark mx-auto" data-tags="{{ event.tags|join(',') }}" style="height: 100%;">
+						{#<div class="border border-light" style="overflow-y: auto; overflow-x: hidden; height: 50vh; width: 100%;"#}
 
-									<div class="main-bg row">
-										<h6 class="col-12 col-md accent-color m-2">{{ event.name }}</h6>
-										<span class="col-12 col-md white-text m-2">{{ event.startDate|date('Y-m') ~ ' - ' ~ event.endDate|date('Y-m') }}</span>
-									</div>
-									<div class="col-12 list-group" style="overflow-y: auto; overflow-x: hidden; height: auto; ">
-										{% for point in event.bulletpoints %}
-											<P style="font-size: 14px;" class="list-group-item list-group-item-action bg-dark text-light">{{ point }}</P>
-										{% endfor %}
-									</div>
 
-									{# Assign tags to the card as a data attribute #}
-									<div class="tags" style="display: none;">{{ event.tags|json_encode|raw }}</div>
+						{% set events_in_year = timeline_events|filter(e => e.startDate|date('Y') == year) %}
+						{% for event in events_in_year %}
+
+							<div class="timeline">
+								{% for event in events_in_year %}
+									<div class="row my-3">
+										<div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center align-items-center">
+											<h5>
+												{{ event.startDate|date('Y-m') ~ ' - ' ~ event.endDate|date('Y-m') }}
+											</h5>
+											<div class="timeline-item-dot"></div>
+										</div>
+										<div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center align-items-center">
+											<div class="card mx-auto" style="width: 95%;">
+												<div class="card-body">
+													<div class="card-title row">
+														<h5 class="col-auto card-title">{{ event.name }}</h5>
+													</div>
+													<ul class="list-group list-group-flush">
+														{% for point in event.bulletpoints %}
+															<li style="font-size: 14px;" class="list-group-item list-group-item-action bg-dark text-light">{{ point }}</li>
+														{% endfor %}
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+
+							<div class="timeline-event container bg-dark" data-tags="{{ event.tags|join(',') }}">
+								<div class="main-bg row">
+									<h6 class="col-12 col-md accent-color m-2">{{ event.name }}</h6>
+									<span class="col-12 col-md white-text m-2">{{ event.startDate|date('Y-m') ~ ' - ' ~ event.endDate|date('Y-m') }}</span>
 								</div>
-							{% endfor %}
+								<div class="col-12 list-group" style="overflow-y: auto; overflow-x: hidden; height: auto; ">
+									{% for point in event.bulletpoints %}
+										<P style="font-size: 14px;" class="list-group-item list-group-item-action bg-dark text-light">{{ point }}</P>
+									{% endfor %}
+								</div>
+
+								{# Assign tags to the card as a data attribute #}
+								<div class="tags" style="display: none;">{{ event.tags|json_encode|raw }}</div>
+							</div>
+						{% endfor %}
 						{#</div>#}
 					</div>
 				{% endfor %}
