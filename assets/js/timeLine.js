@@ -40,23 +40,38 @@ function filterEvents() {
     });
 
     var events = document.querySelectorAll('.timeline-event');
+    var index = 0;
     events.forEach(function (event) {
         var tags = JSON.parse(event.querySelector('.tags').textContent);
         var year = event.closest('.events-wrapper').id.split('-')[1];
         if (selectedTags.some(function (tag) {
             return tags.includes(tag);
         })) {
-            event.style.display = 'inline-block';
+            event.style.display = 'block';
+            index++;
         } else {
             event.style.display = 'none';
         }
     });
+
+    console.log(index);
+    const element = document.getElementById("noTimelineEvents");
+    if (element) {
+        element.style.display = index > 0 ? 'none' : 'block';
+    }
+
 }
 
 function selectAllTags(value = true) {
     document.querySelectorAll('input[name="tags"]').forEach(function (checkbox) {
         checkbox.checked = value;
     });
+
+    var element = document.getElementById("noTimelineevents");
+    if (element) {
+        element.style.display = value ? 'none' : 'block';
+    }
+
     filterEvents();
 }
 
