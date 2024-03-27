@@ -31,8 +31,8 @@ function checkScrollButtons() {
 function filterEvents() {
 
     var exsisttags = Array.from(document.querySelectorAll('input[name="tags"]'));
-    
-    if(exsisttags.length <= 0){ return; }
+
+    if (exsisttags.length <= 0) { return; }
     var tags = Array.from(document.querySelectorAll('input[name="tags"]:checked'));
 
     var selectedTags = tags.map(function (tag) {
@@ -41,16 +41,24 @@ function filterEvents() {
 
     var events = document.querySelectorAll('.timeline-event');
     var index = 0;
+
     events.forEach(function (event) {
         var tags = JSON.parse(event.querySelector('.tags').textContent);
-        var year = event.closest('.events-wrapper').id.split('-')[1];
+
+
         if (selectedTags.some(function (tag) {
             return tags.includes(tag);
         })) {
-            event.style.display = 'block';
+            console.log(tags);
+            console.log(selectedTags);
+
+            event.style.setProperty('display', 'block', 'important');
+
+            //event.style.display = 'block !important';
             index++;
         } else {
-            event.style.display = 'none';
+            //event.style.display = 'none !important';
+            event.style.setProperty('display', 'none', 'important');
         }
     });
 
