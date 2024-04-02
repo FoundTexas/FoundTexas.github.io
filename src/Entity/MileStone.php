@@ -22,9 +22,6 @@ class MileStone
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?array $bulletpoints = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $startDate = null;
 
@@ -67,18 +64,6 @@ class MileStone
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getBulletpoints(): ?array
-    {
-        return $this->bulletpoints;
-    }
-
-    public function setBulletpoints(?array $bulletpoints): static
-    {
-        $this->bulletpoints = $bulletpoints;
 
         return $this;
     }
