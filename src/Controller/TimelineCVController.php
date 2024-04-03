@@ -14,13 +14,13 @@ class TimelineCVController extends AbstractController
     #[Route('/timeline', name: 'app_timeline')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        $mileStones = $entityManager->getRepository(MileStone::class)->findAll();
+        $mileStones = $entityManager->getRepository(MileStone::class)->findBy([], ['startDate' => 'ASC']);
         $bulletPoints = $entityManager->getRepository(BulletPoints::class)->findAll();
 
         $experiences = [];
 
         foreach ($mileStones as $milestone) {
-            $experiences[$milestone->getId()] = ['main'=>$milestone, 'bullets'=>[]];
+            $experiences[$milestone->getId()] = ['main' => $milestone, 'bullets' => []];
         }
         foreach ($bulletPoints as $bulletPoint) {
             $experiences[$bulletPoint->getMilestone()->getId()]['bullets'][] = $bulletPoint;

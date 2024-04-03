@@ -17,130 +17,146 @@
 			left: 48.5vw;
 			top: 0;
 			bottom: 0;
-			width: 2vw;
+			width: 1vw;
 			background: #ccc;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 		}
 	</style>
 
-	{{ dump(timeline_events) }}
-
-	<section id="timeline" class="accent-bg-dark px-2 rounded-top-5" style="min-height: 50vh;">
+	<div id="timeline" class="row m-0 p-0 accent-bg-dark" style="min-height: 50vh;">
 		{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
-		<div class=" container-fluid mx-md-4">
-			<div class="row m-2 position-sticky">
 
-				<div class="col-12 col-md-8 mt-2">
-					{% set all_tags = [] %}
-					{% for event in timeline_events %}
-						{% for tag in event.main.tags %}
-							{% if tag not in all_tags %}
-								{% set all_tags = all_tags|merge([tag]) %}
-							{% endif %}
-						{% endfor %}
+		<div class="row fixed-top position-sticky main-bg-dark rounded-4">
+
+			<div class="col-12 col-md-8 mt-2">
+				{% set all_tags = [] %}
+				{% for event in timeline_events %}
+					{% for tag in event.main.tags %}
+						{% if tag not in all_tags %}
+							{% set all_tags = all_tags|merge([tag]) %}
+						{% endif %}
 					{% endfor %}
-					<div class="row">
-						<h6 class="col-auto ">Filter by Tags:</h6>
+				{% endfor %}
+				<div class="row">
+					<h6 class="col-auto ">Filter by Tags:</h6>
 
-						<input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
-						<label class="col-auto btn btn-outline-success" for="success-outlined" onclick="selectAllTags(true)">All</label>
+					<input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
+					<label class="col-auto btn btn-outline-success" for="success-outlined" onclick="selectAllTags(true)">All</label>
 
-						<input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
-						<label class="col-auto btn btn-outline-danger" for="danger-outlined" onclick="selectAllTags(false)">None</label>
-					</div>
-					<div class="row">
-						{% for tag in all_tags %}
-							<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag }}" name="tags" value="{{ tag }}" checked>
-							<label class="col-auto btn btn-outline-primary" for="btn-check-outlined-{{ tag }}">{{ tag }}</label><br>
-						{% endfor %}
-
-					</div>
+					<input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
+					<label class="col-auto btn btn-outline-danger" for="danger-outlined" onclick="selectAllTags(false)">None</label>
 				</div>
-				<div class="col-12 col-md-4 mt-2">
-					<h6>Filter by Year:</h6>
-					<div class="btn-group" role="group" aria-label="Year buttons">
-						{% set years = [] %}
-						{% for event in timeline_events %}
-							{% if event.main.startDate|date('Y') not in years %}
-								{% set years = years|merge([event.main.startDate|date('Y')]) %}
-								<input type="radio" class="btn-check" name="btnradio" id="btnradio{{loop.index}}" autocomplete="off" {% if loop.index == 1 %} checked {% endif %}>
-								<label class="btn btn-outline-primary" for="btnradio{{loop.index}}" onclick="showEvents('{{ event.main.startDate|date('Y') }}')">{{ event.main.startDate|date('Y') }}</label>
-							{% endif %}
-						{% endfor %}
-					</div>
-				</div>
+				<div class="row">
+					{% for tag in all_tags %}
+						<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag }}" name="tags" value="{{ tag }}" checked>
+						<label class="col-auto btn btn-outline-main" for="btn-check-outlined-{{ tag }}">{{ tag }}</label><br>
+					{% endfor %}
 
+				</div>
 			</div>
+			<div class="col-12 col-md-4 mt-2">
+				<h6>Filter by Year:</h6>
+				<div class="btn-group" role="group" aria-label="Year buttons">
+					{% set years = [] %}
 
-			{% if years is empty %}
+					{# Loop through events to gather unique years from both start and end dates #}
+					{% for event in timeline_events %}
+						{% if event.main.startDate|date('Y') not in years %}
+							{% set years = years|merge([event.main.startDate|date('Y')]) %}
+						{% endif %}
+						{% if event.main.endDate|date('Y') not in years %}
+							{% set years = years|merge([event.main.endDate|date('Y')]) %}
+						{% endif %}
+					{% endfor %}
 
-				<h3 class="col-6 my-5 accent-bg-dark text-center mx-auto py-3 text-warning border border-warning rounded-3">
-					No events available.
-				</h3>
+					{# Sort the years in ascending order #}
+					{% set years = years|sort %}
 
-			{% endif %}
+					{# Generate radio buttons for each year #}
+					{% for year in years %}
+						<input type="radio" class="btn-check" name="btnradio" id="btnradio{{ loop.index }}" autocomplete="off" {% if loop.index == 1 %} checked {% endif %}>
+						<label class="btn btn-outline-main" for="btnradio{{ loop.index }}" onclick="showEvents('{{ year }}')">{{ year }}</label>
+					{% endfor %}
 
-			{% for year in years %}
-				<div class="events-wrapper " id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
-					{% set events_in_year = timeline_events|filter(e => e.main.startDate|date('Y') == year) %}
+				</div>
+			</div>
+		</div>
 
-					<h4 class="col-3 bg-dark text-center shadow-custom mx-auto m-0 py-3 text-warning border border-warning rounded-3">{{ year }}</h4>
+		{% if years is empty %}
 
-					<div
-						class="timeline-container container-fluid " style="min-height: 30vh; position: relative;">
-						<!-- Ensure relative positioning for the container -->
-						{% for event in events_in_year %}
-							<div class="timeline-event col-12 row d-flex flex-column justify-content-center align-items-center p-5 " >
+			<h3 class="col-6 my-5 accent-bg-dark text-center mx-auto py-3 text-warning border border-warning rounded-3">
+				No events available.
+			</h3>
 
-								<div class="card shadow-custom">
-									<div class="card-body row">
-										<div class="col-auto text-center">
-											<h5 class="card-title">{{ event.main.name }}</h5>
+		{% endif %}
 
-											<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="true" aria-controls="collapseWidthExample">
-												Toggle width collapse
-											</button>
-											<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; max-width: 10rem;">
-												<img src="" style="height: 100%; width: auto;" alt="{{ event.main.name }}">
-											</div>
-											<h5 class="card-title mt-2">{{ event.main.startDate|date('Y-m') ~ ' - ' ~ event.main.endDate|date('Y-m') }}</h5>
-										</div>
+		{% for year in years %}
+			<div class="events-wrapper " id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
+				{% set events_in_year = timeline_events|filter(e => (e.main.startDate|date('Y') == year or e.main.endDate|date('Y') == year)) %}
 
-										<div class="col-auto">
-											<div style="min-height: 120px;">
-												<div class="collapse collapse-horizontal" id="collapseWidthExample">
-													<div class="card card-body" style="width: 300px;">
-														<ul class="list-group list-group-flush">
-															{% for point in event.bullets %}
-																<li class="list-group-item">{{ point.name }}</li>
-															{% endfor %}
-														</ul>
-													</div>
-												</div>
+				<h4 class="col-3 bg-dark text-center shadow-custom mx-auto m-0 py-3 text-warning border border-warning rounded-3">{{ year }}</h4>
+
+				<div
+					class="timeline-container row justify-content-center align-items-center" style="min-height: 50vh; position: relative;">
+					<!-- Ensure relative positioning for the container -->
+					{% for event in events_in_year %}
+					{{ dump(loop.index * event.main.startDate|date('m') - event.main.endDate|date('mmm')) }}
+						<div class="card {% if (loop.index * event.main.startDate|date('m') - 1 - event.main.endDate|date('mmm'))  % 2 == 0 %} main-bg-gradient {% else %} main-bg-gradient-alter {% endif %} {{ loop.index }} text-white rounded-4 shadow-custom timeline-event col-12 row m-5" style="width: 66vw;">
+
+							<div class="card-body row justify-content-center text-center">
+
+								<h4 class="col-auto card-title">{{ event.main.name }}
+									<strong class='accent-color'>{{ event.main.startDate|date('F-Y') ~ ' - ' ~ event.main.endDate|date('F-Y') }}</strong>
+								</h4>
+
+								<p>
+									Brief Description:
+									<p>{{ event.main.description != '' ? event.main.description ?? 'not defined' : 'not defined'}}</p>
+								</p>
+
+								<button class="col-auto custom-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="true" aria-controls="collapseWidthExample">
+									More Info
+								</button>
+								<h5 class="card-title">Asociated projects:</h5>
+								<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; max-width: 7rem;">
+									<img src="" style="height: 100%; width: auto;" alt="{{ event.main.name }}">
+								</div>
+
+
+								<div class="col-auto">
+									<div style="min-height: 120px;">
+										<div class="collapse collapse-horizontal" id="collapseWidthExample">
+											<div class="card card-body" style="width: 300px;">
+												<ul class="list-group list-group-flush">
+													{% for point in event.bullets %}
+														<li class="list-group-item">{{ point.name }}</li>
+													{% endfor %}
+												</ul>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="tags" style="display: none;">{{ event.main.tags|json_encode|raw }}</div>
 							</div>
-						{% endfor %}
-						<div class="col-12 d-flex row flex-column justify-content-center align-items-center p-5 ">
-							<h6 id="noTimelineEvents" class="col-6 my-5 accent-bg-dark text-center mx-auto text-secondary border border-secondary rounded-3" style="display: none; z-index: 100;">
-								No events available.
-							</h6>
-						</div>
-					</div>
 
+							<div class="tags" style="display: none;">{{ event.main.tags|json_encode|raw }}</div>
+						</div>
+					{% endfor %}
+					<div class="col-12 d-flex row flex-column justify-content-center align-items-center ">
+						<h6 id="noTimelineEvents" class="col-6 py-5 accent-bg-dark text-center mx-auto text-secondary border border-secondary rounded-3" style="display: none; z-index: 100;">
+							No events available.
+						</h6>
+					</div>
 				</div>
 
-			{% endfor %}
-			<div class="row d-flex container-fluid flex-column justify-content-center align-items-center mb-5">
-				<button class="btn btn-outline-success bg-dark shadow-custom col-3 text-center m-0 py-3" onclick="window.location.href='/#contact'">
-					Let's build together!</button>
 			</div>
-		</div>
-	</section>
 
+		{% endfor %}
+		<div class="row d-flex container-fluid flex-column justify-content-center align-items-center mb-5">
+			<button class="btn btn-outline-success bg-dark shadow-custom col-3 text-center m-0 py-3" onclick="window.location.href='/#contact'">
+				Let's build together!</button>
+		</div>
+
+	</div>
 
 	<script src="{{ asset('js/timeLine.js') }}"></script>
 
