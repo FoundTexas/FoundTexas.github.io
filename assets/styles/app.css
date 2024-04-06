@@ -48,6 +48,9 @@ h6, li, span {
 .main-bg-gradient {
   background: linear-gradient(to bottom right, #6F1B6F, #57a9a1);
 }
+.main-bg-gradient-circle {
+  background: linear-gradient(to bottom right, #6F1B6F, #57a9a1);
+}
 
 .main-bg-gradient-alter {
   background: linear-gradient(to bottom right, #57a9a1, #6F1B6F);

@@ -1,5 +1,5 @@
 <!-- Collapsible Navbar -->
-<div class="collapse navbar-collapse collapse position-fixed" id="navbarCollapse" style="width:100%;">
+<div class="collapse navbar-collapse collapse position-fixed" id="navbarCollapse" style="width:100%; z-index: 1049;">
 	<nav class="navbar navbar-dark main-bg">
 		<div class="container-fluid" style="height: 10vh;">
 			<a class="navbar-brand col-auto" href="#">
@@ -61,6 +61,7 @@
 	</div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 
 <script>
 	// Function to navigate to section and close the modal
@@ -79,23 +80,46 @@ window.location.href = '/' + sectionId;
 $('#pauseMenuModal').modal('hide');
 }
 
+// Function to set the collapse state on a cookie
+function setNavbarCollapseState(state) {
+    Cookies.set('navbarCollapseState', state);
+}
+
+// Function to get the collapse state from the cookie
+function getNavbarCollapseState() {
+    return Cookies.get('navbarCollapseState');
+}
+
 // JavaScript to toggle the collapse state
 const collapseOnButton = document.getElementById("collapseOnButton");
 const collapseOffButton = document.getElementById("collapseOffButton");
 
 collapseOnButton.addEventListener("click", function () {
-document.querySelector(".navbar-collapse").classList.add("show");
-collapseOnButton.disabled = true;
-collapseOffButton.disabled = false;
+    document.querySelector(".navbar-collapse").classList.add("show");
+    collapseOnButton.disabled = true;
+    collapseOffButton.disabled = false;
+    setNavbarCollapseState('on');
 });
 
 collapseOffButton.addEventListener("click", function () {
-document.querySelector(".navbar-collapse").classList.remove("show");
-collapseOnButton.disabled = false;
-collapseOffButton.disabled = true;
+    document.querySelector(".navbar-collapse").classList.remove("show");
+    collapseOnButton.disabled = false;
+    collapseOffButton.disabled = true;
+    setNavbarCollapseState('off');
 });
 
 // Initially, start with "On" enabled and "Off" disabled
-collapseOnButton.disabled = false;
-collapseOffButton.disabled = true;
+const savedState = getNavbarCollapseState();
+if (savedState === 'on') {
+    document.querySelector(".navbar-collapse").classList.add("show");
+    collapseOnButton.disabled = true;
+    collapseOffButton.disabled = false;
+} else if (savedState === 'off') {
+    document.querySelector(".navbar-collapse").classList.remove("show");
+    collapseOnButton.disabled = false;
+    collapseOffButton.disabled = true;
+}
+
 </script>
+
+

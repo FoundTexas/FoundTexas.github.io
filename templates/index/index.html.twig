@@ -11,8 +11,7 @@
 {% block body %}
 
 	{% include 'AboutMe.twig' %}
-	{% include 'keenSlidelGalery.twig' with {'content': Project} %}
-	{% include 'ProjectsHighlights.twig' with {'projects': Project, 'type': 'games','textRef': 'GamesPortfolio', 'headText': 'Games Portfolio', 'darkbg': true} %}
+	{% include 'GameHighlights.twig' with {'projects': Project, 'type': 'games','textRef': 'GamesPortfolio', 'headText': 'Games Portfolio', 'darkbg': true} %}
 	{% include 'ProjectsHighlights.twig' with {'projects': Project, 'type': 'web-projects','textRef': 'WebPortfolio', 'headText': 'Web Portfolio', 'darkbg': true, 'color': 'main-bg-gradient-alter'} %}
 	{% include 'contact.twig' %}
 

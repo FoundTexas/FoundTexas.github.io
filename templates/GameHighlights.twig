@@ -1,0 +1,60 @@
+<section id="Games" class="main-bg-dark px-2 rounded-top-4 m-0 w-100" style="min-height: 80vh;">
+
+	<h3 class='text-center pt-3 m-0'>Game Highlights</h3>
+
+	<div class="d-flex flex-column justify-content-center align-items-center h-100" style="min-height: 60vh; width: 100%;">
+
+		<div class="container-xl rounded-3 main-bg-gradient-circle m-3 my-md-2  p-0 shadow-custom">
+
+			<div id="carouselExampleIndicators" class="carousel slide px-md-5 pt-4">
+				<div class="carousel-inner rounded-4 bg-dark ratio ratio-16x9 px-5" style="height: 45vh;">
+					<div class="carousel-item active">
+						<img src="..." class="" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="..." class="" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="..." class="" alt="...">
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+
+			<div class="d-flex justify-content-start px-0 pt-2 pb-0 mb-3 m-0 rounded-4 shadow" style="overflow-x: auto; overflow-y: hidden;">
+				<div class="col-4 p-1 rounded-4 ">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class=" ratio ratio-1x1 rounded-4 shadow active" aria-current="true">1</button>
+				</div>
+				<div class="col-4 p-1 rounded-4 ">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="btn btn-primary ratio ratio-1x1 rounded-4 shadow" aria-label="Slide 2">2</button>
+				</div>
+				<div class="col-4 p-1 rounded-4">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary ratio ratio-1x1 rounded-4 shadow" aria-label="Slide 3">3</button>
+				</div>
+				<div class="col-4 p-1 rounded-4">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary ratio ratio-1x1 rounded-4 shadow" aria-label="Slide 3">3</button>
+				</div>
+				<div class="col-4 p-1 rounded-4">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary ratio ratio-1x1 rounded-4 shadow" aria-label="Slide 3">3</button>
+				</div>
+				<div class="col-4 p-1 rounded-4">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary ratio ratio-1x1 rounded-4 shadow" aria-label="Slide 3">3</button>
+				</div>
+			</div>
+
+			<div class="row justify-content-center">
+				<button type="button" class="col-auto custom-btn rounded-2 p-1 m-2 accent-bg text-white" onclick="window.location.href='{{ path('app_game_projects', {'type': type}) }}'" data-bs-dismiss="modal">&nbsp;&nbsp;All
+					{{type}}...&nbsp;&nbsp;</button>
+			</div>
+
+		</div>
+
+	</div>
+</section>
