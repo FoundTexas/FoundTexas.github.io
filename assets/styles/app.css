@@ -121,7 +121,7 @@ html {
 
 .btn-outline-main {
   --bs-btn-color: #6F1B6F;
-  --bs-btn-border-color: #6F1B6F;
+  --bs-btn-border-color: transparent;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #6F1B6F;
   --bs-btn-hover-border-color: #6F1B6F;
@@ -133,6 +133,7 @@ html {
   --bs-btn-disabled-color: #6F1B6F;
   --bs-btn-disabled-bg: transparent;
   --bs-btn-disabled-border-color: #6F1B6F;
+  --bs-btn-border-width:0.1rem;
   --bs-gradient: none;
 }
 
