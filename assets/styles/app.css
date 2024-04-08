@@ -135,3 +135,11 @@ html {
   --bs-btn-disabled-border-color: #6F1B6F;
   --bs-gradient: none;
 }
+
+.btn-main {
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #6F1B6F;
+  --bs-btn-hover-color: #4D114D;
+  --bs-btn-hover-bg: #ffffff;
+  --bs-btn-hover-border-color: #6F1B6F;
+}

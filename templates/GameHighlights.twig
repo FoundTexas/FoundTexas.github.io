@@ -1,60 +1,111 @@
-<section id="Games" class="main-bg-dark px-2 rounded-top-4 m-0 w-100" style="min-height: 80vh;">
+
+<section id="Games" class="main-bg-dark px-2 rounded-top-4 m-0 w-100" style="min-height: 93vh;">
 
 	<h3 class='text-center pt-3 m-0'>Game Highlights</h3>
 
 	<div class="d-flex flex-column justify-content-center align-items-center h-100" style="min-height: 60vh; width: 100%;">
 
-		<div class="container-xl rounded-3 main-bg-gradient-circle m-3 my-md-2  p-0 shadow-custom">
+		<div class="container-xxl rounded-4 main-bg-gradient-circle m-3 my-4 p-0 shadow-custom">
+			<div class="px-md-3 px-1 pt-3">
+				<div id="carouselExampleIndicators" class="carousel slide ">
+					<div class="carousel-inner rounded-4 bg-dark px-5 mb-3 shadow-custom" style="height: 45vh; aspect-ratio:1.5;">
 
-			<div id="carouselExampleIndicators" class="carousel slide px-md-5 pt-4 ">
-				<div class="carousel-inner rounded-4 bg-dark px-5 mb-2 shadow" style="height: 45vh; aspect-ratio:2;">
-					<div class="carousel-item active">
-						<img src="..." class="" alt="...">
+						{% for project in projects %}
+						{% for i in 0..5 %}
+							<div class="carousel-item p-0{% if loop.index0 == 0 %}active{% endif %}">
+								<img src="{{ project.iconref }}" class="w-100 h-auto" alt="{{ loop.index }}">
+							</div>
+							{% endfor %}
+						{% endfor %}
 					</div>
-					<div class="carousel-item">
-						<img src="..." class="" alt="...">
-					</div>
-					<div class="carousel-item">
-						<img src="..." class="" alt="...">
-					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" onclick="updateActiveIndicator(-1)">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" onclick="updateActiveIndicator(1)">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
 				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
-				</button>
 			</div>
-
-			<div class="d-flex justify-content-start px-0 pb-0 mb-3 m-0 rounded-4 shadow" style="overflow-x: auto; overflow-y: hidden;">
-				<div class="col-3 p-1 rounded-4 ">
-					<button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="btn btn-primary d-flex flex-column justify-content-center align-items-center rounded-4 w-100 active" style="aspect-ratio:1;" >1</button>
-				</div>
-				<div class="col-3 p-1 rounded-4 ">
-					<button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="btn btn-primary d-flex flex-column justify-content-center align-items-center rounded-4 w-100" style="aspect-ratio:1;">2</button>
-				</div>
-				<div class="col-3 p-1 rounded-4">
-					<button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary d-flex flex-column justify-content-center align-items-center rounded-4 w-100" style="aspect-ratio:1;">3</button>
-				</div>
-				<div class="col-3 p-1 rounded-4">
-					<button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary d-flex flex-column justify-content-center align-items-center rounded-4 w-100" style="aspect-ratio:1;">3</button>
-				</div>
-				<div class="col-3 p-1 rounded-4">
-					<button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary d-flex flex-column justify-content-center align-items-center rounded-4 w-100" style="aspect-ratio:1;">3</button>
-				</div>
-				<div class="col-3 p-1 rounded-4">
-					<button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary d-flex flex-column justify-content-center align-items-center rounded-4 w-100" style="aspect-ratio:1;">3</button>
+			<div class="px-md-5">
+				<div class="px-md-5">
+					<div class="px-md-5 mx-md-5">
+						<div class="d-flex justify-content-start px-0 m-0 rounded-4 bg-dark shadow" style="overflow-x: auto; overflow-y: hidden;">
+							{% for project in projects %}
+							{% for i in 0..5 %}
+								<div class="col-3 rounded-4" >
+									<button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index0 }}" class="carousel-indicator btn btn-outline-primary d-flex flex-column justify-content-center align-items-center rounded-4 w-100 p-3 {% if loop.index0 == 0 %}active{% endif %}" style="aspect-ratio:1; overflow: hidden;">
+										<img src="{{ project.iconref }}" class="w-100 h-auto" alt="{{ loop.index }}">
+									</button>
+								</div>
+							{% endfor %}
+							{% endfor %}
+						</div>
+					</div>
 				</div>
 			</div>
 
 			<div class="row justify-content-center">
-				<button type="button" class="col-auto custom-btn rounded-2 p-1 m-2 accent-bg text-white" onclick="window.location.href='{{ path('app_game_projects', {'type': type}) }}'" data-bs-dismiss="modal">&nbsp;&nbsp;All
+				<button type="button" class="col-auto custom-btn rounded-2 p-1 my-3 accent-bg text-white" onclick="window.location.href='{{ path('app_game_projects', {'type': type}) }}'" data-bs-dismiss="modal">&nbsp;&nbsp;All
 					{{type}}...&nbsp;&nbsp;</button>
 			</div>
 
 		</div>
-
 	</div>
 </section>
+
+<script>
+// Get all carousel indicators
+var indicators = document.querySelectorAll('.carousel-indicator');  
+var curindex = 0;
+
+	function updateActiveIndicator(updatevalue) {
+
+    // Calculate the new index
+    curindex += updatevalue;
+
+    // Loop if curindex is larger than or equal to the length of indicators
+    if (curindex >= indicators.length) {
+        curindex = 0;
+    }
+    // Loop if curindex is less than 0
+    else if (curindex < 0) {
+        curindex = indicators.length - 1;
+    }
+
+    // Remove 'active' class from all indicators
+    indicators.forEach(function(indicator, index) {
+        indicator.classList.remove('active');
+        if (index === curindex) {
+            indicator.classList.add('active');
+            // Scroll to the selected indicator
+            indicator.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    });
+}
+
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // Loop through each indicator and add click event listener
+        indicators.forEach(function(indicator, index) {
+            indicator.addEventListener('click', function() {
+                // Remove 'active' class from all indicators
+                indicators.forEach(function(indicator) {
+                    indicator.classList.remove('active');
+                });
+                
+                // Add 'active' class to the clicked indicator
+                this.classList.add('active');
+                
+                // Activate the corresponding carousel item
+                var carousel = document.getElementById('carouselExampleIndicators');
+                var carouselInstance = bootstrap.Carousel.getInstance(carousel);
+                carouselInstance.to(index);
+
+				curindex = index;
+            });
+        });
+
+    });
+</script> 
