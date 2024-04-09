@@ -8,13 +8,25 @@
 {% block body %}
 	<h1>Create Milestone</h1>
 
-	{{ form_start(form) }}
+	{{ form_start(mileStoneForm) }}
 
-	{{ form_row(form.name) }}
-	{{ form_row(form.description) }}
-	{{ form_row(form.bulletpoints) }}
-	{{ form_row(form.startDate) }}
-	{{ form_row(form.endDate) }}
+	{{ form_row(mileStoneForm.name) }}
+	{{ form_row(mileStoneForm.description) }}
+	{{ form_row(mileStoneForm.startDate) }}
+	{{ form_row(mileStoneForm.endDate) }}
+	{{ form_row(mileStoneForm.tags) }}
+
+	<button type="submit">Create</button>
+
+	{{ form_end(mileStoneForm) }}
+
+	<h1>Create Bulletpoint for Milestone</h1>
+
+	{{ form_start(bulletPointsForm) }}
+
+	{{ form_row(bulletPointsForm.name) }}
+	{{ form_row(bulletPointsForm.info) }}
+	{{ form_row(bulletPointsForm.milestone) }}
 
 	<div>
 		<label for="tags">Tags:</label>
@@ -23,6 +35,6 @@
 
 	<button type="submit">Create</button>
 
-	{{ form_end(form) }}
+	{{ form_end(bulletPointsForm) }}
 
 {% endblock %}

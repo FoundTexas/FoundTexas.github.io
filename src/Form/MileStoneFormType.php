@@ -1,15 +1,14 @@
 <?php
 
-// src/Form/MileStoneFormType.php
-
 namespace App\Form;
 
 use App\Entity\MileStone;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class MileStoneFormType extends AbstractType
 {
@@ -18,14 +17,13 @@ class MileStoneFormType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('description', TextType::class)
-            ->add('bulletpoints', TextType::class) // Example, adjust as needed
             ->add('startDate', DateType::class, [
                 'format' => 'yyyy-MM-dd', // Specify desired date format
             ])
             ->add('endDate', DateType::class, [
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('tags', TextType::class) // Example, adjust as needed
+            ->add('tags', TextType::class)
         ;
     }
 
