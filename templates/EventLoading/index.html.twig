@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add New Milestone
+{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block body %}
+	<h1>Create Milestone</h1>
+	{{ dump(milestone) }}
+	{{ dump(milestones) }}
+
+	<div class="dropdown">
+		<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			Dropdown button
+		</button>
+		<ul class="dropdown-menu">
+			{% for id in milestoneIds %}
+				<li>
+					<a class="dropdown-item" href="#">Action</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#">Another action</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#">Something else here</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+
+{% endblock %}

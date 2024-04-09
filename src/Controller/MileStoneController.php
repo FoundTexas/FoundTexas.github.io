@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
 use App\Entity\MileStone;
 use App\Entity\BulletPoints;
 use App\Form\MileStoneFormType;
@@ -16,29 +17,76 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MileStoneController extends AbstractController
 {
-    #[Route('/milestone/new', name: 'milestone_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+
+    #[Route('/event-load/{id}', name: 'event_load', methods: ['GET', 'POST'])]
+    public function index(Request $request, EntityManagerInterface $entityManager, string $id = null): Response
     {
-        $mileStone = new MileStone();
-        $bulletPoints = new BulletPoints();
+        // Create a query builder to select only the IDs of milestones
+        $queryBuilder = $entityManager->getRepository(MileStone::class)->createQueryBuilder('m');
+        $queryBuilder->select('m.id');
+        $queryBuilder->orderBy('m.startDate', 'ASC');
+        $query = $queryBuilder->getQuery();
+        
+        // Get the IDs of milestones
+        $milestoneIds = $query->getResult();
+
+        // Get the current milestone either by ID or the first one if ID is not provided
+        $currentMilestone = [];
+        if ($id !== null) {
+            $currentMilestone['milestone'] = $entityManager->getRepository(MileStone::class)->find($id);
+        } else {
+            $currentMilestone['milestone'] = $entityManager->getRepository(MileStone::class)->find($milestoneIds[0]); // Get the first milestone
+        }
+
+        $bulletPoints = $entityManager->getRepository(BulletPoints::class)->findBy(['milestone' => $currentMilestone['milestone']->getId()]);
+        $projects = $entityManager->getRepository(Project::class)->findAll(['milestone' => $currentMilestone['milestone']->getId()]);
+
+        $currentMilestone['bulletpoints'] = $bulletPoints;
+        $currentMilestone['projects'] = $projects;
+
+        return $this->render('EventLoading/index.html.twig', [
+            'milestone' => $currentMilestone,
+            'milestoneIds' => $milestoneIds
+        ]);
+    }
+
+    #[Route('/milestone/new', name: 'milestone_new', methods: ['GET', 'POST'])]
+    public function newMilestone(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $id = $request->get('id');
+
+        $mileStone = $entityManager->getRepository(MileStone::class)->find($id) ?? new MileStone();
 
         $mileStoneForm = $this->createForm(MileStoneFormType::class, $mileStone);
         $mileStoneForm->handleRequest($request);
 
-        $bulletPointsForm = $this->createForm(BulletPointsType::class, $bulletPoints);
-        $bulletPointsForm->handleRequest($request);
-
         if ($mileStoneForm->isSubmitted() && $mileStoneForm->isValid()) {
             $entityManager->persist($mileStone);
             $entityManager->flush();
-
             return $this->redirectToRoute('milestone_show', ['id' => $mileStone->getId()]);
         }
 
-        return $this->render('mile_stone/index.html.twig', [
+        return $this->render('EventLoading/create-bulletPoints.twig', [
             'mileStoneForm' => $mileStoneForm->createView(),
+        ]);
+    }
+
+    #[Route('/bulletPoints/new', name: 'milestone_new', methods: ['GET', 'POST'])]
+    public function newBulletPoints(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $bulletPoints = new BulletPoints();
+
+        $bulletPointsForm = $this->createForm(BulletPointsType::class, $bulletPoints);
+        $bulletPointsForm->handleRequest($request);
+
+        if ($bulletPointsForm->isSubmitted() && $bulletPointsForm->isValid()) {
+            $entityManager->persist($bulletPoints);
+            $entityManager->flush();
+            return $this->redirectToRoute('milestone_show', ['id' => $bulletPoints->getId()]);
+        }
+
+        return $this->render('EventLoading/create-mileStone.twig', [
             'bulletPointsForm' => $bulletPointsForm->createView(),
         ]);
     }
 }
-
