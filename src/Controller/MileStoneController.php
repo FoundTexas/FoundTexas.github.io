@@ -26,7 +26,7 @@ class MileStoneController extends AbstractController
         $queryBuilder->select('m.id');
         $queryBuilder->orderBy('m.startDate', 'ASC');
         $query = $queryBuilder->getQuery();
-        
+
         // Get the IDs of milestones
         $milestoneIds = $query->getResult();
 
@@ -50,28 +50,39 @@ class MileStoneController extends AbstractController
         ]);
     }
 
-    #[Route('/milestone/new', name: 'milestone_new', methods: ['GET', 'POST'])]
+    #[Route('/new/milestone', name: 'milestone_new', methods: ['GET', 'POST'])]
+
     public function newMilestone(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $id = $request->get('id');
+        $id = $request->get('id') ?? null;
 
-        $mileStone = $entityManager->getRepository(MileStone::class)->find($id) ?? new MileStone();
+        $mileStone = $id ? $entityManager->getRepository(MileStone::class)->find($id) : new MileStone();
 
         $mileStoneForm = $this->createForm(MileStoneFormType::class, $mileStone);
         $mileStoneForm->handleRequest($request);
 
         if ($mileStoneForm->isSubmitted() && $mileStoneForm->isValid()) {
-            $entityManager->persist($mileStone);
+
+            $updateID = $request->get('updateID') ?? null;
+            $flushMileStone = $entityManager->getRepository(MileStone::class)->find($updateID);
+
+            $flushMileStone->setName($mileStone->getName())->setDescription($mileStone->getDescription())->setStartDate($mileStone->getStartDate())->setEndDate($mileStone->getEndDate())->setTags($mileStone->getTags());
+
+            $entityManager->persist($flushMileStone);
             $entityManager->flush();
-            return $this->redirectToRoute('milestone_show', ['id' => $mileStone->getId()]);
         }
 
-        return $this->render('EventLoading/create-bulletPoints.twig', [
+        // Render only the form HTML
+        $mileStoneFormView = $this->renderView('EventLoading/create_mileStone.twig', [
             'mileStoneForm' => $mileStoneForm->createView(),
+            'mileStonecur' => $mileStone
         ]);
+
+        return new Response($mileStoneFormView);
     }
 
-    #[Route('/bulletPoints/new', name: 'milestone_new', methods: ['GET', 'POST'])]
+
+    #[Route('/new/bulletPoints', name: 'bulletPoints_new', methods: ['GET', 'POST'])]
     public function newBulletPoints(Request $request, EntityManagerInterface $entityManager): Response
     {
         $bulletPoints = new BulletPoints();

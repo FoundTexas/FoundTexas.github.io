@@ -34,6 +34,9 @@ class MileStone
     #[ORM\OneToMany(mappedBy: 'mileStone', targetEntity: Project::class)]
     private Collection $asociatedprojects;
 
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private ?array $bullets = null;
+
     public function __construct()
     {
         $this->asociatedprojects = new ArrayCollection();
@@ -42,6 +45,13 @@ class MileStone
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -130,6 +140,18 @@ class MileStone
                 $asociatedproject->setMileStone(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBullets(): ?array
+    {
+        return $this->bullets;
+    }
+
+    public function setBullets(?array $bullets): static
+    {
+        $this->bullets = $bullets;
 
         return $this;
     }

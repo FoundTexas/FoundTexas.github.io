@@ -6,27 +6,46 @@
 {% block head %}{% endblock %}
 
 {% block body %}
-	<h1>Create Milestone</h1>
-	{{ dump(milestone) }}
-	{{ dump(milestones) }}
 
-	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-			Dropdown button
-		</button>
-		<ul class="dropdown-menu">
-			{% for id in milestoneIds %}
-				<li>
-					<a class="dropdown-item" href="#">Action</a>
-				</li>
-				<li>
-					<a class="dropdown-item" href="#">Another action</a>
-				</li>
-				<li>
-					<a class="dropdown-item" href="#">Something else here</a>
-				</li>
-			{% endfor %}
-		</ul>
+	<div style="height:100vh; width:100%;">
+		<h1>Create Milestone</h1>
+
+		<div class="dropdown-center my-4">
+			<select id="milestoneDropdown" class="dropdown-center">
+				<option value="">Select Milestone</option>
+				{% for milestone in milestoneIds %}
+					<option value="{{ milestone.id }}">{{ milestone.id }}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div id="MilestoneContainer"></div>
 	</div>
 
+	<script src="{{ asset('js/formsFunctions.js') }}"></script>
+
+
+	<script>
+
+
+		document.addEventListener('DOMContentLoaded', function () { // Add event listener for dropdown change
+document.getElementById('milestoneDropdown').addEventListener('change', function () {
+var selectedId = this.value;
+if (selectedId) { // Make AJAX request to get milestone form
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function () {
+if (xhr.readyState === XMLHttpRequest.DONE) {
+if (xhr.status === 200) {
+document.getElementById('MilestoneContainer').innerHTML = xhr.responseText;
+} else {
+console.error('Failed to fetch milestone form:', xhr.status);
+}
+}
+};
+xhr.open('GET', '/new/milestone?id=' + selectedId, true);
+xhr.send();
+}
+});
+});
+	</script>
 {% endblock %}
