@@ -34,7 +34,7 @@ class MileStone
     #[ORM\OneToMany(mappedBy: 'mileStone', targetEntity: Project::class)]
     private Collection $asociatedprojects;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    #[ORM\Column( nullable: true)]
     private ?array $bullets = null;
 
     public function __construct()

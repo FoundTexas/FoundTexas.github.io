@@ -18,11 +18,19 @@ class MileStoneFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('description', TextType::class)
             ->add('startDate', DateType::class, [
                 'years' => range(2000, date('Y') + 10),
             ])
             ->add('endDate', DateType::class, ['required' => false])
+            ->add('description', TextType::class)
+            ->add('bullets', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'entry_options' => ['label' => false], // Hide labels for individual tag fields
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'by_reference' => false, // Ensure the data is passed by reference
+            ])
             ->add('tags', CollectionType::class, [
                 'entry_type' => TextType::class,
                 'entry_options' => ['label' => false], // Hide labels for individual tag fields

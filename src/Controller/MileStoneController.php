@@ -18,34 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class MileStoneController extends AbstractController
 {
 
-    #[Route('/event-load/{id}', name: 'event_load', methods: ['GET', 'POST'])]
-    public function index(Request $request, EntityManagerInterface $entityManager, string $id = null): Response
+    #[Route('/event-load', name: 'event_load', methods: ['GET', 'POST'])]
+    public function index(EntityManagerInterface $entityManager): Response
     {
         // Create a query builder to select only the IDs of milestones
         $queryBuilder = $entityManager->getRepository(MileStone::class)->createQueryBuilder('m');
-        $queryBuilder->select('m.id');
+        $queryBuilder->select('m.id, m.name');
         $queryBuilder->orderBy('m.startDate', 'ASC');
         $query = $queryBuilder->getQuery();
 
         // Get the IDs of milestones
         $milestoneIds = $query->getResult();
 
-        // Get the current milestone either by ID or the first one if ID is not provided
-        $currentMilestone = [];
-        if ($id !== null) {
-            $currentMilestone['milestone'] = $entityManager->getRepository(MileStone::class)->find($id);
-        } else {
-            $currentMilestone['milestone'] = $entityManager->getRepository(MileStone::class)->find($milestoneIds[0]); // Get the first milestone
-        }
-
-        $bulletPoints = $entityManager->getRepository(BulletPoints::class)->findBy(['milestone' => $currentMilestone['milestone']->getId()]);
-        $projects = $entityManager->getRepository(Project::class)->findAll(['milestone' => $currentMilestone['milestone']->getId()]);
-
-        $currentMilestone['bulletpoints'] = $bulletPoints;
-        $currentMilestone['projects'] = $projects;
-
         return $this->render('EventLoading/index.html.twig', [
-            'milestone' => $currentMilestone,
             'milestoneIds' => $milestoneIds
         ]);
     }
@@ -64,9 +49,9 @@ class MileStoneController extends AbstractController
         if ($mileStoneForm->isSubmitted() && $mileStoneForm->isValid()) {
 
             $updateID = $request->get('updateID') ?? null;
-            $flushMileStone = $entityManager->getRepository(MileStone::class)->find($updateID);
+            $flushMileStone = $entityManager->getRepository(MileStone::class)->find($updateID) ?? new MileStone();
 
-            $flushMileStone->setName($mileStone->getName())->setDescription($mileStone->getDescription())->setStartDate($mileStone->getStartDate())->setEndDate($mileStone->getEndDate())->setTags($mileStone->getTags());
+            $flushMileStone->setName($mileStone->getName())->setDescription($mileStone->getDescription())->setStartDate($mileStone->getStartDate())->setEndDate($mileStone->getEndDate())->setTags($mileStone->getTags())->setBullets($mileStone->getBullets());
 
             $entityManager->persist($flushMileStone);
             $entityManager->flush();
