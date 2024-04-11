@@ -1,19 +1,37 @@
 <!-- Collapsible Navbar -->
-<div class="collapse navbar-collapse collapse position-fixed" id="navbarCollapse" style="width:100%; z-index: 1049;">
-	<nav class="navbar navbar-dark main-bg">
-		<div class="container-fluid" style="height: 10vh;">
-			<a class="navbar-brand col-auto" href="#">
-				FoundTexas
-			</a>
-			<div class="d-none d-sm-block col-auto " style="width:100%;">
-				<img src="bannerPandaold.png" alt="Other Image">
+<div class="collapse navbar-collapse collapse position-sticky fixed-top" id="navbarCollapse" style="width:100%; z-index: 1040;">
+
+	<nav class="navbar navbar-dark navbar-expand-md main-bg p-0 m-0" style="min-height:10vh;">
+		<div class="d-flex w-75 align-items-center  justify-content-md-between justify-align-content-start row p-0 m-0">
+
+			<button class=" col-auto navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="col-3 d-none d-md-block">
+				<img class="img-fluid" src="bannerPandaold.png" alt="Other Image">
+			</div>
+			<a class="col-4 p-0 m-0 navbar-brand text-center" href="/">FoundTexas</a>
+
+		</div>
+
+		<div class="col-12 col-md-6">
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a class="nav-link active" aria-current="page" href="/">Games</a>
+					<a class="nav-link active" href="#">Projects</a>
+					<a class="nav-link active" href="/timeline">CV</a>
+					<a class="nav-link active" href="/login">Account</a>
+
+				</div>
 			</div>
 		</div>
 	</nav>
 </div>
 
 <button class="custom-btn position-fixed rounded-4 accent-bg d-flex align-items-center" style="z-index: 1050; top: 5px; right: 5px;" onclick="playSound('audiopress')" data-bs-target="#pauseMenuModal" aria-label="Pause menu button" data-bs-toggle="modal" type="button">
-	<i class="fa fa-home my-2 mx-1 fa-2xl" aria-hidden="true" style="color: #ffffff;"></i> <p class="p-0 m-0 d-none d-md-block">MENU</p>
+	<i class="fa fa-home my-2 mx-1 fa-2xl" aria-hidden="true" style="color: #ffffff;"></i>
+	<p class="p-0 m-0 d-none d-md-block">MENU</p>
 </button>
 
 
@@ -82,12 +100,12 @@ $('#pauseMenuModal').modal('hide');
 
 // Function to set the collapse state on a cookie
 function setNavbarCollapseState(state) {
-    Cookies.set('navbarCollapseState', state);
+Cookies.set('navbarCollapseState', state);
 }
 
 // Function to get the collapse state from the cookie
 function getNavbarCollapseState() {
-    return Cookies.get('navbarCollapseState');
+return Cookies.get('navbarCollapseState');
 }
 
 // JavaScript to toggle the collapse state
@@ -95,31 +113,28 @@ const collapseOnButton = document.getElementById("collapseOnButton");
 const collapseOffButton = document.getElementById("collapseOffButton");
 
 collapseOnButton.addEventListener("click", function () {
-    document.querySelector(".navbar-collapse").classList.add("show");
-    collapseOnButton.disabled = true;
-    collapseOffButton.disabled = false;
-    setNavbarCollapseState('on');
+document.querySelector(".navbar-collapse").classList.add("show");
+collapseOnButton.disabled = true;
+collapseOffButton.disabled = false;
+setNavbarCollapseState('on');
 });
 
 collapseOffButton.addEventListener("click", function () {
-    document.querySelector(".navbar-collapse").classList.remove("show");
-    collapseOnButton.disabled = false;
-    collapseOffButton.disabled = true;
-    setNavbarCollapseState('off');
+document.querySelector(".navbar-collapse").classList.remove("show");
+collapseOnButton.disabled = false;
+collapseOffButton.disabled = true;
+setNavbarCollapseState('off');
 });
 
 // Initially, start with "On" enabled and "Off" disabled
 const savedState = getNavbarCollapseState();
 if (savedState === 'on') {
-    document.querySelector(".navbar-collapse").classList.add("show");
-    collapseOnButton.disabled = true;
-    collapseOffButton.disabled = false;
+document.querySelector(".navbar-collapse").classList.add("show");
+collapseOnButton.disabled = true;
+collapseOffButton.disabled = false;
 } else if (savedState === 'off') {
-    document.querySelector(".navbar-collapse").classList.remove("show");
-    collapseOnButton.disabled = false;
-    collapseOffButton.disabled = true;
+document.querySelector(".navbar-collapse").classList.remove("show");
+collapseOnButton.disabled = false;
+collapseOffButton.disabled = true;
 }
-
 </script>
-
-

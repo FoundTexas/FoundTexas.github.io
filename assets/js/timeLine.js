@@ -29,13 +29,11 @@ function checkScrollButtons() {
 }
 
 function filterEvents() {
+    var existTags = Array.from(document.querySelectorAll('input[name="tags"]'));
 
-    var exsisttags = Array.from(document.querySelectorAll('input[name="tags"]'));
+    if (existTags.length <= 0) return;
 
-    if (exsisttags.length <= 0) { return; }
-    var tags = Array.from(document.querySelectorAll('input[name="tags"]:checked'));
-
-    var selectedTags = tags.map(function (tag) {
+    var selectedTags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(function (tag) {
         return tag.value;
     });
 
@@ -43,31 +41,28 @@ function filterEvents() {
     var index = 0;
 
     events.forEach(function (event) {
-        var tags = JSON.parse(event.querySelector('.tags').textContent);
+        var tagsvalue = event.querySelector('.tags').textContent;
 
+        var tags = tagsvalue.split(",");
+
+        console.log('tags:', tags);
 
         if (selectedTags.some(function (tag) {
             return tags.includes(tag);
         })) {
-            console.log(tags);
-            console.log(selectedTags);
-
             event.style.setProperty('display', 'block', 'important');
-
-            //event.style.display = 'block !important';
             index++;
         } else {
-            //event.style.display = 'none !important';
             event.style.setProperty('display', 'none', 'important');
         }
     });
 
-    console.log(index);
-    const element = document.getElementById("noTimelineEvents");
-    if (element) {
-        element.style.display = index > 0 ? 'none' : 'block';
-    }
+    var noEventsElement = document.getElementById("noTimelineEvents");
+    if (noEventsElement) {
 
+        noEventsElement.style.setProperty('display', index > 0 ? 'none' : 'block', 'important');
+
+    }
 }
 
 function selectAllTags(value = true) {
@@ -75,20 +70,17 @@ function selectAllTags(value = true) {
         checkbox.checked = value;
     });
 
-    var element = document.getElementById("noTimelineevents");
-    if (element) {
-        element.style.display = value ? 'none' : 'block';
+    var noEventsElement = document.getElementById("noTimelineEvents");
+    if (noEventsElement) {
+        noEventsElement.style.display = value ? 'none' : 'block';
     }
 
     filterEvents();
 }
-
-window.addEventListener('resize', function () {
-    checkScrollButtons();
-});
 
 document.querySelectorAll('input[name="tags"]').forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
         filterEvents();
     });
 });
+

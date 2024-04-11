@@ -16,7 +16,6 @@ class TimelineCVController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $mileStones = $entityManager->getRepository(MileStone::class)->findBy([], ['startDate' => 'ASC']);
-        $bulletPoints = $entityManager->getRepository(BulletPoints::class)->findAll();
 
         $projects = $entityManager->getRepository(Project::class)
         ->createQueryBuilder('p')
@@ -27,10 +26,7 @@ class TimelineCVController extends AbstractController
         $experiences = [];
 
         foreach ($mileStones as $milestone) {
-            $experiences[$milestone->getId()] = ['main' => $milestone, 'bullets' => []];
-        }
-        foreach ($bulletPoints as $bulletPoint) {
-            $experiences[$bulletPoint->getMilestone()->getId()]['bullets'][] = $bulletPoint;
+            $experiences[$milestone->getId()] = ['main' => $milestone];
         }
         foreach ($projects as $project) {
             $experiences[$project->getMileStone()->getId()]['projects'][] = $project;
