@@ -6,16 +6,15 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Entity\MileStone;
-use App\Entity\BulletPoints;
+use App\Form\ProjectType;
 use App\Form\MileStoneFormType;
-use App\Form\BulletPointsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MileStoneController extends AbstractController
+class LoadEventsController extends AbstractController
 {
 
     #[Route('/event-load', name: 'event_load', methods: ['GET', 'POST'])]
@@ -67,22 +66,24 @@ class MileStoneController extends AbstractController
     }
 
 
-    #[Route('/new/bulletPoints', name: 'bulletPoints_new', methods: ['GET', 'POST'])]
+    #[Route('/new/project', name: 'bulletPoints_new', methods: ['GET', 'POST'])]
     public function newBulletPoints(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $bulletPoints = new BulletPoints();
+        $project = new Project();
 
-        $bulletPointsForm = $this->createForm(BulletPointsType::class, $bulletPoints);
-        $bulletPointsForm->handleRequest($request);
+        $projectForm = $this->createForm(ProjectType::class, $project);
+        $projectForm->handleRequest($request);
 
-        if ($bulletPointsForm->isSubmitted() && $bulletPointsForm->isValid()) {
-            $entityManager->persist($bulletPoints);
-            $entityManager->flush();
-            return $this->redirectToRoute('milestone_show', ['id' => $bulletPoints->getId()]);
+        if ($projectForm->isSubmitted() && $projectForm->isValid()) {
+
+            $updateID = $request->get('updateID') ?? null;
+            $flushProject = $entityManager->getRepository(MileStone::class)->find($updateID) ?? new MileStone();
+
+            $flushProject->setName($project->getName())->setDescription($project->getDescription())->setFileref($project->getFileref())->setMileStone($project->getMileStone())->setIconref($project->getIconref());
         }
 
         return $this->render('EventLoading/create-mileStone.twig', [
-            'bulletPointsForm' => $bulletPointsForm->createView(),
+            'bulletPointsForm' => $projectForm->createView(),
         ]);
     }
 }
