@@ -66,7 +66,7 @@ class LoadEventsController extends AbstractController
     }
 
 
-    #[Route('/new/project', name: 'bulletPoints_new', methods: ['GET', 'POST'])]
+    #[Route('/new/project', name: 'project_new', methods: ['GET', 'POST'])]
     public function newBulletPoints(Request $request, EntityManagerInterface $entityManager): Response
     {
         $project = new Project();
@@ -75,15 +75,12 @@ class LoadEventsController extends AbstractController
         $projectForm->handleRequest($request);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
-
-            $updateID = $request->get('updateID') ?? null;
-            $flushProject = $entityManager->getRepository(MileStone::class)->find($updateID) ?? new MileStone();
-
-            $flushProject->setName($project->getName())->setDescription($project->getDescription())->setFileref($project->getFileref())->setMileStone($project->getMileStone())->setIconref($project->getIconref());
+            $entityManager->persist($project);
+            $entityManager->flush();
         }
 
-        return $this->render('EventLoading/create-mileStone.twig', [
-            'bulletPointsForm' => $projectForm->createView(),
+        return $this->render('EventLoading/create_Project.twig', [
+            'projectForm' => $projectForm->createView(),
         ]);
     }
 }

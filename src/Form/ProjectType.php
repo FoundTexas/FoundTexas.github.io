@@ -20,7 +20,9 @@ class ProjectType extends AbstractType
             ->add('iconref')
             ->add('mileStone', EntityType::class, [
                 'class' => MileStone::class,
-                'choice_label' => 'id'.'name',
+                'choice_label' => function (MileStone $mileStone) {
+                    return $mileStone->getId() . ' - ' . $mileStone->getName();
+                },
             ])
         ;
     }
