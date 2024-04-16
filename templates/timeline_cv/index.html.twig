@@ -98,9 +98,7 @@
 				<div class="row justify-content-center mt-4 m-0">
 					<h4 class="col-auto bg-dark text-center shadow-custom m-0 px-5 py-3 text-warning border border-warning rounded-3">{{ year }}</h4>
 				</div>
-				<div
-					class="timeline-container row justify-content-center p-0 m-0 ">
-					<!-- Ensure relative positioning for the container -->
+				<div class="timeline-container row justify-content-center p-0 m-0 ">
 					{% for event in events_in_year %}
 						<div class=" col-12 row justify-content-center text-white">
 
@@ -145,12 +143,11 @@
 										<h5 class="card-title">Asociated projects:</h5>
 										<div class="row">
 											{% for project in event.projects %}
-
-											<div class="col-auto">
-												<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; max-width: 7rem;" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'">
-													<img src="{{ project.iconref }}" style="height: 100%; width: auto;" alt="{{ project.name }}">
-												</div>
-												<h6 class="card-title">{{project.name}}</h6>
+												<div class="col-auto">
+													<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; max-width: 7rem;" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'">
+														<img src="{{ project.iconref }}" style="height: 100%; width: auto;" alt="{{ project.name }}">
+													</div>
+													<h6 class="card-title">{{project.name}}</h6>
 												</div>
 											{% endfor %}
 										</div>
