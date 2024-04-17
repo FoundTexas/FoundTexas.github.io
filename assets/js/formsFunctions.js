@@ -57,7 +57,7 @@ function submitForm(updateID) {
 }
 
 
-function newMilestone() {
+function newForm( url = '/new/milestone') {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -68,7 +68,7 @@ function newMilestone() {
             }
         }
     };
-    xhr.open('GET', '/admin/new/milestone', true);
+    xhr.open('GET', url, true);
     xhr.send();
 }
 

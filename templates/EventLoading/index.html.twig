@@ -7,11 +7,11 @@
 
 {% block body %}
 
-	<div class="w-100 row" style="height:100vh;">
-		<div class="col-12 col-md-6">
-			<h1>Milestone Load:</h1>
+	<div class="w-100 row p-5" style="height:100vh;">
+		<div class="col-12 col-md-6 row">
+			<h1 class="col-12">Milestone Load:</h1>
 
-			<div class="dropdown-center my-4">
+			<div class="dropdown-center my-4 col-6">
 				<select id="milestoneDropdown" class="dropdown-center">
 					<option value="">Select Milestone</option>
 					{% for milestone in milestoneIds %}
@@ -19,15 +19,16 @@
 					{% endfor %}
 				</select>
 			</div>
-
-			<button class="btn btn-success my-4" onclick="newMilestone()">+</button>
+			<div class="col-6">
+				<button class="btn btn-success " onclick="newForm('{{path('milestone_new')}}')">+</button>
+			</div>
 
 			<div id="MilestoneContainer"></div>
 		</div>
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-md-6 row">
 			<h1>Project Load:</h1>
 
-			<div class="dropdown-center my-4">
+			<div class="dropdown-center my-4 col-6">
 				<select id="ProjectDropdown" class="dropdown-center">
 					<option value="">Select Project</option>
 					{% for project in projectsIds %}
@@ -36,9 +37,9 @@
 				</select>
 			</div>
 
-			<button class="btn btn-success my-4" onclick="newMilestone()">+</button>
+			<button class="btn btn-success my-4 col-6" onclick="newMilestone()">+</button>
 
-			<div id="MilestoneContainer"></div>
+			<div id="ProjectContainer"></div>
 		</div>
 	</div>
 </div>
