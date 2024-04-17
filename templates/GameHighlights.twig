@@ -1,8 +1,400 @@
-<section id="Games" class="main-bg-dark px-2 rounded-top-4 m-0 w-100" style="min-height: 93vh;">
+<style>
 
-	<h3 class='text-center pt-3 m-0'>Game Highlights</h3>
 
-	<div class="d-flex flex-column justify-content-center align-items-center h-100" style="min-height: 60vh; width: 100%;">
+	.container-games {
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		font-family: 'Montserrat', sans-serif;
+		color: #fff;
+		height: 80vh;
+	}
+
+	.slider {
+		width: 100% !important;
+		height: 100% !important;
+
+		position: relative;
+		perspective: 1000px;
+		max-height: 100%;
+		max-width: 100%;
+		will-change: transform;
+
+		&:not(.zoom) {
+			.item {
+				transition: all 900ms ease-in-out, opacity 400ms linear 0;
+				opacity: 0;
+
+				&.active {
+					width: 100% !important;
+					height: 100% !important;
+					line-height: 100%;
+					position: relative;
+					display: flex;
+					opacity: 1;
+					pointer-events: all;
+
+					span {
+						top: 0;
+						transform: scale(10);
+
+					}
+
+					.custom-btn {
+						transform: scale(3);
+					}
+				}
+
+				&:not(.active) {
+					display: none;
+				}
+
+				&.item1 {
+					transform: rotateY(0deg) translateZ(0);
+				}
+
+				&.item2 {
+					transform: rotateY(60deg) translateZ(0);
+				}
+
+				&.item3 {
+					transform: rotateY(120deg) translateZ(0);
+				}
+				&.item4 {
+					transform: rotateY(180deg) translateZ(0);
+				}
+
+				&.item5 {
+					transform: rotateY(240deg) translateZ(0);
+				}
+
+				&.item6 {
+					transform: rotateY(300deg) translateZ(0);
+				}
+			}
+		}
+
+		&.zoom {
+			.item {
+				transition: all 900ms ease-in-out, opacity 300ms linear 500ms;
+				opacity: 0.5;
+			}
+			span {
+				display: none;
+			}
+			.custom-btn {
+				display: none;
+			}
+		}
+
+	}
+
+	.wrapper {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		transform-style: preserve-3d;
+		transition: transform 900ms ease-in-out;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		will-change: transform;
+	}
+
+	.item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		width: 39%;
+		height: 50%;
+		line-height: 50%;
+		color: #fff;
+		background-repeat: no-repeat;
+		background-size: cover !important;
+		background-position: center;
+		transition: all 900ms ease-in-out;
+		transform-origin: center;
+		pointer-events: none;
+		will-change: transform;
+
+		&.item1 {
+			transform: rotateY(0deg) translateZ(1000px);
+
+			&.active {
+				transform: rotateY(0deg) translateZ(500px);
+				opacity: 1;
+			}
+		}
+
+		&.item2 {
+			transform: rotateY(60deg) translateZ(1000px);
+
+			&.active {
+				transform: rotateY(60deg) translateZ(500px);
+				opacity: 1;
+			}
+		}
+
+		&.item3 {
+			transform: rotateY(120deg) translateZ(1000px);
+
+			&.active {
+				transform: rotateY(120deg) translateZ(500px);
+				opacity: 1;
+			}
+		}
+
+		&.item4 {
+			transform: rotateY(180deg) translateZ(1000px);
+
+			&.active {
+				transform: rotateY(180deg) translateZ(500px);
+				opacity: 1;
+			}
+		}
+
+		&.item5 {
+			transform: rotateY(240deg) translateZ(1000px);
+
+			&.active {
+				transform: rotateY(240deg) translateZ(500px);
+				opacity: 1;
+			}
+		}
+
+		&.item6 {
+			transform: rotateY(300deg) translateZ(1000px);
+
+			&.active {
+				transform: rotateY(300deg) translateZ(500px);
+				opacity: 1;
+			}
+		}
+
+		&__info {
+			text-align: center;
+			text-transform: uppercase;
+			font-weight: bold;
+			will-change: transform;
+		}
+
+		&__year {
+			font-size: 30px;
+			letter-spacing: 3px;
+			margin-bottom: 35px;
+			overflow: hidden;
+			line-height: 30px;
+			will-change: transform;
+
+			span {
+				position: relative;
+				top: 27px;
+				transition: all 900ms linear;
+				display: inline-block;
+				transform: scale(0.5);
+				white-space: nowrap;
+				will-change: transform;
+			}
+		}
+
+		&__name {
+			font-size: 55px;
+			letter-spacing: 3px;
+			margin-bottom: 62px;
+			overflow: hidden;
+			line-height: 55px;
+			will-change: transform;
+
+			span {
+				position: relative;
+				top: 48px;
+				transition: all 900ms ease-in-out;
+				display: inline-block;
+				transform: scale(1);
+				white-space: nowrap;
+				will-change: transform;
+			}
+		}
+	}
+
+	.arrow {
+		background: #8e2037;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		cursor: pointer;
+		border-radius: 50%;
+		width: 3rem;
+		height: 3rem;
+		transition: all 0.1s ease-in-out;
+		transform-origin: 50% 50%;
+		will-change: transform;
+
+		&:hover {
+			transform: translateY(-50%) scale(1.1)
+		}
+
+		&.arrow-next {
+			right: 1rem;
+			background: url('https://alikinvv.github.io/3d-carousel/build/img/arrow-right.svg') no-repeat center #8e2037;
+			background-size: 38px !important;
+		}
+
+		&.arrow-prev {
+			left: 1rem;
+			background: url('https://alikinvv.github.io/3d-carousel/build/img/arrow-left.svg') no-repeat center #8e2037;
+			background-size: 38px !important;
+		}
+	}
+</style>
+
+<section id="Games" class="main-bg-dark rounded-top-4 m-0 w-100 row p-0 m-0 justify-content-evenly" style="min-height: 93vh;">
+
+	<h3 class='text-center py-3 m-0'>Game Highlights</h3>
+
+	<div class="container-games p-0 m-0 w-100">
+		<div class="slider">
+			<div class="wrapper">
+				<div style="background-image: url('https://i.natgeofe.com/k/75ac774d-e6c7-44fa-b787-d0e20742f797/giant-panda-eating_4x3.jpg')" class="item item1 active">
+					<div class="item__info">
+						<p class="item__year">
+							<span>1483 - 1484</span>
+						</p>
+						<p class="item__name">
+							<span>BIRH OF VENUS</span>
+						</p>
+						<buton href="javascript:void(0)" class=" custom-btn rounded-2 p-1 m-2 accent-bg text-white">
+							<span>Discover more</span>
+						</buton>
+					</div>
+				</div>
+				<div style="background-image: url('https://alikinvv.github.io/3d-carousel/build/img/slide1.jpg')" class="item item2">
+					<div class="item__info">
+						<p class="item__year">
+							<span>1481 - 1484</span>
+						</p>
+						<p class="item__name">
+							<span>BIRH OF VENUS</span>
+						</p>
+						<a href="javascript:void(0)" class="custom-btn rounded-2 p-1 m-2 accent-bg text-white">
+							<span>Discover more</span>
+						</a>
+					</div>
+				</div>
+				<div style="background-image: url('https://alikinvv.github.io/3d-carousel/build/img/slide3.jpg')" class="item item3">
+					<div class="item__info">
+						<p class="item__year">
+							<span>1500 - 1501</span>
+						</p>
+						<p class="item__name">
+							<span>THE STORY OF VIRGINIA</span>
+						</p>
+						<a href="javascript:void(0)" class="custom-btn rounded-2 p-1 m-2 accent-bg text-white">
+							<span>Discover more</span>
+						</a>
+					</div>
+				</div>
+				<div style="background-image: url('https://i.natgeofe.com/k/75ac774d-e6c7-44fa-b787-d0e20742f797/giant-panda-eating_4x3.jpg')" class="item item4">
+					<div class="item__info">
+						<p class="item__year">
+							<span>1483 - 1484</span>
+						</p>
+						<p class="item__name">
+							<span>BIRH OF VENUS</span>
+						</p>
+						<a href="javascript:void(0)" class="custom-btn rounded-2 p-1 m-2 accent-bg text-white">
+							<span>Discover more</span>
+						</a>
+					</div>
+				</div>
+				<div style="background-image: url('https://alikinvv.github.io/3d-carousel/build/img/slide1.jpg')" class="item item5">
+					<div class="item__info">
+						<p class="item__year">
+							<span>1481 - 1484</span>
+						</p>
+						<p class="item__name">
+							<span>BIRH OF VENUS</span>
+						</p>
+						<a href="javascript:void(0)" class=" custom-btn rounded-2 p-1 m-2 accent-bg text-white">
+							<span>Discover more</span>
+						</a>
+					</div>
+				</div>
+				<div style="background-image: url('https://alikinvv.github.io/3d-carousel/build/img/slide3.jpg')" class="item item6">
+					<div class="item__info">
+						<p class="item__year">
+							<span>1500 - 1501</span>
+						</p>
+						<p class="item__name">
+							<span>THE STORY OF VIRGINIA</span>
+						</p>
+						<a href="javascript:void(0)" class=" custom-btn rounded-2 p-1 m-2 accent-bg text-white">
+							<span>Discover more</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="arrow arrow-next"></div>
+			<div class="arrow arrow-prev"></div>
+		</div>
+
+	</div>
+</section>
+
+
+<script>
+	let slider = document.querySelector('.slider');
+let wrapper = document.querySelector('.wrapper');
+let next = document.querySelector('.arrow-next');
+let prev = document.querySelector('.arrow-prev');
+let item = document.querySelectorAll('.item');
+let currdeg = 0;
+let active = 0;
+
+next.addEventListener('click', () => {
+slider.classList.toggle('zoom');
+
+currdeg = currdeg - 60;
+
+if (active === item.length - 1) {
+active = 0;
+} else {
+active++;
+} toggle();
+});
+
+prev.addEventListener('click', () => {
+slider.classList.toggle('zoom');
+
+currdeg = currdeg + 60;
+
+if (active === 0) {
+active = item.length - 1;
+} else {
+active--;
+} toggle();
+});
+
+let toggle = () => {
+setTimeout(() => {
+for (let i = 0; i < item.length; i++) {
+item[i].classList.remove('active');
+}
+
+item[active].classList.add('active')
+wrapper.style.transform = 'rotateY(' + currdeg + 'deg)';
+}, 900);
+
+setTimeout(() => {
+slider.classList.toggle('zoom');
+}, 1900);
+}
+</script>
+
+
+{#<div class="d-flex flex-column justify-content-center align-items-center h-100" style="min-height: 60vh; width: 100%;">
 
 		<div class="container-xxl rounded-4 main-bg-gradient-circle m-3 my-4 p-0 shadow-custom">
 
@@ -52,65 +444,8 @@
 			</div>
 
 		</div>
-	</div>
-</section>
+	</div>#}
 
-
-<script>
-  // Get all carousel indicators
-  var indicators = document.querySelectorAll('.carousel-indicator');
-  var curindex = 0;
-
-  function updateActiveIndicator(updatevalue) {
-    // Calculate the new index
-    curindex += updatevalue;
-
-    // Loop if curindex is larger than or equal to the length of indicators
-    if (curindex >= indicators.length) {
-      curindex = 0;
-    } else if (curindex < 0) {
-      curindex = indicators.length - 1;
-    }
-
-    // Remove 'active' class from all indicators
-    indicators.forEach(function (indicator, index) {
-      indicator.classList.remove('active');
-      if (index === curindex) {
-        indicator.classList.add('active');
-        // Scroll to the selected indicator
-        indicator.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-    });
-
-    // Activate the corresponding carousel item
-    var carousel = document.getElementById('carouselExampleIndicators');
-    var carouselInstance = new bootstrap.Carousel(carousel);
-    carouselInstance.to(curindex);
-  }
-
-  // Loop through each indicator and add click event listener
-  indicators.forEach(function (indicator, index) {
-    indicator.addEventListener('click', function () {
-      // Remove 'active' class from all indicators
-      indicators.forEach(function (indicator) {
-        indicator.classList.remove('active');
-      });
-
-      // Add 'active' class to the clicked indicator
-      this.classList.add('active');
-
-      // Update the current index
-      curindex = index;
-
-      // Activate the corresponding carousel item
-      var carousel = document.getElementById('carouselExampleIndicators');
-      var carouselInstance = new bootstrap.Carousel(carousel);
-      carouselInstance.to(index);
-    });
-  });
-</script>
-
-{#
 
 <script>
 	// Get all carousel indicators
@@ -123,12 +458,9 @@ curindex += updatevalue;
 // Loop if curindex is larger than or equal to the length of indicators
 if (curindex >= indicators.length) {
 curindex = 0;
-}
-// Loop if curindex is less than 0 else if (curindex < 0) {
+} else if (curindex < 0) {
 curindex = indicators.length - 1;
 }
-
-indicators = document.querySelectorAll('.carousel-indicator');
 
 // Remove 'active' class from all indicators
 indicators.forEach(function (indicator, index) {
@@ -140,8 +472,13 @@ indicator.scrollIntoView({behavior: 'smooth', block: 'nearest'});
 }
 });
 
+// Activate the corresponding carousel item
+var carousel = document.getElementById('carouselExampleIndicators');
+var carouselInstance = new bootstrap.Carousel(carousel);
+carouselInstance.to(curindex);
+}
 
-document.addEventListener("DOMContentLoaded", function () { // Loop through each indicator and add click event listener
+// Loop through each indicator and add click event listener
 indicators.forEach(function (indicator, index) {
 indicator.addEventListener('click', function () { // Remove 'active' class from all indicators
 indicators.forEach(function (indicator) {
@@ -151,16 +488,68 @@ indicator.classList.remove('active');
 // Add 'active' class to the clicked indicator
 this.classList.add('active');
 
+// Update the current index
+curindex = index;
+
 // Activate the corresponding carousel item
 var carousel = document.getElementById('carouselExampleIndicators');
-var carouselInstance = bootstrap.Carousel.getInstance(carousel);
+var carouselInstance = new bootstrap.Carousel(carousel);
 carouselInstance.to(index);
-
-curindex = index;
 });
-});
-
 });
 </script>
 
-#}
+{#
+	
+	<script>
+		// Get all carousel indicators
+	var indicators = document.querySelectorAll('.carousel-indicator');
+	var curindex = 0;
+	
+	function updateActiveIndicator(updatevalue) { // Calculate the new index
+	curindex += updatevalue;
+	
+	// Loop if curindex is larger than or equal to the length of indicators
+	if (curindex >= indicators.length) {
+	curindex = 0;
+	}
+	// Loop if curindex is less than 0 else if (curindex < 0) {
+	curindex = indicators.length - 1;
+	}
+	
+	indicators = document.querySelectorAll('.carousel-indicator');
+	
+	// Remove 'active' class from all indicators
+	indicators.forEach(function (indicator, index) {
+	indicator.classList.remove('active');
+	if (index === curindex) {
+	indicator.classList.add('active');
+	// Scroll to the selected indicator
+	indicator.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+	}
+	});
+	
+	
+	document.addEventListener("DOMContentLoaded", function () { // Loop through each indicator and add click event listener
+	indicators.forEach(function (indicator, index) {
+	indicator.addEventListener('click', function () { // Remove 'active' class from all indicators
+	indicators.forEach(function (indicator) {
+	indicator.classList.remove('active');
+	});
+	
+	// Add 'active' class to the clicked indicator
+	this.classList.add('active');
+	
+	// Activate the corresponding carousel item
+	var carousel = document.getElementById('carouselExampleIndicators');
+	var carouselInstance = bootstrap.Carousel.getInstance(carousel);
+	carouselInstance.to(index);
+	
+	curindex = index;
+	});
+	});
+	
+	});
+	</script>
+	
+	#}

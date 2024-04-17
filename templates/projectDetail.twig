@@ -127,7 +127,8 @@
 											{% else %}
 												<h5>Please
 													<a href="{{ path('app_login') }}">log in</a>
-													to leave a comment.</h5>
+													to leave a comment.
+												</h5>
 											{% endif %}
 										</div>
 									</div>
@@ -144,18 +145,10 @@
 
 	<hr>
 
-	<footer class="footer bg-dark text-center">
-		<div class="container">
-			<span class="text-muted text-white">Your footer content goes here.</span>
-		</div>
-	</footer>
-
 {% endblock %}
 
-{% block foote %}
-	<footer class="footer bg-dark text-center">
-		<div class="container">
-			<span class="text-muted">Your footer content goes here.</span>
-		</div>
+{% block foot %}
+	<footer class="bg-dark text-white text-center py-3" style="min-height: 25vh;">
+		<p>&copy; 2024 . All Rights Reserved.</p>
 	</footer>
 {% endblock %}

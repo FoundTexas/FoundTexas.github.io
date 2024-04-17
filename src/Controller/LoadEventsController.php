@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/admin')]
 class LoadEventsController extends AbstractController
 {
 
@@ -26,11 +27,20 @@ class LoadEventsController extends AbstractController
         $queryBuilder->orderBy('m.startDate', 'ASC');
         $query = $queryBuilder->getQuery();
 
-        // Get the IDs of milestones
         $milestoneIds = $query->getResult();
 
+        // Create a query builder to select only the IDs of projects
+        $queryBuilder = $entityManager->getRepository(Project::class)->createQueryBuilder('p');
+        $queryBuilder->select('p.id, p.name');
+        $queryBuilder->orderBy('p.id', 'DESC');
+        $query = $queryBuilder->getQuery();
+
+        // Get the IDs of milestones
+        $projectsIds = $query->getResult();
+
         return $this->render('EventLoading/index.html.twig', [
-            'milestoneIds' => $milestoneIds
+            'milestoneIds' => $milestoneIds,
+            'projectsIds' => $projectsIds
         ]);
     }
 

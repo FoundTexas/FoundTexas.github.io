@@ -73,6 +73,8 @@
 					<p>You are logged in as
 						{{ app.user.userIdentifier }}</p>
 					<a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
+				{% else %}
+					<a href="{{ path('app_login') }}">log in</a>
 				{% endif %}
 			</div>
 		</div>
