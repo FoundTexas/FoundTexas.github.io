@@ -79,18 +79,30 @@ class LoadEventsController extends AbstractController
     #[Route('/new/project', name: 'project_new', methods: ['GET', 'POST'])]
     public function newBulletPoints(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $project = new Project();
+        $id = $request->get('id') ?? null;
+
+        $project = $id ? $entityManager->getRepository(Project::class)->find($id) : new Project();
 
         $projectForm = $this->createForm(ProjectType::class, $project);
         $projectForm->handleRequest($request);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
-            $entityManager->persist($project);
+
+            $updateID = $request->get('updateID') ?? null;
+            $flushProject = $entityManager->getRepository(Project::class)->find($updateID) ?? new Project();
+
+            $flushProject->setName($project->getName())->setDescription($project->getDescription())->setFileref($project->getFileref())->setMileStone($project->getMileStone())->setIconref($project->getIconref());
+
+            $entityManager->persist($flushProject);
             $entityManager->flush();
         }
 
-        return $this->render('EventLoading/create_Project.twig', [
+        // Render only the form HTML
+        $projectFormView = $this->renderView('EventLoading/create_Project.twig', [
             'projectForm' => $projectForm->createView(),
+            'projectcur' => $project
         ]);
+
+        return new Response($projectFormView);
     }
 }

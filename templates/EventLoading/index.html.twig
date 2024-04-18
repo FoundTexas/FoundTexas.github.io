@@ -12,7 +12,7 @@
 			<h1 class="col-12">Milestone Load:</h1>
 
 			<div class="dropdown-center my-4 col-6">
-				<select id="milestoneDropdown" class="dropdown-center">
+				<select id="milestoneDropdown" class="dropdown-center" onchange="newForm('{{path('milestone_new')}}','MilestoneContainer', this.value)">
 					<option value="">Select Milestone</option>
 					{% for milestone in milestoneIds %}
 						<option value="{{ milestone.id }}">{{ milestone.id }}-{{ milestone.name }}</option>
@@ -20,16 +20,16 @@
 				</select>
 			</div>
 			<div class="col-6">
-				<button class="btn btn-success " onclick="newForm('{{path('milestone_new')}}')">+</button>
+				<button class="btn btn-success " onclick="newForm('{{path('milestone_new')}}','MilestoneContainer')">+</button>
 			</div>
 
 			<div id="MilestoneContainer"></div>
 		</div>
-		<div class="col-12 col-md-6 row">
+		<div class="col-12 col-md-6 row align-content-top">
 			<h1>Project Load:</h1>
 
-			<div class="dropdown-center my-4 col-6">
-				<select id="ProjectDropdown" class="dropdown-center">
+			<div class="dropdown-center col-6">
+				<select id="ProjectDropdown" class="dropdown-center" onchange="newForm('{{path('project_new')}}','ProjectContainer', this.value)">
 					<option value="">Select Project</option>
 					{% for project in projectsIds %}
 						<option value="{{ project.id }}">{{ project.id }}-{{ project.name }}</option>
@@ -37,7 +37,7 @@
 				</select>
 			</div>
 
-			<button class="btn btn-success my-4 col-6" onclick="newMilestone()">+</button>
+			<button class="btn btn-success my-4 col-6" onclick="newForm('{{path('project_new')}}', 'ProjectContainer')">+</button>
 
 			<div id="ProjectContainer"></div>
 		</div>

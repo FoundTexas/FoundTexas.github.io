@@ -1,6 +1,6 @@
 // JavaScript function to add new tag fields
 function addField(formcollection = 'mile_stone_form', formvalue = 'tags') {
-    var tagsContainer = document.getElementById( (formcollection+'_'+formvalue) );
+    var tagsContainer = document.getElementById((formcollection + '_' + formvalue));
     var index = tagsContainer.children.length; // Get the number of existing tag fields
 
     var newTagField = document.createElement('div');
@@ -28,14 +28,14 @@ function deleteField(button, container = 'mile_stone_form_tags') {
     }
 }
 
-function submitForm(updateID) {
-    var form = document.getElementById('mileStoneForm');
+function submitForm(url = 'admin/new/milestone', id = 'mileStoneForm', updateID) {
+    var form = document.getElementById(id);
     var formData = new FormData(form);
 
     // Append the updateID to the formData
     formData.append('updateID', updateID);
 
-    fetch('/new/milestone', {
+    fetch(url, {
         method: 'POST',
         body: formData
     })
@@ -56,38 +56,17 @@ function submitForm(updateID) {
         });
 }
 
-
-function newForm( url = '/new/milestone') {
+function newForm(url = 'admin/new/milestone', containerid = 'MilestoneContainer', selectedId) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                document.getElementById('MilestoneContainer').innerHTML = xhr.responseText;
+                document.getElementById(containerid).innerHTML = xhr.responseText;
             } else {
-                console.error('Failed to fetch milestone form:', xhr.status);
+                console.error('Failed to fetch form:', xhr.status);
             }
         }
     };
-    xhr.open('GET', url, true);
+    xhr.open('GET', url + (selectedId ? '?id=' + selectedId : ''), true);
     xhr.send();
 }
-
-document.addEventListener('DOMContentLoaded', function () { // Add event listener for dropdown change
-    document.getElementById('milestoneDropdown').addEventListener('change', function () {
-        var selectedId = this.value;
-        if (selectedId) { // Make AJAX request to get milestone form
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        document.getElementById('MilestoneContainer').innerHTML = xhr.responseText;
-                    } else {
-                        console.error('Failed to fetch milestone form:', xhr.status);
-                    }
-                }
-            };
-            xhr.open('GET', '/admin/new/milestone?id=' + selectedId, true);
-            xhr.send();
-        }
-    });
-});

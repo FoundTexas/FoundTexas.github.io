@@ -3,7 +3,7 @@
 {{ form_start(mileStoneForm, {'attr': {'id': 'mileStoneForm'}}) }}
 
 {{ form_row(mileStoneForm.name) }}
-{{ form_row(mileStoneForm.description) }}
+{{ form_row(mileStoneForm.description) }} projectForm
 {{ form_row(mileStoneForm.startDate) }}
 {{ form_row(mileStoneForm.endDate) }}
 
@@ -28,6 +28,6 @@
 <button type="button" onclick="addField('mile_stone_form', 'bullets')">Add BulletPoint</button>
 
 
-<button type="button" onclick="submitForm({{mileStonecur.id}})">Create</button>
+<button type="button" onclick="submitForm('{{path('milestone_new')}}', 'mileStoneForm', {{mileStonecur.id}})">Create</button>
 
 {{ form_end(mileStoneForm) }}
