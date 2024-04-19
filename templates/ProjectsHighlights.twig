@@ -1,10 +1,10 @@
-<section id="projects" class="main-bg-dark p-0" style="min-height: 100vh;">
+<section id="projects" class="bg-main-dark p-0" style="min-height: 100vh;">
 
 	{% include 'index/IndexHeader.twig' with {'textRef': textRef, 'headText': headText, 'darkbg': true} %}
 
 	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
 
-		<div class="container rounded-5 {{ color ?? 'main-bg-gradient' }}  m-3 my-md-4 p-3 shadow-custom">
+		<div class="container rounded-5 {{ color ?? 'bg-main-gradient' }}  m-3 my-md-4 p-3 shadow-custom">
 			<div class="row justify-content-center">
 
 				{% for project in projects %}

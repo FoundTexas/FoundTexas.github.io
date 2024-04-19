@@ -1,7 +1,7 @@
 <!-- Collapsible Navbar -->
 <div class="collapse navbar-collapse collapse position-sticky fixed-top" id="navbarCollapse" style="width:100%; z-index: 1040;">
 
-	<nav class="navbar navbar-dark navbar-expand-md main-bg p-0 m-0" style="min-height:10vh;">
+	<nav class="navbar navbar-dark navbar-expand-md bg-main p-0 m-0" style="min-height:10vh;">
 		<div class="d-flex w-75 align-items-center  justify-content-md-between justify-align-content-start row p-0 m-0">
 
 			<button class=" col-auto navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,31 +44,31 @@
 				<button type="button" class="btn-close" onclick="playSound('audioback')" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div
-				class="modal-body main-bg" style="overflow-y: auto; height: 50vh; ">
+				class="modal-body bg-main" style="overflow-y: auto; height: 50vh; ">
 
 				<!-- Navigation Buttons -->
-				<div class="row main-bg">
+				<div class="row bg-main">
 					{% for button in buttons %}
 						<button type="button" class="btn btn-primary col m-1" onclick="navigateToSectionAndCloseModal('{{ button.id }}')" data-bs-dismiss="modal">{{ button.label }}</button>
 					{% endfor %}
 				</div>
 
 				<!-- Classic Navbar Toggle -->
-				<div class="row main-bg align-items-center">
+				<div class="row bg-main align-items-center">
 					<h5 class="col">Classic Navbar:</h5>
 					<button type="button" class="col-auto btn btn-success" id="collapseOnButton">ON</button>
 					<button type="button" class="col-auto btn btn-danger" id="collapseOffButton">Off</button>
 				</div>
 
 				<!-- Volume Slider -->
-				<div class="row main-bg align-items-center">
+				<div class="row bg-main align-items-center">
 					<label for="volumeRange" class="form-label col-auto">Volume:</label>
 					<input type="range" class="form-range col" id="volumeRange" min="0" max="1" step="0.01" value="0.25">
 					<span class="col-auto" id="volumeValue">25%</span>
 				</div>
 
 			</div>
-			<div class="modal-footer text-center dark-main-bg">
+			<div class="modal-footer text-center dark-bg-main">
 				{% if app.user %}
 					<p>You are logged in as
 						{{ app.user.userIdentifier }}</p>

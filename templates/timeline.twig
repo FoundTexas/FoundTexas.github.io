@@ -48,7 +48,7 @@
 						{% for event in events_in_year %}
 							<div class="timeline-event border rounded-4 border-light bg-dark mx-auto" data-tags="{{ event.tags|join(',') }}" style="height: 100%;">
 
-								<div class="main-bg row">
+								<div class="bg-main row">
 									<h6 class="col-12 col-md accent-color m-2">{{ event.name }}</h6>
 									<span class="col-12 col-md white-text m-2">{{ event.startDate|date('Y-m') ~ ' - ' ~ event.endDate|date('Y-m') }}</span>
 								</div>

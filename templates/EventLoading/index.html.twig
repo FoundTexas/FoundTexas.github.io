@@ -6,42 +6,47 @@
 {% block head %}{% endblock %}
 
 {% block body %}
+	<div style="height:100vh;">
+		<div class="row p-5">
+			<div class="col-12 col-md-6 row justify-content-center">
+				<h1 class="text-center bg-main p-2 rounded-pill">Milestone Load:</h1>
+				<div class="d-flex justify-content-center align-content-evenly">
 
-	<div class="w-100 row p-5" style="height:100vh;">
-		<div class="col-12 col-md-6 row">
-			<h1 class="col-12">Milestone Load:</h1>
+					<select id="milestoneDropdown" class="dropdown-center col-auto" onchange="newForm('{{path('milestone_new')}}','MilestoneContainer', this.value)">
+						<option value="">Select Milestone</option>
+						{% for milestone in milestoneIds %}
+							<option value="{{ milestone.id }}">{{ milestone.id }}-{{ milestone.name }}</option>
+						{% endfor %}
+					</select>
+					<button class="btn btn-success col-auto" onclick="newForm('{{path('milestone_new')}}','MilestoneContainer')">+</button>
 
-			<div class="dropdown-center my-4 col-6">
-				<select id="milestoneDropdown" class="dropdown-center" onchange="newForm('{{path('milestone_new')}}','MilestoneContainer', this.value)">
-					<option value="">Select Milestone</option>
-					{% for milestone in milestoneIds %}
-						<option value="{{ milestone.id }}">{{ milestone.id }}-{{ milestone.name }}</option>
-					{% endfor %}
-				</select>
+				</div>
 			</div>
-			<div class="col-6">
-				<button class="btn btn-success " onclick="newForm('{{path('milestone_new')}}','MilestoneContainer')">+</button>
-			</div>
+			<div class="col-12 col-md-6 row justify-content-center">
+				<h1 class="text-center bg-main p-2 rounded-pill">Project Load:</h1>
+				<div class="row justify-content-center align-content-evenly">
 
-			<div id="MilestoneContainer"></div>
+					<select id="ProjectDropdown" class="dropdown-center col-auto" onchange="newForm('{{path('project_new')}}','ProjectContainer', this.value)">
+						<option value="">Select Project</option>
+						{% for project in projectsIds %}
+							<option value="{{ project.id }}">{{ project.id }}-{{ project.name }}</option>
+						{% endfor %}
+					</select>
+					<button class="btn btn-success my-4 col-auto" onclick="newForm('{{path('project_new')}}', 'ProjectContainer')">+</button>
+
+				</div>
+			</div>
 		</div>
-		<div class="col-12 col-md-6 row align-content-top">
-			<h1>Project Load:</h1>
 
-			<div class="dropdown-center col-6">
-				<select id="ProjectDropdown" class="dropdown-center" onchange="newForm('{{path('project_new')}}','ProjectContainer', this.value)">
-					<option value="">Select Project</option>
-					{% for project in projectsIds %}
-						<option value="{{ project.id }}">{{ project.id }}-{{ project.name }}</option>
-					{% endfor %}
-				</select>
+		<div class="row p-5">
+			<div class="col-12 col-md-6 row justify-content-center">
+				<div id="MilestoneContainer"></div>
 			</div>
-
-			<button class="btn btn-success my-4 col-6" onclick="newForm('{{path('project_new')}}', 'ProjectContainer')">+</button>
-
-			<div id="ProjectContainer"></div>
+			<div class="col-12 col-md-6 row justify-content-center">
+				<div id="ProjectContainer"></div>
+			</div>
 		</div>
 	</div>
-</div>
 
-<script src="{{ asset('js/formsFunctions.js') }}"></script>{% endblock %}
+	<script src="{{ asset('js/formsFunctions.js') }}"></script>
+{% endblock %}

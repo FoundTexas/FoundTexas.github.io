@@ -5,7 +5,7 @@
 		overflow: hidden;
 		display: flex;
 		align-items: center;
-		font-family: 'Montserrat', sans-serif;
+		justify-content: center;
 		color: #fff;
 		height: 80vh;
 	}
@@ -13,7 +13,7 @@
 	.slider {
 		width: 100% !important;
 		height: 100% !important;
-
+		transition: transform 900ms;
 		position: relative;
 		perspective: 1000px;
 		max-height: 100%;
@@ -34,11 +34,6 @@
 					opacity: 1;
 					pointer-events: all;
 
-					span {
-						top: 0;
-						transform: scale(10);
-
-					}
 
 					.custom-btn {
 						transform: scale(3);
@@ -171,85 +166,43 @@
 				opacity: 1;
 			}
 		}
-
-		&__info {
-			text-align: center;
-			text-transform: uppercase;
-			font-weight: bold;
-			will-change: transform;
-		}
-
-		&__year {
-			font-size: 30px;
-			letter-spacing: 3px;
-			margin-bottom: 35px;
-			overflow: hidden;
-			line-height: 30px;
-			will-change: transform;
-
-			span {
-				position: relative;
-				top: 27px;
-				transition: all 900ms linear;
-				display: inline-block;
-				transform: scale(0.5);
-				white-space: nowrap;
-				will-change: transform;
-			}
-		}
-
-		&__name {
-			font-size: 55px;
-			letter-spacing: 3px;
-			margin-bottom: 62px;
-			overflow: hidden;
-			line-height: 55px;
-			will-change: transform;
-
-			span {
-				position: relative;
-				top: 48px;
-				transition: all 900ms ease-in-out;
-				display: inline-block;
-				transform: scale(1);
-				white-space: nowrap;
-				will-change: transform;
-			}
-		}
 	}
 
 	.arrow {
-		background: #8e2037;
 		position: absolute;
 		top: 50%;
-		transform: translateY(-50%);
 		cursor: pointer;
 		border-radius: 50%;
-		width: 3rem;
-		height: 3rem;
+		width: 2rem;
+		height: 2rem;
 		transition: all 0.1s ease-in-out;
-		transform-origin: 50% 50%;
 		will-change: transform;
-
-		&:hover {
-			transform: translateY(-50%) scale(1.1)
-		}
 
 		&.arrow-next {
 			right: 1rem;
-			background: url('https://alikinvv.github.io/3d-carousel/build/img/arrow-right.svg') no-repeat center #8e2037;
-			background-size: 38px !important;
+			background: url('https://alikinvv.github.io/3d-carousel/build/img/arrow-right.svg') no-repeat center #6f1b6f39;
+			background-size: 2rem !important;
+
+			&:hover {
+				transform: scale(1.1);
+				background: url('https://alikinvv.github.io/3d-carousel/build/img/arrow-right.svg') no-repeat center #6F1B6F;
+			}
 		}
 
 		&.arrow-prev {
 			left: 1rem;
-			background: url('https://alikinvv.github.io/3d-carousel/build/img/arrow-left.svg') no-repeat center #8e2037;
-			background-size: 38px !important;
+			background: url('https://alikinvv.github.io/3d-carousel/build/img/arrow-left.svg') no-repeat center #6f1b6f39;
+			background-size: 2rem !important;
+
+			&:hover {
+				transform: scale(1.1);
+				background: url('https://alikinvv.github.io/3d-carousel/build/img/arrow-left.svg') no-repeat center #6F1B6F;
+			}
 		}
 	}
 </style>
 
-<section id="Games" class="main-bg-dark rounded-top-4 m-0 w-100 row p-0 m-0 justify-content-evenly" style="min-height: 93vh;">
+<section id="Games" class="bg-main-dark rounded-top-4 m-0 w-100 row p-0 m-0 justify-content-evenly" style="min-height: 93vh;">
 
 	<h3 class='text-center py-3 m-0'>Game Highlights</h3>
 
@@ -345,7 +298,7 @@
 
 
 <script>
-	let slider = document.querySelector('.slider');
+let slider = document.querySelector('.slider');
 let wrapper = document.querySelector('.wrapper');
 let next = document.querySelector('.arrow-next');
 let prev = document.querySelector('.arrow-prev');
@@ -354,49 +307,49 @@ let currdeg = 0;
 let active = 0;
 
 next.addEventListener('click', () => {
-slider.classList.toggle('zoom');
+    slider.classList.toggle('zoom');
 
-currdeg = currdeg - 60;
+    currdeg = currdeg - 60;
 
-if (active === item.length - 1) {
-active = 0;
-} else {
-active++;
-} toggle();
+    if (active === item.length - 1) {
+        active = 0;
+    } else {
+        active++;
+    } toggle();
 });
 
 prev.addEventListener('click', () => {
-slider.classList.toggle('zoom');
+    slider.classList.toggle('zoom');
 
-currdeg = currdeg + 60;
+    currdeg = currdeg + 60;
 
-if (active === 0) {
-active = item.length - 1;
-} else {
-active--;
-} toggle();
+    if (active === 0) {
+        active = item.length - 1;
+    } else {
+        active--;
+    } toggle();
 });
 
 let toggle = () => {
-setTimeout(() => {
-for (let i = 0; i < item.length; i++) {
-item[i].classList.remove('active');
-}
+    setTimeout(() => {
+        for (let i = 0; i < item.length; i++) {
+            item[i].classList.remove('active');
+        }
 
-item[active].classList.add('active')
-wrapper.style.transform = 'rotateY(' + currdeg + 'deg)';
-}, 900);
+        item[active].classList.add('active')
+        wrapper.style.transform = 'rotateY(' + currdeg + 'deg)';
+    }, 900);
 
-setTimeout(() => {
-slider.classList.toggle('zoom');
-}, 1900);
+    setTimeout(() => {
+        slider.classList.toggle('zoom');
+    }, 1900);
 }
 </script>
 
 
 {#<div class="d-flex flex-column justify-content-center align-items-center h-100" style="min-height: 60vh; width: 100%;">
 
-		<div class="container-xxl rounded-4 main-bg-gradient-circle m-3 my-4 p-0 shadow-custom">
+		<div class="container-xxl rounded-4 bg-main-gradient-circle m-3 my-4 p-0 shadow-custom">
 
 			<div id="carouselExampleIndicators" class="carousel slide px-md-3 px-1 pt-3">
 				<div class="carousel-inner rounded-4 bg-dark mb-3 shadow-custom col-6 d-flex flex-column align-content-center" style="overflow: hidden; aspect-ratio:2.5;">
