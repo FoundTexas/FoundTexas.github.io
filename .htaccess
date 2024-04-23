@@ -1,14 +1,9 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine on
+    RewriteEngine On
 
     # Check if the request is for an existing file or directory.
-    RewriteCond %{REQUEST_FILENAME} -s [OR]
-    RewriteCond %{REQUEST_FILENAME} -l [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
-
-    # If it's an existing file or directory, do nothing.
-    RewriteRule ^ - [NC,L]
+    RewriteCond %{REQUEST_FILENAME} !-f
 
     # Rewrite all other requests to index.php in the public directory.
-    RewriteRule ^(.*) public/index.php [NC,L]
+    RewriteRule ^(.*) public/index.php [L,QSA]
 </IfModule>
