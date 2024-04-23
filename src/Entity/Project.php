@@ -29,6 +29,9 @@ class Project
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $iconref = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Project
     public function setIconref(?string $iconref): static
     {
         $this->iconref = $iconref;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
