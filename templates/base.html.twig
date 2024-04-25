@@ -9,7 +9,7 @@
 				none
 			{% endblock %}
 		</title>
-		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%30>🐼</text></svg>"> {% block stylesheets %}{% endblock %}
+		<link rel="icon" href="{{ asset('foundtexaspanda.svg') }}"> {% block stylesheets %}{% endblock %}
 
 		<!-- googleapis fonts Pixelify+Sans -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +43,7 @@
 
 		<link href="{{ asset('styles/app.css') }}" rel="stylesheet">
 	</head>
+	
 	<body>
 		{% block sound %}
 			<audio class="audio-sfx-group" id="audiopress" src="{{ asset('sounds/pressUI.mp3') }}"></audio>

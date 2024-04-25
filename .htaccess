@@ -1,11 +1,15 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine On
+    RewriteEngine on
+    RewriteOptions inherit
+    
+    RewriteCond %{Request_URI} !^/\.well-known/acme-challenge/.+$
+    RewriteCond %{Request_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 
     # Check if the request is for an existing file or directory.
-    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !public/
 
     # Rewrite all other requests to index.php in the public directory.
-    RewriteRule ^(.*) public/index.php [QSA]
+    RewriteRule (.*) /public/$1 [L]
 </IfModule>
 # php -- BEGIN cPanel-generated handler, do not edit
 # Configure el paquete “ea-php82” como el lenguaje de programación predeterminado “PHP”.
