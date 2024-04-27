@@ -68,13 +68,13 @@
 				</div>
 
 			</div>
-			<div class="modal-footer text-center dark-bg-main">
+			<div class="modal-footer text-center dark-bg-main text-white">
 				{% if app.user %}
 					<p>You are logged in as
 						{{ app.user.userIdentifier }}</p>
 					<a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
 				{% else %}
-					<a href="{{ path('app_login') }}">log in</a>
+					<a href="{{ path('app_login') }}">log in</a> or <a href="{{ path('app_register') }}"> Sign up</a>
 				{% endif %}
 			</div>
 		</div>

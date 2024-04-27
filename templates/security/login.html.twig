@@ -14,6 +14,9 @@
 							<h1 class="text-center m-2">Log In</h1>
 						</div>
 						<div class="container card-body bg-dark">
+
+							<a href="{{ path('app_register') }}"> Sign up</a>
+
 							<form method="post">
 								{% if error %}
 									<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -48,7 +51,7 @@
 										        #}
 
 								<button class="btn btn-lg btn-primary" type="submit">
-									Sign in
+									Login in
 								</button>
 							</form>
 
