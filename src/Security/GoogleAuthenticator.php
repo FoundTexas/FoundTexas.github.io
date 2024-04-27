@@ -47,18 +47,27 @@ class GoogleAuthenticator extends OAuth2Authenticator
                 $googleUser = $client->fetchUserFromToken($accessToken);
                 $email = $googleUser->getEmail();
 
-                // have they logged in with Google before? Easy!
+                // Check if a user with this Google ID already exists
                 $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['googleId' => $googleUser->getId()]);
 
-                //User doesnt exist, we create it !
                 if (!$existingUser) {
+                    // No user with this Google ID, check by email
                     $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]) ?? new User();
                     $existingUser->setEmail($email);
                     $existingUser->setGoogleId($googleUser->getId());
-                    $existingUser->setHostedDomain($googleUser->getHostedDomain());
+                    $existingUser->setHostedDomain($googleUser->getHostedDomain() ?? "");
                 }
-                $existingUser->setName($googleUser->getName());
-                $existingUser->setAvatar($googleUser->getAvatar());
+
+                // Generate a random password
+                $password = $this->generateRandomPassword();
+                // Set the password for the user
+                $existingUser->setPassword($existingUser->getPassword() != "none" ? $existingUser->getPassword() : $password);
+
+                // Set the user's name and ensure uniqueness
+                $originalName = $googleUser->getName();
+                $uniqueName = $this->makeNameUnique($originalName);
+                $existingUser->setName($existingUser->getName() ?? $uniqueName);
+                $existingUser->setAvatar($existingUser->getAvatar() ?? $googleUser->getAvatar());
 
                 $this->entityManager->persist($existingUser);
                 $this->entityManager->flush();
@@ -66,6 +75,41 @@ class GoogleAuthenticator extends OAuth2Authenticator
                 return $existingUser;
             })
         );
+    }
+
+    private function generateRandomPassword(int $length = 12): string
+    {
+        // Define characters to be used in the random password
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|';
+
+        // Generate random password
+        $password = '';
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[random_int(0, strlen($chars) - 1)];
+        }
+
+        return $password;
+    }
+
+    private function makeNameUnique(string $name): string
+    {
+        $baseName = $name;
+        $suffix = 1;
+
+        // Loop until a unique name is found
+        while ($this->isNameExists($baseName)) {
+            $baseName = $name . '-' . $suffix;
+            $suffix++;
+        }
+
+        return $baseName;
+    }
+
+    private function isNameExists(string $name): bool
+    {
+        $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['name' => $name]);
+
+        return ($existingUser !== null);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
