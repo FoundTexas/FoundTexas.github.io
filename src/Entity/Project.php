@@ -32,6 +32,9 @@ class Project
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $linkref = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Project
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getLinkref(): ?string
+    {
+        return $this->linkref;
+    }
+
+    public function setLinkref(?string $linkref): static
+    {
+        $this->linkref = $linkref;
 
         return $this;
     }
