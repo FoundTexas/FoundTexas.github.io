@@ -16,12 +16,24 @@ class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager): Response
-    {   
-        $Project = $entityManager->getRepository(Project::class)->findAll();
+    {
+        $queryBuilder = $entityManager->getRepository(Project::class)->createQueryBuilder('p');
+
+        $queryBuilder->select('p.id, p.name, p.description, p.fileref, p.iconref, p.type, p.linkref')
+            ->where('p.type = :type');
+
+        $queryBuilder2 = $queryBuilder;
+        
+        $queryBuilder->setParameter('type', 'main-game');
+        $queryBuilder2->setParameter('type', 'main-web');
+
+        $results = $queryBuilder->getQuery()->getResult();
+        $results2 = $queryBuilder2->getQuery()->getResult();
 
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
-            'Project' => $Project,
+            'games' => $results,
+            'Projects' => $results2,
         ]);
     }
 
