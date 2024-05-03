@@ -23,14 +23,6 @@ a, label, p, h1, h2, h3, h4, h5, h6, li, span {
   margin: 0 auto;
 }
 
-.typing-effect::after {
-  content: '';
-  display: inline-block;
-  vertical-align: bottom;
-  width: 0;
-  animation: typing 5s steps(30, end) infinite;
-}
-
 /* Keyframes for the typing animation */
 @keyframes typing {
   from {
