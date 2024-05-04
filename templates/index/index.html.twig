@@ -11,6 +11,73 @@
 {% block body %}
 
 	{% include 'index/AboutMe.twig' %}
+
+	<style type="text/css">
+		.wrapper {
+			height: 100%;
+			margin: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			perspective: 1000px;
+			background-color: #f0f0f0;
+		}
+
+		.carousel {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform-style: preserve-3d;
+			transition: transform 0.5s;
+		}
+
+		.item {
+			width: 100px;
+			height: 100px;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform-origin: center center 0;
+			transition: transform 0.5s;
+		}
+	</style>
+
+	<section id="test" class="bg-primary p-0 w-100" style="height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; perspective: 1000px;">
+
+			<div class="carousel" style="width: 300px; height: 300px; position: relative; transform-style: preserve-3d;">
+
+				{% for i in 0..5 %}
+					<div class="item" style="width: 80px; height: 80px; background-color: white; border: 1px solid #ccc; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateY({{ loop.index * 60 }}deg) translateZ(200px);">
+						<h5 style="margin: 0; text-align: center;">{{ loop.index }}</h5>
+					</div>
+				{% endfor %}
+
+			</div>
+
+	</section>
+
+	<button class="prev-btn" onclick="rotateCarousel(-1)">Prev</button>
+	<button class="next-btn" onclick="rotateCarousel(1)">Next</button>
+
+	<script>
+		let currentRotation = 0;
+const rotationIncrement = 60; // Degrees to rotate per step
+
+function rotateCarousel(direction) {
+const carousel = document.querySelector('.carousel');
+currentRotation += direction * rotationIncrement;
+carousel.style.transform = `rotateY(${currentRotation}deg)`;
+}
+	</script>
+
+
 	{% include 'index/GameHighlights.twig' with {'projects': games, 'type': 'games','textRef': 'GamesPortfolio', 'headText': 'Games Portfolio', 'darkbg': true} %}
 	{% include 'index/ProjectsHighlights.twig' with {'projects': Projects, 'type': 'web-projects','textRef': 'WebPortfolio', 'headText': 'Web Portfolio', 'darkbg': true, 'color': 'bg-main-gradient-alter'} %}
 	{% include 'index/contact.twig' %}
