@@ -41,7 +41,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    #[Route('/terms-of-Service', name: 'app_terms_of_Service')]
+    #[Route('/terms-of-service', name: 'app_terms_of_Service')]
     public function showTermsOfService(): Response
     {
         return $this->render('terms_of_service.html.twig', []);
