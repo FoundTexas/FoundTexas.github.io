@@ -76,11 +76,11 @@ a, label, p, h1, h2, h3, h4, h5, h6, li, span {
   color: #cfa6cb;
 }
 
-.accent-bg {
+.bg-accent {
   background-color: #57a9a1;
 }
 
-.accent-bg-dark {
+.bg-accent-dark {
   background-color: #252b29;
 }
 

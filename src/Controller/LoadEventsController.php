@@ -91,7 +91,7 @@ class LoadEventsController extends AbstractController
             $updateID = $request->get('updateID') ?? null;
             $flushProject = $entityManager->getRepository(Project::class)->find($updateID) ?? new Project();
 
-            $flushProject->setName($project->getName())->setDescription($project->getDescription())->setFileref($project->getFileref())->setMileStone($project->getMileStone())->setIconref($project->getIconref());
+            $flushProject->setName($project->getName())->setDescription($project->getDescription())->setFileref($project->getFileref())->setMileStone($project->getMileStone())->setIconref($project->getIconref())->setLinkref($project->getLinkref())->setType($project->getType());
 
             $entityManager->persist($flushProject);
             $entityManager->flush();

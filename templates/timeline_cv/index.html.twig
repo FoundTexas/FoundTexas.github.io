@@ -24,7 +24,7 @@
 		}
 	</style>
 
-	<div id="timeline" class="row m-0 p-0 accent-bg-dark" style="min-height: 75vh;">
+	<div id="timeline" class="row m-0 p-0 bg-accent-dark" style="min-height: 75vh;">
 		{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
 
 		<div class="col-12 row fixed-top py-2 position-sticky bg-main-dark rounded-4" style="z-index: 1042;">
@@ -85,7 +85,7 @@
 
 		{% if years is empty %}
 
-			<h3 class="col-6 my-5 accent-bg-dark text-center mx-auto py-3 text-warning border border-warning rounded-3">
+			<h3 class="col-6 my-5 bg-accent-dark text-center mx-auto py-3 text-warning border border-warning rounded-3">
 				No events available.
 			</h3>
 
@@ -121,7 +121,7 @@
 									{% if event.main.bullets is defined and event.main.bullets|length > 0 %}
 										<div class="row my-2">
 											<div class="col">
-												<button class="custom-btn rounded-2 p-1 m-2 accent-bg text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvent{{ event.main.id }}" aria-expanded="false" aria-controls="collapseEvent{{ event.main.id }}">
+												<button class="custom-btn rounded-2 p-1 m-2 bg-accent text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvent{{ event.main.id }}" aria-expanded="false" aria-controls="collapseEvent{{ event.main.id }}">
 													<i class="fa fa-info-circle" aria-hidden="true"></i>
 													More Info
 												</button>
@@ -159,7 +159,7 @@
 						</div>
 					{% endfor %}
 					<div class="col-12 d-flex row flex-column justify-content-center align-items-center ">
-						<h6 id="noTimelineEvents" class="col-6 py-5 my-5 accent-bg-dark text-center mx-auto text-secondary border border-secondary rounded-3" style="display: none; z-index: 100;">
+						<h6 id="noTimelineEvents" class="col-6 py-5 my-5 bg-accent-dark text-center mx-auto text-secondary border border-secondary rounded-3" style="display: none; z-index: 100;">
 							No events available.
 						</h6>
 					</div>
