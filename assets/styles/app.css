@@ -2,7 +2,8 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
-  background-color: #252b29;
+  background-color: #382838;
+  
 }
 
 a, label, p, h1, h2, h3, h4, h5, h6, li, span {
@@ -39,7 +40,7 @@ a, label, p, h1, h2, h3, h4, h5, h6, li, span {
 }
 
 .main-color-dark {
-  color: #4D114D;
+  color: #391539;
 }
 
 .accent-color {

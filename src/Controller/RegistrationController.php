@@ -63,6 +63,14 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    #[Route('/terms-of-use', name: 'app_terms_of_use')]
+    public function termsOfUse(): Response
+    {
+
+        return $this->render('terms_of_service.html.twig', [
+        ]);
+    }
+
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {

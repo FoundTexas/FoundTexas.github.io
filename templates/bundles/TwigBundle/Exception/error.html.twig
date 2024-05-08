@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <div class="text-center">
+            <h1 class="display-4">Page not found</h1>
+            <p class="lead">
+                The requested page couldn't be located. Check for any URL misspelling or
+                <a href="{{ path('app_index') }}" class="accent-color">return to the homepage</a>.
+            </p>
+        </div>
+    </div>
+
+	{% block stylesheets %}
+		<style>
+
+			h1.display-4 {
+				animation: fadeInDown 0.5s ease forwards; /* Fade-in animation for the heading */
+			}
+			p.lead {
+				animation: fadeInUp 0.5s ease forwards 0.3s; /* Fade-in animation for the paragraph */
+			}
+
+			/* Keyframes for animations */
+			@keyframes fadeInDown {
+				from {
+					opacity: 0;
+					transform: translateY(-20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+		</style>
+	{% endblock %}
+
+{% endblock %}

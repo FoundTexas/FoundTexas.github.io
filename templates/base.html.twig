@@ -48,11 +48,44 @@
 	</head>
 	
 	<body>
-		<div id="loading" class="position-fixed container-fluid p-0" style="z-index: 900000; height:101vh; background-color:#111111;">
+		<div id="loading" class="position-fixed container-fluid p-0" style="z-index: 900000; height:101vh; background-color:#111111; display:block;">
 			<div class="row d-flex align-items-center justify-content-center p-5 w-100 h-100" >
 				<img class="" src="{{ asset('loadgif.gif') }}" style="width: 40vw; height:auto;" alt="Loading..." />
 			</div>
 		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+
+				// Event listener to detect when the page is being refreshed
+				window.addEventListener('beforeunload', function() {
+					showLoading(); // Show the loading spinner before the page is refreshed
+				});
+
+				// Event listener to detect when the page is being shown from bfcache (navigating back)
+				window.addEventListener('pageshow', function(event) {
+					if (event.persisted) {
+						// Page is being loaded from the bfcache (navigated back)
+						hideLoading(); // Immediately hide the loading spinner
+					}
+				});
+
+			});
+
+			function showLoading() {
+					document.getElementById('loading').style.display = 'block';
+				}
+
+				// Function to hide the loading spinner
+				function hideLoading() {
+					document.getElementById('loading').style.display = 'none';
+				}
+
+				// Add a delay before hiding the loading spinner (example: 1000ms = 1 second)
+				setTimeout(function() {
+					hideLoading(); // Hide the loading spinner after a short delay
+				}, 1000); // Change the delay value as needed
+		</script>
 
 		{% block sound %}
 			<audio class="audio-sfx-group" id="audiopress" src="{{ asset('sounds/pressUI.mp3') }}"></audio>
@@ -75,44 +108,6 @@
 		{% block foot %}
 			{% include 'index/footer.twig' %}
 		{% endblock %}
-
-		<script>
-
-		document.addEventListener("DOMContentLoaded", function() {
-			// Function to show the loading spinner
-			function showLoading() {
-				document.getElementById('loading').style.display = 'block';
-			}
-
-			// Function to hide the loading spinner
-			function hideLoading() {
-				document.getElementById('loading').style.display = 'none';
-			}
-
-			// Show the loading spinner when the page starts loading or refreshing
-			showLoading();
-
-			// Event listener to detect when the page is being refreshed
-			window.addEventListener('beforeunload', function() {
-				showLoading(); // Show the loading spinner before the page is refreshed
-			});
-
-			// Event listener to detect when the page is being shown from bfcache (navigating back)
-			window.addEventListener('pageshow', function(event) {
-				if (event.persisted) {
-					// Page is being loaded from the bfcache (navigated back)
-					hideLoading(); // Immediately hide the loading spinner
-				}
-			});
-
-			// Add a delay before hiding the loading spinner (example: 1000ms = 1 second)
-			setTimeout(function() {
-				hideLoading(); // Hide the loading spinner after a short delay
-			}, 100); // Change the delay value as needed
-		});
-
-
-		</script>
 
 	</body>
 </html>
