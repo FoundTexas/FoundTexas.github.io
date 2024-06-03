@@ -11,22 +11,16 @@
 {% block body %}
 
 	<section id="projects" class="bg-main-dark px-2" style="min-height: 100vh;">
-
 		{% include 'index/IndexHeader.twig' with {'textRef': textRef, 'headText': headText, 'darkbg': true} %}
-
 		<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
-
 			<div class="container rounded-5 bg-main-gradient m-3 my-md-4 shadow-custom">
 				<div class="row justify-content-center m-2">
-
 					{% for project in projects %}
-
-						<div class="col-6 col-md-3 col-lg-2 my-2 ">
-							<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow-custom cursor-pointer" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; ">
+						<a class="col-6 col-md-3 col-lg-2 my-2 " href="{{project.linkref ?? path('app_project_detail', {'id': project.id}) }}">
+							<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow-custom cursor-pointer" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; ">
 								<img src="{{ project.iconref }}" style="height: 100%; width: auto;" alt="Gallery Image 1">
 							</div>
-						</div>
-
+						</a>
 					{% endfor %}
 				</div>
 			</div>

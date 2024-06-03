@@ -38,8 +38,8 @@
 	}
 </style>
 
-<div class="row justify-content-center bg-main-dark p-0 m-0">
-	<h3 class='text-center py-3 m-0'>Game Highlights</h3>
+<div class="row justify-content-center bg-main-dark p-0 m-0 rounded-top-5">
+	<h3 class='text-center py-4 m-0'>Game Highlights</h3>
 </div>
 
 <section id="test" class="bg-main-dark p-0 m-0 d-flex justify-content-evenly" style="min-height: 80vh; align-items: center; overflow: hidden; perspective: 3000px;">
@@ -56,7 +56,7 @@
 				<div class="container m-5 row justify-content-center bg-main-dark-translucent p-3 rounded-4">
 					<h5 class="text-white text-center" style="margin: 0; text-align:">{{ game.name }}</h5>
 
-					<a type="button" href="{{game.linkref ?? path('app_project_detail', {'id': game.id}) }}" class="col-auto custom-btn rounded-2 p-1 mt-4 mb-2 bg-accent text-white">
+					<a type="button" href="{{game.linkref ?? path('app_project_detail', {'id': game.id}) }}" class="col-auto custom-btn rounded-2 p-1 mt-4 mb-2 bg-accent text-white text-decoration-none">
 						&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;
 					</a>
 				</div>
