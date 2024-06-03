@@ -20,7 +20,7 @@ class Project
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $fileref = null;
 
     #[ORM\ManyToOne(inversedBy: 'asociatedproject')]
@@ -69,7 +69,7 @@ class Project
         return $this->fileref;
     }
 
-    public function setFileref(string $fileref): static
+    public function setFileref(?string $fileref): static
     {
         $this->fileref = $fileref;
 
