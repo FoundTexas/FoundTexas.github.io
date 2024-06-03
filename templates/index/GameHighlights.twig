@@ -56,12 +56,9 @@
 				<div class="container m-5 row justify-content-center bg-main-dark-translucent p-3 rounded-4">
 					<h5 class="text-white text-center" style="margin: 0; text-align:">{{ game.name }}</h5>
 
-					<a href="{{game.linkref ?? path('app_project_detail', {'id': game.id}) }}" class="btn btn-primary">
+					<a type="button" href="{{game.linkref ?? path('app_project_detail', {'id': game.id}) }}" class="col-auto custom-btn rounded-2 p-1 mt-4 mb-2 bg-accent text-white">
 						&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;
 					</a>
-					<button type="button" class="col-auto custom-btn rounded-2 p-1 mt-4 mb-2 bg-accent text-white" href="{{project.linkref ?? '#' }}" onclick="window.location.href='{{ path('app_project_detail', {'id': game.id}) }}'" data-bs-dismiss="modal">
-						&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;
-					</button>
 				</div>
 			</div>
 		{% endfor %}
