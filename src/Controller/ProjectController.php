@@ -21,7 +21,7 @@ class ProjectController extends AbstractController
     {
         $projects = $entityManager->getRepository(Project::class)->findAll();
 
-        return $this->render('Projects.twig', [
+        return $this->render('projects/Projects.twig', [
             'controller_name' => 'IndexController',
             'projects' => $projects,
             'textRef'=> $type, 
@@ -71,7 +71,7 @@ class ProjectController extends AbstractController
             ];
         }
 
-        return $this->render('projectDetail.twig', [
+        return $this->render('projects/projectDetail.twig', [
             'project' => $project,
             'commentsWithSubcomments' => $commentsWithSubcomments,
         ]);
