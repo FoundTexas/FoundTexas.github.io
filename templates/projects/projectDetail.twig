@@ -50,19 +50,7 @@
 					</div>
 					<div class="card-body bg-dark">
 						{% if app.user %}
-							<form action="{{ path('comment_create', {'projectId': project.id}) }}" method="post">
-								<div class="row align-items-center mb-4">
-									<div class="col-auto">
-										<img class="rounded-circle shadow-1-strong" src="{% if app.user.avatar is not null %}{{ app.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="40vw" height="40vw">
-									</div>
-									<div class="col">
-										<input type="text" class="form-control" name="comment" placeholder="Add a comment">
-									</div>
-									<div class="col-auto">
-										<button type="submit" class="btn btn-primary">Submit</button>
-									</div>
-								</div>
-							</form>
+							{% include 'projects/comment.twig' with {'project': project, 'avatar': app.user.avatar, 'parentId':null } %}
 						{% else %}
 							<p>Please
 								<a href="{{ path('app_login') }}">log in</a>
@@ -80,17 +68,39 @@
 												{{ commentWithSubcomments.parentComment.user.name }}
 												<span class="small">-</span>
 											</p>
-											<a data-bs-toggle="collapse" href="#collapseComments{{ commentWithSubcomments.parentComment.id }}" aria-expanded="false" aria-controls="collapseComments{{ commentWithSubcomments.parentComment.id }}">
-												<i class="fas fa-reply fa-xs"></i>
-												<span class="small">reply</span>
-											</a>
+											<div>
+												<a class="mx-1" data-bs-toggle="collapse" href="#collapseComments{{ commentWithSubcomments.parentComment.id }}" aria-expanded="false" aria-controls="collapseComments{{ commentWithSubcomments.parentComment.id }}">
+													<i class="fas fa-reply fa-xs"></i>
+													<span class="small">reply</span>
+												</a>
+												{% if app.user and app.user.id == commentWithSubcomments.parentComment.user.id %}
+													<a class="mx-1" data-bs-toggle="collapse" href="#editComment{{ commentWithSubcomments.parentComment.id }}" aria-expanded="false" aria-controls="editComment{{ commentWithSubcomments.parentComment.id }}">
+														<i class="fas fa-edit fa-xs"></i>
+														<span class="small">edit</span>
+													</a>
+													<form class="mx-1" method="post" action="{{ path('comment_delete', {'commentId': commentWithSubcomments.parentComment.id, 'projectId': project.id}) }}" style="display:inline;">
+														<button type="submit" class="btn btn-link btn-sm text-danger p-0 m-0">delete</button>
+													</form>
+												{% endif %}
+											</div>
 										</div>
 										<p class="small mb-0">{{ commentWithSubcomments.parentComment.textdata }}</p>
+
+										{% if app.user and app.user.id == commentWithSubcomments.parentComment.user.id %}
+											<div class="collapse" id="editComment{{ commentWithSubcomments.parentComment.id }}">
+												<form method="post" action="{{ path('comment_create', {'projectId': project.id}) }}">
+													<input type="hidden" name="updateId" value="{{ commentWithSubcomments.parentComment.id }}">
+													<textarea name="comment" class="form-control mb-2">{{ commentWithSubcomments.parentComment.textdata }}</textarea>
+													<button type="submit" class="btn btn-primary btn-sm">Save</button>
+												</form>
+											</div>
+										{% endif %}
+
 										{% if commentWithSubcomments.subComments %}
 											{% for subComment in commentWithSubcomments.subComments %}
 												<div class="d-flex flex-start my-3">
 													<a class="me-3" href="#">
-														<img class="rounded-circle shadow-1-strong me-3" src="{% if commentWithSubcomments.parentComment.user.avatar is not null %}{{ commentWithSubcomments.parentComment.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="40vh" height="40vw">
+														<img class="rounded-circle shadow-1-strong me-3" src="{% if subComment.user.avatar is not null %}{{ subComment.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="40vh" height="40vw">
 													</a>
 													<div class="flex-grow-1 flex-shrink-1">
 														<div>
@@ -99,6 +109,15 @@
 																	{{ subComment.user.name }}
 																	<span class="small">-</span>
 																</p>
+																{% if app.user and app.user.id == subComment.user.id %}
+																	<a data-bs-toggle="collapse" href="#editSubComment{{ subComment.id }}" aria-expanded="false" aria-controls="editSubComment{{ subComment.id }}">
+																		<i class="fas fa-edit fa-xs"></i>
+																		<span class="small">edit</span>
+																	</a>
+																	<form method="post" action="{{ path('comment_delete', {'commentId': subComment.id, 'projectId': project.id}) }}" style="display:inline;">
+																		<button type="submit" class="btn btn-link btn-sm text-danger p-0 m-0">delete</button>
+																	</form>
+																{% endif %}
 															</div>
 															<p class="small mb-0">
 																{{ subComment.textdata }}
@@ -106,24 +125,20 @@
 														</div>
 													</div>
 												</div>
+												{% if app.user and app.user.id == subComment.user.id %}
+													<div class="collapse" id="editSubComment{{ subComment.id }}">
+														<form method="post" action="{{ path('comment_create', {'projectId': project.id}) }}">
+															<input type="hidden" name="updateId" value="{{ subComment.id }}">
+															<textarea name="comment" class="form-control mb-2">{{ subComment.textdata }}</textarea>
+															<button type="submit" class="btn btn-primary btn-sm">Save</button>
+														</form>
+													</div>
+												{% endif %}
 											{% endfor %}
 										{% endif %}
 										<div class="collapse" id="collapseComments{{ commentWithSubcomments.parentComment.id }}">
 											{% if app.user %}
-												<form action="{{ path('comment_create', {'projectId': project.id}) }}" method="post" class="mt-3">
-													<div class="row align-items-center">
-														<div class="col-auto">
-															<img class="rounded-circle shadow-1-strong" src="{% if app.user.avatar is not null %}{{ app.user.avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="65" height="65">
-														</div>
-														<div class="col">
-															<input type="text" class="form-control" name="comment" placeholder="Add a comment">
-														</div>
-														<input type="hidden" name="parentId" value="{{ commentWithSubcomments.parentComment.id }}">
-														<div class="col-auto">
-															<button type="submit" class="btn btn-primary">Submit</button>
-														</div>
-													</div>
-												</form>
+												{% include 'projects/comment.twig' with {'project': project, 'avatar': app.user.avatar, 'parentId':commentWithSubcomments.parentComment.id  } %}
 											{% else %}
 												<h5>Please
 													<a href="{{ path('app_login') }}">log in</a>
@@ -137,6 +152,7 @@
 						{% else %}
 							<p>No comments yet.</p>
 						{% endif %}
+
 					</div>
 				</div>
 			</div>

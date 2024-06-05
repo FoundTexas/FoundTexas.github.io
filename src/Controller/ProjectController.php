@@ -17,15 +17,15 @@ class ProjectController extends AbstractController
 
 
     #[Route('/projects/{type}', name: 'app_game_projects')]
-    public function gameProjects(Request $request, EntityManagerInterface $entityManager,string $type =null): Response
+    public function gameProjects(Request $request, EntityManagerInterface $entityManager, string $type = null): Response
     {
         $projects = $entityManager->getRepository(Project::class)->findAll();
 
         return $this->render('projects/Projects.twig', [
             'controller_name' => 'IndexController',
             'projects' => $projects,
-            'textRef'=> $type, 
-            'headText'=> $type.' Portfolio'
+            'textRef' => $type,
+            'headText' => $type . ' Portfolio'
         ]);
     }
 
@@ -44,6 +44,7 @@ class ProjectController extends AbstractController
         $parentComments = $qb->select('c')
             ->from(Comment::class, 'c')
             ->where('c.project = :projectId')
+            ->andWhere('c.status = 1')
             ->andWhere($qb->expr()->isNull('c.parentComment'))
             ->orderBy('c.id', 'ASC')
             ->setParameter('projectId', $project->getId())
@@ -91,8 +92,12 @@ class ProjectController extends AbstractController
             throw $this->createNotFoundException('Project not found');
         }
 
-        // Create a new Comment instance
         $comment = new Comment();
+        // Comment instance
+        $updateId = $request->request->get('updateId');
+        if ($updateId) {
+            $comment = $entityManager->getRepository(Comment::class)->find($updateId) ?? new Comment();
+        }
 
         // Assuming your Comment entity setters are appropriately defined, set the comment properties
         $comment->setUser($user);
@@ -113,6 +118,30 @@ class ProjectController extends AbstractController
         $entityManager->flush();
 
         // Redirect back to the project detail page after commenting
+        return $this->redirectToRoute('app_project_detail', ['id' => $projectId]);
+    }
+
+    #[Route('/comment/delete/{commentId}/{projectId}', name: 'comment_delete')]
+    public function deleteComment(int $commentId, int $projectId, EntityManagerInterface $entityManager): Response
+    {
+        // Retrieve the current user
+        $user = $this->getUser();
+
+        // Find the comment by ID
+        $comment = $entityManager->getRepository(Comment::class)->find($commentId);
+
+        // Check if the comment exists and if the current user is the owner of the comment
+        if (!$comment || $comment->getUser() !== $user) {
+            throw $this->createAccessDeniedException('You cannot delete this comment');
+        }
+
+        $comment->setStatus(0);
+
+        // Remove the comment
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        // Redirect back to the project detail page
         return $this->redirectToRoute('app_project_detail', ['id' => $projectId]);
     }
 }

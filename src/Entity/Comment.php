@@ -28,6 +28,9 @@ class Comment
     #[ORM\ManyToOne(targetEntity: self::class)]
     private ?self $parentComment = null;
 
+    #[ORM\Column]
+    private ?int $status = 1;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class Comment
     public function setParentComment(?self $parentComment): static
     {
         $this->parentComment = $parentComment;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }
