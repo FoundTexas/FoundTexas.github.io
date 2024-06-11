@@ -56,10 +56,11 @@ function submitForm(url = 'admin/new/milestone', id = 'mileStoneForm', updateID)
         });
 }
 
-function newForm(url = 'admin/new/milestone', containerid = 'MilestoneContainer', selectedId) {
+function newForm(url = 'admin/new/milestone', containerid = 'MilestoneContainer', loadingGif, selectedId ) {
     // Show the loading GIF
     var container = document.getElementById(containerid);
-    container.innerHTML = '<div id="loading"><img src="path/to/loading.gif" alt="Loading..."></div>';
+
+    setLoadingGif(containerid, loadingGif);
     
     fetch(url + (selectedId ? '?id=' + selectedId : ''))
     .then(response => {
