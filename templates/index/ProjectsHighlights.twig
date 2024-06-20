@@ -1,6 +1,18 @@
-<section id="projects" class="bg-main-dark p-0" style="min-height: 100vh;">
+<style>
+	#projects {
+		background-image: url("{{ asset('bg-pixels.svg') }}");
+		background-repeat: repeat;
+		background-size: auto; /* Adjust as needed, e.g., 'contain', 'cover', or specific sizes */
+	}
+</style>
 
-	{% include 'index/IndexHeader.twig' with {'textRef': textRef, 'headText': headText, 'darkbg': true} %}
+<section id="projects" class=" p-0" style="min-height: 100vh;">
+
+	<div class="w-100 d-flex justify-content-center ">
+		<div class="bg-accent rounded-4 col-12 col-md-6  py-5" href="#{{ textRef }}">
+			<span class="text-center text-capitalize white-text" style="font-size: 2.5rem;">{{ headText }}</span>
+		</div>
+	</div>
 
 	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
 

@@ -56,17 +56,27 @@ function submitForm(url = 'admin/new/milestone', id = 'mileStoneForm', updateID)
         });
 }
 
-function newForm(url = 'admin/new/milestone', containerid = 'MilestoneContainer', selectedId) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                document.getElementById(containerid).innerHTML = xhr.responseText;
-            } else {
-                console.error('Failed to fetch form:', xhr.status);
-            }
+function newForm(url = 'admin/new/milestone', containerid = 'MilestoneContainer', loadingGif, selectedId ) {
+    // Show the loading GIF
+    var container = document.getElementById(containerid);
+
+    setLoadingGif(containerid, loadingGif);
+    
+    fetch(url + (selectedId ? '?id=' + selectedId : ''))
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    };
-    xhr.open('GET', url + (selectedId ? '?id=' + selectedId : ''), true);
-    xhr.send();
+        return response.text();
+    })
+    .then(html => {
+        // Hide the loading GIF and update the container with the fetched content
+        container.innerHTML = html;
+    })
+    .catch(error => {
+        // Hide the loading GIF and handle error
+        container.innerHTML = '<div class="error">Failed to fetch form: ' + error.message + '</div>';
+        console.error('There was a problem with the fetch operation:', error);
+    });
 }
+

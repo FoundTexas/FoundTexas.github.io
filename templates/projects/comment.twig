@@ -1,0 +1,14 @@
+<form action="{{ path('comment_create', {'projectId': project.id}) }}" method="post" class="my-2">
+	<div class="row align-items-center">
+		<div class="col-auto">
+			<img class="rounded-circle shadow-1-strong" src="{% if avatar is not null %}{{ avatar }}{% else %}https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg{% endif %}" alt="avatar" width="50vw" height="50vw">
+		</div>
+		<div class="col">
+			<input type="text" class="form-control" name="comment" placeholder="Add a comment">
+		</div>
+        <input type="hidden" name="parentId" value="{{ parentId }}">
+		<div class="col-auto">
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</div>
+</form>
