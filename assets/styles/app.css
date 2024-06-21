@@ -168,7 +168,6 @@ html {
 .sin-down-div.expanded{
   background: linear-gradient(0deg, rgba(43,10,43,1) 0%, rgba(43,10,43,1) 100%);;
   background-color: rgba(43,10,43,1);
-  clip-path: polygon(0 1%, 100% 0, 100% 100%, 0% 100%);
   transition: 0.5s background-color ease;
 }
 
