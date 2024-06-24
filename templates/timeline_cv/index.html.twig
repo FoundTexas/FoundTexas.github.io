@@ -24,10 +24,9 @@
 		}
 	</style>
 
-	<div id="timeline" class="row mb-5 p-0 bg-accent-dark" style="min-height: 100vh;">
-		{% include 'index/IndexHeader.twig' with {'upRef': 'aboutme', 'textRef': 'timeline', 'headText': 'timeline', 'darkbg': true} %}
+	<div id="timeline" class="row pb-5 bg-accent-dark" style="min-height: 100vh; margin-top: -2vh;">
 
-		<div class="col-12 row fixed-top py-2 position-sticky bg-main-dark rounded-4" style="z-index: 1042;">
+		<div class="col-12 row p-4 position-sticky bg-main-dark rounded-4" style="z-index: 10; top:11vh;">
 
 			<div class="col-md-8 m-0 p-0">
 				{% set all_tags = [] %}
@@ -82,6 +81,8 @@
 				</div>
 			</div>
 		</div>
+
+		<h3 class="text-center text-capitalize my-5 white-text ">TIMELINE</h3>
 
 		{% if years is empty %}
 

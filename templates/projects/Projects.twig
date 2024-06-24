@@ -11,7 +11,11 @@
 {% block body %}
 
 	<section id="projects" class="bg-main-dark px-2" style="min-height: 100vh;">
-		{% include 'index/IndexHeader.twig' with {'textRef': textRef, 'headText': headText, 'darkbg': true} %}
+		<div class="w-100 d-flex justify-content-center ">
+			<div class="bg-accent rounded-4 col-12 col-md-6  py-5 d-flex justify-content-center" href="#{{ textRef }}">
+				<span class="text-center text-capitalize white-text" style="font-size: 2.5rem;">{{ headText }}</span>
+			</div>
+		</div>
 		<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
 			<div class="container rounded-5 bg-main-gradient m-3 my-md-4 shadow-custom">
 				<div class="row justify-content-center m-2">

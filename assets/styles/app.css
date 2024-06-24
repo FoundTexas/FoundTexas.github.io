@@ -112,7 +112,7 @@ a, label, p, h1, h2, h3, h4, h5, h6, li, span {
 
 /* Style for WebKit-based browsers (e.g., Chrome, Safari) */
 ::-webkit-scrollbar {
-  background-color: #252b29; /* Sets the background color of the scrollbar to transparent */
+  background-color: #1b1f1d; /* Sets the background color of the scrollbar to transparent */
 }
 
 /* Style for the scrollbar handle */
@@ -121,7 +121,7 @@ a, label, p, h1, h2, h3, h4, h5, h6, li, span {
 }
 
 html {
-  scrollbar-color: #812181 #252b29; /* Sets the scrollbar handle color to red */
+  scrollbar-color: #812181 #1b1f1d; /* Sets the scrollbar handle color to red */
 }
 
 .shadow-custom {

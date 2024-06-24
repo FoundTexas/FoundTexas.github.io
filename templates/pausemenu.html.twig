@@ -7,15 +7,15 @@
 		</button>
 
 		<div class="align-items-center row p-0 m-0 w-100">
-			<div class="col-2 p-0 m-0 d-none d-lg-block">
-				<img style="height: auto; width: 100%;" src="bannerPandaold.png" alt="Other Image">
-			</div>
+			<a class="col-2 p-0 m-0 d-none d-lg-block" href="/" style="min-height: 10vh;" >
+				<img style="height: auto; width: 100%;" src="{{ asset('bannerPandaold.png') }}" alt="Other Image">
+			</a>
 
 			<div class="col-7">
 				<div id="navbarNavAltMarkup" class="collapse navbar-collapse row justify-content-evenly">>
-					<a class="col-auto" aria-current="page" href="/">GAMES</a>
-					<a class="col-auto" href="#">WEB</a>
 					<a class="col-auto" href="/timeline">TIMELINE</a>
+					<a class="col-auto" aria-current="page" href="{{ path('app_game_projects', { type: 'games' }) }}">GAMES</a>
+					<a class="col-auto" href="{{ path('app_game_projects', { type: 'web' }) }}">WEB APPS</a>
 				</div>
 			</div>
 		</div>
