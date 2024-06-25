@@ -93,11 +93,11 @@
 		{% endif %}
 
 		{% for year in years %}
-			{% set events_in_year = timeline_events|filter(e => (e.main.startDate|date('Y') == year or e.main.endDate|date('Y') == year)) %}
+			{% set events_in_year = timeline_events|filter(e => (e.main.endDate|date('Y') == year)) %}
 
 			<div class="events-wrapper container-fluid row justify-content-center align-items-center m-0" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
-				<div class="row justify-content-center mt-4 m-0">
-					<h4 class="col-auto bg-dark text-center shadow-custom m-0 px-5 py-3 text-warning border border-warning rounded-3">{{ year }}</h4>
+				<div class="row justify-content-center mt-4">
+					<h4 class="col-auto bg-dark text-center shadow-custom px-5 py-3 text-warning border border-warning rounded-3">{{ year }}</h4>
 				</div>
 				<div class="timeline-container row justify-content-center p-0 m-0 ">
 					{% for event in events_in_year %}

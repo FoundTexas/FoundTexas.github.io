@@ -53,11 +53,12 @@ class IndexController extends AbstractController
         $name = $request->request->get('name');
         $email = $request->request->get('email');
         $message = $request->request->get('message');
+        $subject = $request->request->get('subject');
 
         $sendmail = (new Email())
             ->from('rolega01@gmail.com')
             ->to('rolega01@gmail.com')
-            ->subject('New Contact Form Submission')
+            ->subject('Portfolio: '. $subject)
             ->html("<html><body>
                         <img src='https://masoftcode.com/img/ico/MasoftcodeICO.png' alt='Masoftcode Icon' style='height: 300px; width: auto;' />
                         <h1>CONTACT FORM</h1>
