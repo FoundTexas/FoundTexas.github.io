@@ -1,26 +1,27 @@
 <!-- Collapsible Navbar -->
-<div class="collapse navbar-collapse collapse position-sticky fixed-top d-flex justify-content-center" id="navbarCollapse" style="width:100%; z-index: 1040;">
+<div class=" position-sticky fixed-top d-flex justify-content-center" style="width:100%; z-index: 1040;">
+	<div class="collapse navbar-collapse collapse d-flex position-relative justify-content-center w-100" id="navbarCollapse">
 
-	<nav class=" navbar navbar-dark navbar-expand-lg sin-down-div row justify-content-center" style="scale:102%; ">
-		<button class=" col-auto navbar-toggler bg-dark rounded-pill p-2 border-1 border-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-			<img style="height: 7vh; width: auto;" src="{{ asset('foundtexaspanda.svg') }}" alt="foundtexaspanda"/>
-		</button>
+		<nav class=" navbar navbar-dark navbar-expand-lg sin-down-div row justify-content-center" style="scale:102%; ">
+			<button class=" col-auto navbar-toggler bg-dark rounded-pill p-2 border-1 border-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<img style="height: 7vh; width: auto;" src="{{ asset('foundtexaspanda.svg') }}" alt="foundtexaspanda"/>
+			</button>
 
-		<div class="align-items-center row p-0 m-0 w-100">
-			<a class="col-2 p-0 m-0 d-none d-lg-block" href="/" style="min-height: 10vh;" >
-				<img style="height: auto; width: 100%;" src="{{ asset('bannerPandaold.png') }}" alt="Other Image">
-			</a>
+			<div class="align-items-center row p-0 m-0 w-100">
+				<a class="col-12 col-lg-2 p-0 m-0 d-none d-lg-block" href="/" style="height: 4.25rem;">
+					<img style="height: auto; width: 100%;" src="{{ asset('bannerPandaold.png') }}" alt="Other Image">
+				</a>
 
-			<div class="col-7">
-				<div id="navbarNavAltMarkup" class="collapse navbar-collapse row justify-content-evenly">>
-					<a class="col-auto" href="/timeline">TIMELINE</a>
-					<a class="col-auto" aria-current="page" href="{{ path('app_game_projects', { type: 'games' }) }}">GAMES</a>
-					<a class="col-auto" href="{{ path('app_game_projects', { type: 'web' }) }}">WEB APPS</a>
+				<div class="col-12 col-lg">
+					<div id="navbarNavAltMarkup" class="collapse navbar-collapse row py-2 justify-content-evenly">
+						<a class="col-12 col-lg-auto my-2 text-center" href="/timeline">TIMELINE</a>
+						<a class="col-12 col-lg-auto my-2 text-center" aria-current="page" href="{{ path('app_game_projects', { type: 'games' }) }}">GAMES</a>
+						<a class="col-12 col-lg-auto my-2 text-center" href="{{ path('app_game_projects', { type: 'web' }) }}">WEB APPS</a>
+					</div>
 				</div>
 			</div>
-		</div>
-	</nav>
-
+		</nav>
+	</div>
 </div>
 
 <button class="custom-btn position-fixed rounded-4 bg-accent d-flex align-items-center" style="z-index: 1050; top: 5px; right: 5px;" onclick="playSound('audiopress')" data-bs-target="#pauseMenuModal" aria-label="Pause menu button" data-bs-toggle="modal" type="button">
@@ -36,29 +37,35 @@
 				<h2 class="modal-title text-center" id="pauseMenuModalLabel">Pause Menu</h2>
 				<button type="button" class="btn-close" onclick="playSound('audioback')" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div
-				class="modal-body bg-main" style="overflow-y: auto; height: 50vh; ">
+			<div class="modal-body bg-main" style="overflow-y: auto; height: 50vh; ">
+
+				<!-- Volume Slider -->
+				<div class="row p-0 m-0 bg-main-darg justify-content-evenly">
+					<h4 for="volumeRange" class="form-label col-auto">Volume:
+						<span class="col-auto" id="volumeValue">25%</span>
+					</h4>
+					<input class="cool-range col-12 p-0 m-0" type="range" oninput="setVolume(this.value, 'audio-sfx-group')" id="volumeRange" min="0" max="1" step="0.01" value="0.25">
+				</div>
 
 				<!-- Navigation Buttons -->
-				<div class="row bg-main">
+				<div class="row p-0 m-0 bg-main justify-content-evenly my-2">
+					<h4 class="col-12 text-center p-0 m-0">Options:</h4>
 					{% for button in buttons %}
-						<button type="button" class="btn btn-primary col m-1" onclick="navigateToSectionAndCloseModal('{{ button.id }}')" data-bs-dismiss="modal">{{ button.label }}</button>
+						<div class="col-3 m-0 d-flex align-content-center">
+							<button type="button" class="w-100 custom-btn rounded-2 p-1 mt-4 mb-2 bg-accent text-white" onclick="navigateToSectionAndCloseModal('{{ button.id }}')" data-bs-dismiss="modal">{{ button.label }}</button>
+						</div>
 					{% endfor %}
 				</div>
 
 				<!-- Classic Navbar Toggle -->
-				<div class="row bg-main align-items-center">
-					<h5 class="col">Classic Navbar:</h5>
-					<button type="button" class="col-auto btn btn-success" id="collapseOnButton">ON</button>
-					<button type="button" class="col-auto btn btn-danger" id="collapseOffButton">Off</button>
+				<div class="row p-0 m-0 bg-main align-items-center">
+					<h4 class="col">Classic Navbar:</h4>
+					<div class="row p-0 m-0 col align-items-center">
+						<button type="button" class="col-auto btn btn-success" id="collapseOnButton">ON</button>
+						<button type="button" class="col-auto btn btn-danger" id="collapseOffButton">Off</button>
+					</div>
 				</div>
 
-				<!-- Volume Slider -->
-				<div class="row bg-main align-items-center">
-					<label for="volumeRange" class="form-label col-auto">Volume:</label>
-					<input type="range" class="form-range col" id="volumeRange" min="0" max="1" step="0.01" value="0.25">
-					<span class="col-auto" id="volumeValue">25%</span>
-				</div>
 
 			</div>
 			<div class="modal-footer text-center dark-bg-main text-white">
@@ -84,20 +91,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    var navbarToggler = document.querySelector('.navbar-toggler');
-    var mainNav = document.querySelector('.navbar');
-    var navbarCollapse = document.getElementById('navbarNavAltMarkup');
+	document.addEventListener('DOMContentLoaded', function () {
+var navbarToggler = document.querySelector('.navbar-toggler');
+var mainNav = document.querySelector('.navbar');
+var navbarCollapse = document.getElementById('navbarNavAltMarkup');
 
-    navbarCollapse.addEventListener('show.bs.collapse', function () {
-        mainNav.classList.add('expanded');
-    });
-
-    navbarCollapse.addEventListener('hide.bs.collapse', function () {
-        mainNav.classList.remove('expanded');
-    });
+navbarCollapse.addEventListener('show.bs.collapse', function () {
+mainNav.classList.add('expanded');
 });
 
+navbarCollapse.addEventListener('hide.bs.collapse', function () {
+mainNav.classList.remove('expanded');
+});
+});
 </script>
 
 <script>
@@ -124,7 +130,9 @@ Cookies.set('navbarCollapseState', state);
 
 // Function to get the collapse state from the cookie
 function getNavbarCollapseState() {
-return Cookies.get('navbarCollapseState');
+const value = Cookies.get('navbarCollapseState', 'on');
+console.log("init", value);
+return value;
 }
 
 // JavaScript to toggle the collapse state
@@ -132,14 +140,15 @@ const collapseOnButton = document.getElementById("collapseOnButton");
 const collapseOffButton = document.getElementById("collapseOffButton");
 
 collapseOnButton.addEventListener("click", function () {
-document.querySelector(".navbar-collapse").classList.add("show");
+document.querySelector(".navbar-collapse").classList.remove("d-none");
 collapseOnButton.disabled = true;
 collapseOffButton.disabled = false;
-setNavbarCollapseState('on');
+Cookies.set('navbarCollapseState', 'on');
+
 });
 
 collapseOffButton.addEventListener("click", function () {
-document.querySelector(".navbar-collapse").classList.remove("show");
+document.querySelector(".navbar-collapse").classList.add("d-none");
 collapseOnButton.disabled = false;
 collapseOffButton.disabled = true;
 setNavbarCollapseState('off');
@@ -148,11 +157,11 @@ setNavbarCollapseState('off');
 // Initially, start with "On" enabled and "Off" disabled
 const savedState = getNavbarCollapseState();
 if (savedState === 'on') {
-document.querySelector(".navbar-collapse").classList.add("show");
+document.querySelector(".navbar-collapse").classList.remove("d-none");
 collapseOnButton.disabled = true;
 collapseOffButton.disabled = false;
 } else if (savedState === 'off') {
-document.querySelector(".navbar-collapse").classList.remove("show");
+document.querySelector(".navbar-collapse").classList.add("d-none");
 collapseOnButton.disabled = false;
 collapseOffButton.disabled = true;
 }

@@ -9,8 +9,12 @@
 <section id="projects" class=" p-0" style="min-height: 100vh;">
 
 	<div class="w-100 d-flex justify-content-center ">
-		<div class="bg-accent rounded-4 col-12 col-md-6  py-5 d-flex justify-content-center" href="#{{ textRef }}">
-			<span class="text-center text-capitalize white-text" style="font-size: 2.5rem;">{{ headText }}</span>
+		<div class="bg-accent rounded-4 col-12 col-md-6  py-4 d-flex justify-content-center" href="#{{ textRef }}">
+			<div class=" p-0 m-0 stack" style="--stacks: 3;">
+				<span class="p-3 text-center" style="--index: 0;">WEB HIGHLIGHTS</span>
+				<span class="p-3 text-center" style="--index: 1;">WEB HIGHLIGHTS</span>
+				<span class="p-3 text-center" style="--index: 2;">WEB HIGHLIGHTS</span>
+			</div>
 		</div>
 	</div>
 
@@ -29,7 +33,9 @@
 									<img src="{{ project.iconref }}" style="width:100%;" alt="project not loading">
 								</div>
 								<div class='px-1'>
-									<p class="m-0 accent-color text-center"><strong>{{ project.name }}</strong></p>
+									<p class="m-0 accent-color text-center">
+										<strong>{{ project.name }}</strong>
+									</p>
 									<p class=" m-0 d-none d-md-block">{{ project.description }}</p>
 								</div>
 								<a href="{{project.linkref ?? '#' }}" class="btn btn-main"></a>
