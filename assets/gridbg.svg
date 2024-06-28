@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  style="margin: auto; background: rgb(0, 0, 0); display: block; z-index: 1; position: relative; shape-rendering: auto;"
+  width="500" height="350" preserveAspectRatio="xMidYMid" viewBox="0 0 500 350">
+  <g transform="translate(250,175) scale(1,1) translate(-250,-175)">
+    <defs>
+      <linearGradient id="lg-0.17064652333029828" x1="0" x2="0" y1="0" y2="1">
+        <stop stop-color="#391539" offset="0.3"></stop>
+        <stop stop-color="#391539" offset="0.6499999999999999"></stop>
+        <stop stop-color="#391539" offset="1"></stop>
+      </linearGradient>
+      <linearGradient id="fg-lg-0.17064652333029828" x1="0" x2="0" y1="0" y2="1">
+        <stop stop-color="#000000" stop-opacity="1" offset="0"></stop>
+        <stop stop-color="#391539" stop-opacity="1" offset="0"></stop>
+        <stop stop-color="#391539" stop-opacity="0" offset="0"></stop>
+      </linearGradient>
+      <style type="text/css">
+        path.main  { fill: none; stroke: #ffffff; stroke-width: 1px }
+        path { fill: none; stroke: #ff00ff; stroke-width: 1px }
+</style>
+    </defs>
+    <rect x="0" y="0" width="500" height="350" fill="url(#lg-0.17064652333029828)"></rect>
+    
+    
+    <path d="M50  200 L-450 350"></path>
+    <path d="M70  200 L-380 350"></path>
+    <path d="M90  200 L-310 350"></path>
+    <path d="M110 200 L-240 350"></path>
+    <path d="M130 200 L-170 350"></path>
+    <path d="M150 200 L-100 350"></path>
+    <path d="M170 200 L-30  350"></path>
+    <path d="M190 200 L40   350"></path>
+    <path d="M210 200 L110  350"></path>
+    <path d="M230 200 L180  350"></path>
+    <path d="M250 200 L250  350"></path> //middle
+    <path d="M270 200 L320  350"></path>
+    <path d="M290 200 L390  350"></path>
+    <path d="M310 200 L460  350"></path>
+    <path d="M330 200 L530  350"></path>
+    <path d="M350 200 L600  350"></path>
+    <path d="M370 200 L670  350"></path>
+    <path d="M390 200 L740  350"></path>
+    <path d="M410 200 L810  350"></path>
+    <path d="M430 200 L880  350"></path>
+    <path d="M450 200 L950  350"></path>
+
+
+    <g>
+      <path class="main" d="M0 200 L500 200"></path>
+    </g>
+
+    <g>
+      <path d="M0 200 L500 200"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 1" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path d="M0 201 L500 201"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 2" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path d="M0 203 L500 203"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 3" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path d="M0 209 L500 209"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 4" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+
+    
+    <rect x="0" y="0" width="500" height="350" fill="url(#fg-lg-0.17064652333029828)"></rect>
+  </g>
+</svg>
