@@ -17,7 +17,7 @@
       <style type="text/css">
         path.main  { fill: none; stroke: #ffffff; stroke-width: 1px }
         path { fill: none; stroke: #ff00ff; stroke-width: 1px }
-</style>
+      </style>
     </defs>
     <rect x="0" y="0" width="500" height="350" fill="url(#lg-0.17064652333029828)"></rect>
     
@@ -46,9 +46,9 @@
 
 
     <g>
-      <path class="main" d="M0 200 L500 200"></path>
+      <path class="main" d="M0 300 L500 300"></path>
     </g>
-
+    
     <g>
       <path d="M0 200 L500 200"></path>
       <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
@@ -56,7 +56,6 @@
         dur="1s"></animateTransform>
 
     </g>
-
     <g>
       <path d="M0 201 L500 201"></path>
       <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
@@ -72,9 +71,94 @@
 
     </g>
     <g>
-      <path d="M0 209 L500 209"></path>
+      <path d="M0 206 L500 206"></path>
       <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
         calcMode="linear" keyTimes="0;1" values="0 0;0 4" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path d="M0 210 L500 210"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 5" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path d="M0 215 L500 215"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 6" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path d="M0 221 L500 221"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 7" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path d="M0 228 L500 228"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 8" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path d="M0 236 L500 236"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 9" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+   
+    <g>
+      <path d="M0 245 L500 245"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 10" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path d="M0 255 L500 255"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 11" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path d="M0 266 L500 266"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 11" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path d="M0 277 L500 277"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 11" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path d="M0 288 L500 288"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 12" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path d="M0 300 L500 300"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 13" begin="0s"
         dur="1s"></animateTransform>
 
     </g>
