@@ -1,21 +1,18 @@
 <!-- Collapsible Navbar -->
 <div class=" position-sticky fixed-top d-flex justify-content-center" style="width:100%; z-index: 1040;">
 	<div class="collapse navbar-collapse collapse d-flex position-relative justify-content-center w-100" id="navbarCollapse">
-
-		<nav class=" navbar navbar-dark navbar-expand-lg sin-down-div row justify-content-center" style="scale:102%; ">
+		<nav class=" navbar navbar-dark navbar-expand-lg sin-down-div row justify-content-center" style="scale:100%; ">
 			<button class=" col-auto navbar-toggler bg-dark rounded-pill p-2 border-1 border-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 				<img style="height: 7vh; width: auto;" src="{{ asset('foundtexaspanda.svg') }}" alt="foundtexaspanda"/>
 			</button>
-
 			<div class="align-items-center row p-0 m-0 w-100">
-				<a class="col-12 col-lg-2 p-0 m-0 d-none d-lg-block" href="/" style="height: 4.25rem;">
-					<img style="height: auto; width: 100%;" src="{{ asset('bannerPandaold.png') }}" alt="Other Image">
+				<a class="bg-dark rounded-circle col-12 col-lg-auto p-1 m-0 d-none d-lg-block position-absolute top-0 start-0" href="/" style="height: 7rem; aspect-ratio:1;">
+					<img style="height: 100%; width: auto;" src="{{ asset('foundtexaspanda.svg') }}" alt="foundtexaspanda"/>
 				</a>
-
 				<div class="col-12 col-lg">
 					<div id="navbarNavAltMarkup" class="collapse navbar-collapse row py-2 justify-content-evenly">
 						<a class="col-12 col-lg-auto my-2 text-center" href="/timeline">TIMELINE</a>
-						<a class="col-12 col-lg-auto my-2 text-center" aria-current="page" href="{{ path('app_game_projects', { type: 'games' }) }}">GAMES</a>
+						<a class="col-12 col-lg-auto my-2 text-center" aria-current="page" href="{{ path('app_game_projects', { type: 'game' }) }}">GAMES</a>
 						<a class="col-12 col-lg-auto my-2 text-center" href="{{ path('app_game_projects', { type: 'web' }) }}">WEB APPS</a>
 					</div>
 				</div>
@@ -24,7 +21,7 @@
 	</div>
 </div>
 
-<button class="custom-btn position-fixed rounded-4 bg-accent d-flex align-items-center" style="z-index: 1050; top: 5px; right: 5px;" onclick="playSound('audiopress')" data-bs-target="#pauseMenuModal" aria-label="Pause menu button" data-bs-toggle="modal" type="button">
+<button class="custom-btn position-fixed rounded-4 bg-accent d-flex align-items-center" style="z-index: 1050; top: 1rem; right: 1rem;" onclick="playSound('audiopress')" data-bs-target="#pauseMenuModal" aria-label="Pause menu button" data-bs-toggle="modal" type="button">
 	<i class="fa fa-home my-2 mx-1 fa-2xl" aria-hidden="true" style="color: #ffffff;"></i>
 	<p class="p-0 m-0 d-none d-md-block">PAUSE</p>
 </button>
@@ -37,7 +34,8 @@
 				<h2 class="modal-title text-center" id="pauseMenuModalLabel">Pause Menu</h2>
 				<button type="button" class="btn-close" onclick="playSound('audioback')" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body bg-main" style="overflow-y: auto; height: 50vh; ">
+			<div
+				class="modal-body bg-main" style="min-height: 50vh; ">
 
 				<!-- Volume Slider -->
 				<div class="row p-0 m-0 bg-main-darg justify-content-evenly">
@@ -51,7 +49,7 @@
 				<div class="row p-0 m-0 bg-main justify-content-evenly my-2">
 					<h4 class="col-12 text-center p-0 m-0">Options:</h4>
 					{% for button in buttons %}
-						<div class="col-3 m-0 d-flex align-content-center">
+						<div class="col-6 col-md-3 m-0 d-flex align-content-center">
 							<button type="button" class="w-100 custom-btn rounded-2 p-1 mt-4 mb-2 bg-accent text-white" onclick="navigateToSectionAndCloseModal('{{ button.id }}')" data-bs-dismiss="modal">{{ button.label }}</button>
 						</div>
 					{% endfor %}
