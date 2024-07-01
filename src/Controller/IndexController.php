@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\MileStone;
 use App\Entity\Project;
 use Doctrine\ORM\EntityManagerInterface;
+use FontLib\Table\Type\name;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mime\Email;
@@ -48,27 +50,37 @@ class IndexController extends AbstractController
     }
 
     #[Route('/email', name: 'app_email')]
-    public function handleContactForm(Request $request, MailerInterface $mailer): Response
+    public function handleContactForm(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
-        $name = $request->request->get('name');
-        $email = $request->request->get('email');
-        $message = $request->request->get('message');
-        $subject = $request->request->get('subject');
+        try {
+            $name = $request->request->get('name');
+            $email = $request->request->get('email');
+            $message = $request->request->get('message');
+            $subject = $request->request->get('subject');
 
-        $sendmail = (new Email())
-            ->from('rolega01@gmail.com')
-            ->to('rolega01@gmail.com')
-            ->subject('Portfolio: '. $subject)
-            ->html("<html><body>
-                        <img src='https://masoftcode.com/img/ico/MasoftcodeICO.png' alt='Masoftcode Icon' style='height: 300px; width: auto;' />
-                        <h1>CONTACT FORM</h1>
-                        <p>Name: $name</p>
-                        <p>Email: $email</p>
-                        <p>Message: $message</p>
-                    </body></html>");
+            if ($name == "" || !$name) throw new \Exception("no name");
+            if ($email == "" || !$email) throw new \Exception("no email");
+            if ($message == "" || !$message) throw new \Exception("no message");
+            if ($subject == "" || !$subject) throw new \Exception("no subject");
 
-        $mailer->send($sendmail);
+            $sendmail = (new Email())
+                ->from('rolega01@gmail.com')
+                ->to('rolega01@gmail.com')
+                ->subject('Portfolio: ' . $subject)
+                ->html("<html><body>
+                    <img src='https://foundtexas.net/assets/foundtexaspandamail.svg' alt='Masoftcode Icon' style='height: 300px; width: auto;' />
+                    <h1>CONTACT FORM</h1>
+                    <p>Name: $name</p>
+                    <p>Email: $email</p>
+                    <p>Message: $message</p>
+                </body></html>");
 
-        return new Response('Message sent successfully!');
+            $mailer->send($sendmail);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(['success' => false, 'message' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+        }
+        
+        return new JsonResponse(['success' => true, 'message' => 'Message sent successfully!'], JsonResponse::HTTP_OK);
     }
 }

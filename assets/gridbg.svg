@@ -5,15 +5,16 @@
   <g transform="translate(250,175) scale(1,1) translate(-250,-175)">
     <defs>
       <linearGradient id="lg-0.17064652333029828" x1="0" x2="0" y1="0" y2="1">
-        <stop stop-color="#0a2222" offset="0"></stop>
-        <stop stop-color="#000000" stop-opacity="0" offset="0.52"></stop>
+        <stop stop-color="#000000" offset="0"></stop>
+        <stop stop-color="#0a2222" offset="0.3"></stop>
+        <stop stop-color="#000000" offset="0.55"></stop>
         <stop stop-color="#391539" offset="0.57"></stop>
         <stop stop-color="#391539" offset="0.85"></stop>
         <stop stop-color="#000000" offset="1"></stop>
       </linearGradient>
       <linearGradient id="fg-lg-0.17064652333029828" x1="0" x2="0" y1="0" y2="1">
-        <stop stop-color="#391539" stop-opacity="0" offset="0.5"></stop>
-        <stop stop-color="#A4A4A4" stop-opacity="0.4" offset="0.57"></stop>
+        <stop stop-color="#391539" stop-opacity="0" offset="0.47"></stop>
+        <stop stop-color="#A4A4A4" stop-opacity="0.55" offset="0.57"></stop>
         <stop stop-color="#391539" stop-opacity="0.13" offset="0.75"></stop>
         <stop stop-color="#391539" stop-opacity="0" offset="1"></stop>
       </linearGradient>
@@ -24,7 +25,6 @@
       <style type="text/css">
         path.main { fill: #0fdda3; stroke: #0fdda3; stroke-width: 1px }
         path.line { fill: black; stroke: #ff00ff; stroke-width: 1px }
-        path.sun { fill: black; stroke: #ff00ff; stroke-width: 1px }
       </style>
     </defs>
 

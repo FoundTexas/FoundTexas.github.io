@@ -278,3 +278,10 @@ input[type="range"].cool-range::-moz-range-thumb {
   box-shadow: -20rem 0 0 20rem rgba(249, 0, 0, 0.711);
 }
 
+.swal2-modal
+{
+  border-radius: 20% !important;
+  background-color: #1f2020 !important;
+  color: #FFFFFF;
+}
+

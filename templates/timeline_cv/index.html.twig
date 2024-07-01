@@ -24,7 +24,42 @@
 		}
 	</style>
 
-	<div id="timeline" class="row pb-5 bg-accent-dark" style="min-height: 100vh; margin-top: -2vh;">
+
+	<div id="timeline" class="row pb-5 bg-accent-dark justify-content-center w-100" style="min-height: 100vh; margin-top: -2vh;">
+
+
+		<button class="col-auto btn btn-primary position-fixed top-50 start-0 translate-middle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+			Button with data-bs-target
+		</button>
+
+
+		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+			<div class="offcanvas-header">
+				<button type="button" class="" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+				<h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+			</div>
+			<div class="offcanvas-body">
+				<div>
+					Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+				</div>
+				<div class="dropdown mt-3">
+					<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+						Dropdown button
+					</button>
+					<ul class="dropdown-menu">
+						<li>
+							<a class="dropdown-item" href="#">Action</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#">Another action</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#">Something else here</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
 		<div class="col-12 row p-4 position-sticky bg-main-dark rounded-4" style="z-index: 10; top:11vh;">
 
