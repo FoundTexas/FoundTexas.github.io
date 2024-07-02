@@ -1,9 +1,7 @@
 body {
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100%;
+  width: 100vw;
   background-color: #000000;
-  padding-right: 0 !important;
+  
 }
 
 a, label, p, h1, h2, h3, h4, h5, h6, li, span {

@@ -1,42 +1,102 @@
 import * as THREE from 'three';
 
-console.log('Three.js loaded');
+let scene, camera, renderer;
+let geometries = [];
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2();
+let scrollY = 0;
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+init();
+animate();
 
-const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('#bgcanvas'),
-    alpha: true
-});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+function init() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 0;
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+    renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#bgcanvas'),
+        alpha: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
-camera.position.z = 5;
+    // Create geometries with different colors and wireframe material
+    const geometryParams = [
+        { type: 'BoxGeometry', color: 0xff5733, position: { x: -1.5, y: 1, z: -2.5 } },    // Orange
+        { type: 'SphereGeometry', color: 0x28a745, position: { x: 3.5, y: 2, z: -5 } },  // green
+        { type: 'TorusGeometry', color: 0x6f42c1, position: { x: 0, y: -1, z: -3 } },   // Purple
 
-function animate() {
-    renderer.render(scene, camera);
+    ];
+
+    geometryParams.forEach(params => {
+        let geometry;
+        switch (params.type) {
+            case 'BoxGeometry': geometry = new THREE.BoxGeometry(); break;
+            case 'SphereGeometry': geometry = new THREE.SphereGeometry(); break;
+            case 'ConeGeometry': geometry = new THREE.ConeGeometry(); break;
+            case 'TorusGeometry': geometry = new THREE.TorusGeometry(); break;
+        }
+        const material = new THREE.MeshBasicMaterial({ color: params.color, wireframe: true });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(params.position.x, params.position.y, params.position.z);
+        mesh.userData.originalColor = params.color;
+        scene.add(mesh);
+        geometries.push(mesh);
+    });
+
+    window.addEventListener('resize', onWindowResize, false);
+    window.addEventListener('mousemove', onMouseMove, false);
+    window.addEventListener('scroll', onScroll, false);
 }
 
-// Scroll Event Listener to Rotate Cube
-window.addEventListener('scroll', () => {
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    cube.rotation.x = scrollTop * 0.01;
-    cube.rotation.y = scrollTop * 0.01;
-
-});
-
-// Handle Window Resize
-window.addEventListener('resize', () => {
+function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-});
+}
 
-renderer.setAnimationLoop(animate);
+function onMouseMove(event) {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}
 
+function onScroll() {
+    scrollY = window.scrollY;
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Idle subtle wobble animation
+    geometries.forEach((mesh, index) => {
+        mesh.rotation.x += 0.0005;
+        mesh.rotation.y += 0.0005;
+        mesh.position.y += 0.0005 * Math.sin(Date.now() * 0.002 + index);
+    });
+
+    // Camera rotation based on scroll
+    camera.rotation.y = scrollY * 0.001;
+    camera.position.z = scrollY * -0.001;
+
+    // Mouse hover interaction
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(geometries);
+    geometries.forEach(mesh => {
+        mesh.material.color.setHex(mesh.userData.originalColor);
+        mesh.userData.spinning = false;
+    });
+    intersects.forEach(intersect => {
+        intersect.object.material.color.setHex(0xffffff);
+        intersect.object.userData.spinning = true;
+    });
+
+    // Apply spinning effect on hover
+    geometries.forEach(mesh => {
+        if (mesh.userData.spinning) {
+            mesh.rotation.y += 0.005;
+        }
+    });
+
+    renderer.render(scene, camera);
+}

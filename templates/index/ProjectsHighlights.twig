@@ -1,26 +1,27 @@
 <style>
 	#projects {
-		background-image: url("{{ asset('bg-pixels.svg') }}");
+		;
+		/*background-image: url("{{ asset('bg-pixels.svg') }}");
 		background-repeat: repeat;
 		background-size: auto; /* Adjust as needed, e.g., 'contain', 'cover', or specific sizes */
 	}
 </style>
 
-<section id="projects" class=" p-0" style="min-height: 100vh;">
+<section id="projects" class=" p-lg-5" style="min-height: 100vh;">
 
-	<div class="w-100 d-flex justify-content-center ">
-		<div class="bg-accent rounded-4 col-12 col-md-6  py-4 d-flex justify-content-center" href="#{{ textRef }}">
-			<div class=" p-0 m-0 stack" style="--stacks: 3;">
-				<span class="p-3 text-center" style="--index: 0;">WEB HIGHLIGHTS</span>
-				<span class="p-3 text-center" style="--index: 1;">WEB HIGHLIGHTS</span>
-				<span class="p-3 text-center" style="--index: 2;">WEB HIGHLIGHTS</span>
+
+	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%; opacity:0.9;">
+
+		<div class="container rounded-5 bg-main-gradient  m-3 my-md-4 p-3 shadow-custom">
+			<div class="w-100 d-flex justify-content-center ">
+				<div class="bg-accent rounded-4 col-12 col-md-6  py-4 d-flex justify-content-center" href="#{{ textRef }}">
+					<div class=" p-0 m-0 stack" style="--stacks: 3;">
+						<span class="p-3 text-center" style="--index: 0;">WEB HIGHLIGHTS</span>
+						<span class="p-3 text-center" style="--index: 1;">WEB HIGHLIGHTS</span>
+						<span class="p-3 text-center" style="--index: 2;">WEB HIGHLIGHTS</span>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
-
-		<div class="container rounded-5 {{ color ?? 'bg-main-gradient' }}  m-3 my-md-4 p-3 shadow-custom">
 			<div class="row justify-content-center">
 
 				{% for project in projects %}

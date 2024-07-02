@@ -5,18 +5,16 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('js/threeCube.js') }}"></script>
 {% endblock %}
 
 {% block body %}
 	{% include 'index/AboutMe.twig' %}
 
-	<canvas id="bgcanvas"></canvas>
-
-	<div class="row m-0 p-0 justify-content-center content">
+<canvas id="bgcanvas"></canvas>
 
 		{% include 'index/GameHighlights.twig' with {'games': games, 'type': 'game', 'textRef': 'GamesPortfolio', 'headText': 'Games Portfolio', 'darkbg': true} %}
 		{% include 'index/ProjectsHighlights.twig' with {'projects': projects, 'type': 'web', 'textRef': 'WebPortfolio', 'headText': 'Web Portfolio', 'darkbg': true, 'color': 'bg-main-gradient-alter'} %}
 		{% include 'index/contact.twig' %}
-	</div>
+
+
 {% endblock %}
