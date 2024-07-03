@@ -23,9 +23,10 @@ function init() {
 
     // Create geometries with different colors and wireframe material
     const geometryParams = [
-        { type: 'BoxGeometry', color: 0xff5733, position: { x: -1.5, y: 1, z: -2.5 } },    // Orange
-        { type: 'SphereGeometry', color: 0x28a745, position: { x: 3.5, y: 2, z: -5 } },  // green
-        { type: 'TorusGeometry', color: 0x6f42c1, position: { x: 0, y: -1, z: -3 } },   // Purple
+        { type: 'BoxGeometry', color: 0xff5733, position: { x: -3, y: 2, z: -5 } },    // Orange
+        { type: 'BoxGeometry', color: 0x6f42c1, position: { x: 2.5, y: 1, z: -4 } },    // Purple
+        { type: 'SphereGeometry', color: 0x28a745, position: { x: 3.5, y: -2, z: -4 } },  // green
+        { type: 'TorusGeometry', color: 0x6f42c1, position: { x: -2, y: -1, z: -3 } },   // Purple
 
     ];
 
@@ -76,8 +77,10 @@ function animate() {
     });
 
     // Camera rotation based on scroll
-    camera.rotation.y = scrollY * 0.001;
-    camera.position.z = scrollY * -0.001;
+    camera.rotation.z = scrollY * 0.001;
+    //camera.position.z = scrollY * -0.001;
+    camera.position.x = scrollY * -0.004;
+    camera.position.y = scrollY * -0.003;
 
     // Mouse hover interaction
     raycaster.setFromCamera(mouse, camera);

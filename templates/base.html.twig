@@ -52,9 +52,9 @@
 	</head>
 	
 	<body>
-		<div id="loading" class="position-fixed container-fluid p-0" style="z-index: 900000; height:101vh; background-color:#111111; display:block;">
-			<div class="row d-flex align-items-center justify-content-center p-5 w-100 h-100" >
-				<img class="" src="{{ asset('loadgif.gif') }}" style="width: 30rem; height:auto;" alt="Loading..." />
+		<div id="loading" class="position-fixed top-0" style="z-index: 90000000; height:102vh; width:102vw; background-color:#111111; display:block;">
+			<div class="row d-flex align-items-center justify-content-center  w-100 h-100" >
+				<img class="" src="{{ asset('loadgif.gif') }}" style="width: 40rem; height:auto;" alt="Loading..." />
 			</div>
 		</div>
 
@@ -88,7 +88,7 @@
 				// Add a delay before hiding the loading spinner (example: 1000ms = 1 second)
 				setTimeout(function() {
 					hideLoading(); // Hide the loading spinner after a short delay
-				}, 1000); // Change the delay value as needed
+				}, 2000); // Change the delay value as needed
 				
 		</script>
 
