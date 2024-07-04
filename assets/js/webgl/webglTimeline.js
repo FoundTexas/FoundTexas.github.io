@@ -92,7 +92,7 @@ function animate() {
     {scrollDir += scrollDir > 1  ? -0.2 : 0.2;}
 
     // Camera sinusoidal motion
-    camera.position.x = Math.sin(Date.now() * 0.00066) * 80; // Adjust speed and amplitude as needed
+    camera.position.x = Math.sin(Date.now() * 0.00066) * 100; // Adjust speed and amplitude as needed
 
     renderer.render(scene, camera);
 }
