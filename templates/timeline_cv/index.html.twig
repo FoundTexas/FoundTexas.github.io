@@ -24,14 +24,12 @@
 		}
 	</style>
 
+	<button class="col-auto btn btn-primary position-fixed top-50 start-0 translate-middle" tyle="z-index: 100000;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+		Button with data-bs-target
+	</button>
+	<div id="timeline" class="row pb-5 justify-content-center w-100" style="min-height: 100vh; margin-top: -2vh;">
 
-	<div id="timeline" class="row pb-5 bg-accent-dark justify-content-center w-100" style="min-height: 100vh; margin-top: -2vh;">
-
-
-		<button class="col-auto btn btn-primary position-fixed top-50 start-0 translate-middle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-			Button with data-bs-target
-		</button>
-
+		<canvas id="bgcanvas"></canvas>
 
 		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 			<div class="offcanvas-header">
@@ -39,80 +37,60 @@
 				<h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
 			</div>
 			<div class="offcanvas-body">
-				<div>
-					Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-				</div>
-				<div class="dropdown mt-3">
-					<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-						Dropdown button
-					</button>
-					<ul class="dropdown-menu">
-						<li>
-							<a class="dropdown-item" href="#">Action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Another action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+				<div class="col-12 row p-4 position-sticky bg-main-dark rounded-4" style="z-index: 10; top:11vh;">
 
-		<div class="col-12 row p-4 position-sticky bg-main-dark rounded-4" style="z-index: 10; top:11vh;">
+					<div class="col-md-8 m-0 p-0">
+						{% set all_tags = [] %}
+						{% for event in timeline_events %}
+							{% for tag in event.main.tags %}
+								{% if tag not in all_tags %}
+									{% set all_tags = all_tags|merge([tag]) %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}
+						<div class="row">
+							<h6 class="col-auto ">Filter by Tags:</h6>
 
-			<div class="col-md-8 m-0 p-0">
-				{% set all_tags = [] %}
-				{% for event in timeline_events %}
-					{% for tag in event.main.tags %}
-						{% if tag not in all_tags %}
-							{% set all_tags = all_tags|merge([tag]) %}
-						{% endif %}
-					{% endfor %}
-				{% endfor %}
-				<div class="row">
-					<h6 class="col-auto ">Filter by Tags:</h6>
+							<input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
+							<label class="col-auto btn btn-outline-success" for="success-outlined" onclick="selectAllTags(true)">All</label>
 
-					<input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
-					<label class="col-auto btn btn-outline-success" for="success-outlined" onclick="selectAllTags(true)">All</label>
+							<input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
+							<label class="col-auto btn btn-outline-danger" for="danger-outlined" onclick="selectAllTags(false)">None</label>
+						</div>
+						<div class="row">
+							{% for tag in all_tags %}
+								<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag }}" name="tags" value="{{ tag }}" checked>
+								<label class="col-auto btn btn-outline-main" for="btn-check-outlined-{{ tag }}">{{ tag }}</label><br>
+							{% endfor %}
 
-					<input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
-					<label class="col-auto btn btn-outline-danger" for="danger-outlined" onclick="selectAllTags(false)">None</label>
-				</div>
-				<div class="row">
-					{% for tag in all_tags %}
-						<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag }}" name="tags" value="{{ tag }}" checked>
-						<label class="col-auto btn btn-outline-main" for="btn-check-outlined-{{ tag }}">{{ tag }}</label><br>
-					{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-4 m-0 p-0">
+						<h6>Filter by Year:</h6>
+						<div class="btn-group" role="group" aria-label="Year buttons">
+							{% set years = [] %}
 
-				</div>
-			</div>
-			<div class="col-md-4 m-0 p-0">
-				<h6>Filter by Year:</h6>
-				<div class="btn-group" role="group" aria-label="Year buttons">
-					{% set years = [] %}
+							{# Loop through events to gather unique years from both start and end dates #}
+							{% for event in timeline_events %}
+								{% if event.main.startDate|date('Y') not in years %}
+									{% set years = years|merge([event.main.startDate|date('Y')]) %}
+								{% endif %}
+								{% if event.main.endDate|date('Y') not in years %}
+									{% set years = years|merge([event.main.endDate|date('Y')]) %}
+								{% endif %}
+							{% endfor %}
 
-					{# Loop through events to gather unique years from both start and end dates #}
-					{% for event in timeline_events %}
-						{% if event.main.startDate|date('Y') not in years %}
-							{% set years = years|merge([event.main.startDate|date('Y')]) %}
-						{% endif %}
-						{% if event.main.endDate|date('Y') not in years %}
-							{% set years = years|merge([event.main.endDate|date('Y')]) %}
-						{% endif %}
-					{% endfor %}
+							{# Sort the years in ascending order #}
+							{% set years = years|sort %}
 
-					{# Sort the years in ascending order #}
-					{% set years = years|sort %}
+							{# Generate radio buttons for each year #}
+							{% for year in years %}
+								<input type="radio" class="btn-check" name="btnradio" id="btnradio{{ loop.index }}" autocomplete="off" {% if loop.index == 1 %} checked {% endif %}>
+								<label class="btn btn-outline-main" for="btnradio{{ loop.index }}" onclick="showEvents('{{ year }}')">{{ year }}</label>
+							{% endfor %}
 
-					{# Generate radio buttons for each year #}
-					{% for year in years %}
-						<input type="radio" class="btn-check" name="btnradio" id="btnradio{{ loop.index }}" autocomplete="off" {% if loop.index == 1 %} checked {% endif %}>
-						<label class="btn btn-outline-main" for="btnradio{{ loop.index }}" onclick="showEvents('{{ year }}')">{{ year }}</label>
-					{% endfor %}
-
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
