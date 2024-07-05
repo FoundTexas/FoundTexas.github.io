@@ -24,15 +24,16 @@
 		}
 	</style>
 
-	<button class="col-auto btn btn-primary position-fixed top-50 start-0 translate-middle" tyle="z-index: 100000;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-		Button with data-bs-target
-	</button>
-	<div id="timeline" class="row pb-5 p-0 m-0 justify-content-center w-100" style="min-height: 100vh; margin-top: -2vh; ">
-		<!--img class="mx-auto position-fixed bg-dark" 
-     		style="z-index: -100000; brightness(59%); height: 100vh; width: 101vw; mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, transparent 77%);" 
-    		 src="{{asset('TimeVortex.gif')}}" 
-     		alt="Other Image"/-->
-	 
+
+	<div id="timeline" class="row pb-5 p-0 m-0 justify-content-center w-100 position-relative" style="min-height: 100vh; margin-top: -2vh; ">
+
+		<div class="col-auto position-absolute top-0 start-50">
+			<button class="btn btn-primary position-fixed " tyle="z-index: 1000000;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+				Button with data-bs-target
+			</button>
+
+		</div>
+
 		<canvas id="bgcanvas"></canvas>
 
 		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
