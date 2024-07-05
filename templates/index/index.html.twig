@@ -10,10 +10,10 @@
 {% block body %}
 	{% include 'index/AboutMe.twig' %}
 
-<canvas id="bgcanvas"></canvas>
+		<canvas id="bgcanvas" ></canvas>
 
-		{% include 'index/GameHighlights.twig' with {'games': games, 'type': 'game', 'textRef': 'GamesPortfolio', 'headText': 'Games Portfolio', 'darkbg': true} %}
-		{% include 'index/ProjectsHighlights.twig' with {'projects': projects, 'type': 'web', 'textRef': 'WebPortfolio', 'headText': 'Web Portfolio', 'darkbg': true, 'color': 'bg-main-gradient-alter'} %}
-		{% include 'index/contact.twig' %}
+	{% include 'index/GameHighlights.twig' with {'games': games, 'type': 'game', 'textRef': 'GamesPortfolio', 'headText': 'Games Portfolio', 'darkbg': true} %}
+	{% include 'index/ProjectsHighlights.twig' with {'projects': projects, 'type': 'web', 'textRef': 'WebPortfolio', 'headText': 'Web Portfolio', 'darkbg': true, 'color': 'bg-main-gradient-alter'} %}
+	{% include 'index/contact.twig' %}
 
 {% endblock %}

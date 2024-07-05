@@ -32,4 +32,31 @@ return [
     'three/addons/loaders/GLTFLoader.js' => [
         'version' => '0.166.1',
     ],
+    'three/addons/postprocessing/UnrealBloomPass.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/postprocessing/OutputPass.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/postprocessing/RenderPass.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/postprocessing/EffectComposer.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/renderers/SVGRenderer.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/examples/jsm/loaders/GLTFLoader.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/examples/jsm/postprocessing/EffectComposer.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/examples/jsm/postprocessing/RenderPass.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/examples/jsm/postprocessing/UnrealBloomPass.js' => [
+        'version' => '0.166.1',
+    ],
 ];

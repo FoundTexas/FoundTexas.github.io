@@ -27,11 +27,11 @@
 	<button class="col-auto btn btn-primary position-fixed top-50 start-0 translate-middle" tyle="z-index: 100000;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
 		Button with data-bs-target
 	</button>
-	<div id="timeline" class="row pb-5 justify-content-center w-100" style="min-height: 100vh; margin-top: -2vh; ">
-		<img class="mx-auto position-fixed bg-dark" 
+	<div id="timeline" class="row pb-5 p-0 m-0 justify-content-center w-100" style="min-height: 100vh; margin-top: -2vh; ">
+		<!--img class="mx-auto position-fixed bg-dark" 
      		style="z-index: -100000; brightness(59%); height: 100vh; width: 101vw; mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, transparent 77%);" 
     		 src="{{asset('TimeVortex.gif')}}" 
-     		alt="Other Image"/>
+     		alt="Other Image"/-->
 	 
 		<canvas id="bgcanvas"></canvas>
 
@@ -112,7 +112,7 @@
 		{% for year in years %}
 			{% set events_in_year = timeline_events|filter(e => (e.main.endDate|date('Y') == year)) %}
 
-			<div class="events-wrapper container-fluid row justify-content-center align-items-center m-0" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
+			<div class="events-wrapper container-fluid row p-0 m-0 justify-content-center align-items-center m-0" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
 				<div class="row justify-content-center mt-4">
 					<h4 class="col-auto bg-dark text-center shadow-custom px-5 py-3 text-warning border border-warning rounded-3">{{ year }}</h4>
 				</div>
