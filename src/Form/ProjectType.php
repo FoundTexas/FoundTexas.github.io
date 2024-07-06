@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ProjectType extends AbstractType
 {
@@ -57,6 +58,19 @@ class ProjectType extends AbstractType
                 },
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
+            ])
+            ->add('gallery', CollectionType::class, [
+                'label' => 'Gallery',
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'attr' => ['class' => 'form-control'],
+                    'row_attr' => ['class' => 'form-group'],
+                ],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'by_reference' => false,
             ]);
     }
 

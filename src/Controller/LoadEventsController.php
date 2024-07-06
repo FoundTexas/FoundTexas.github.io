@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin')]
@@ -45,64 +46,89 @@ class LoadEventsController extends AbstractController
     }
 
     #[Route('/new/milestone', name: 'milestone_new', methods: ['GET', 'POST'])]
-
-    public function newMilestone(Request $request, EntityManagerInterface $entityManager): Response
+    public function newMilestone(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-        $id = $request->get('id') ?? null;
+        try {
+            $id = $request->get('id');
+            $mileStone = $id ? $entityManager->getRepository(MileStone::class)->find($id) : new MileStone();
 
-        $mileStone = $id ? $entityManager->getRepository(MileStone::class)->find($id) : new MileStone();
+            $mileStoneForm = $this->createForm(MileStoneFormType::class, $mileStone);
+            $mileStoneForm->handleRequest($request);
 
-        $mileStoneForm = $this->createForm(MileStoneFormType::class, $mileStone);
-        $mileStoneForm->handleRequest($request);
+            if ($mileStoneForm->isSubmitted() && $mileStoneForm->isValid()) {
+                $updateID = $request->get('updateID') ?? null;
+                $flushMileStone = $entityManager->getRepository(MileStone::class)->find($updateID) ?? new MileStone();
 
-        if ($mileStoneForm->isSubmitted() && $mileStoneForm->isValid()) {
+                $flushMileStone->setName($mileStone->getName())
+                    ->setDescription($mileStone->getDescription())
+                    ->setStartDate($mileStone->getStartDate())
+                    ->setEndDate($mileStone->getEndDate())
+                    ->setTags($mileStone->getTags())
+                    ->setBullets($mileStone->getBullets());
 
-            $updateID = $request->get('updateID') ?? null;
-            $flushMileStone = $entityManager->getRepository(MileStone::class)->find($updateID) ?? new MileStone();
+                $entityManager->persist($flushMileStone);
+                $entityManager->flush();
+            }
 
-            $flushMileStone->setName($mileStone->getName())->setDescription($mileStone->getDescription())->setStartDate($mileStone->getStartDate())->setEndDate($mileStone->getEndDate())->setTags($mileStone->getTags())->setBullets($mileStone->getBullets());
+            // Render only the form HTML
+            $mileStoneFormView = $this->renderView('EventLoading/create_mileStone.twig', [
+                'mileStoneForm' => $mileStoneForm->createView(),
+                'mileStonecur' => $mileStone
+            ]);
 
-            $entityManager->persist($flushMileStone);
-            $entityManager->flush();
+            return new JsonResponse([
+                'status' => 'success',
+                'html' => $mileStoneFormView
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'An error occurred: ' . $e->getMessage()
+            ], 500);
         }
-
-        // Render only the form HTML
-        $mileStoneFormView = $this->renderView('EventLoading/create_mileStone.twig', [
-            'mileStoneForm' => $mileStoneForm->createView(),
-            'mileStonecur' => $mileStone
-        ]);
-
-        return new Response($mileStoneFormView);
     }
 
-
     #[Route('/new/project', name: 'project_new', methods: ['GET', 'POST'])]
-    public function newBulletPoints(Request $request, EntityManagerInterface $entityManager): Response
+    public function newBulletPoints(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-        $id = $request->get('id') ?? null;
+        try {
+            $id = $request->get('id') ?? null;
+            $project = $id ? $entityManager->getRepository(Project::class)->find($id) : new Project();
 
-        $project = $id ? $entityManager->getRepository(Project::class)->find($id) : new Project();
+            $projectForm = $this->createForm(ProjectType::class, $project);
+            $projectForm->handleRequest($request);
 
-        $projectForm = $this->createForm(ProjectType::class, $project);
-        $projectForm->handleRequest($request);
+            if ($projectForm->isSubmitted() && $projectForm->isValid()) {
+                $updateID = $request->get('updateID') ?? null;
+                $flushProject = $entityManager->getRepository(Project::class)->find($updateID) ?? new Project();
 
-        if ($projectForm->isSubmitted() && $projectForm->isValid()) {
+                $flushProject->setName($project->getName())
+                    ->setDescription($project->getDescription())
+                    ->setFileref($project->getFileref())
+                    ->setMileStone($project->getMileStone())
+                    ->setIconref($project->getIconref())
+                    ->setLinkref($project->getLinkref())
+                    ->setType($project->getType());
 
-            $updateID = $request->get('updateID') ?? null;
-            $flushProject = $entityManager->getRepository(Project::class)->find($updateID) ?? new Project();
+                $entityManager->persist($flushProject);
+                $entityManager->flush();
+            }
 
-            $flushProject->setName($project->getName())->setDescription($project->getDescription())->setFileref($project->getFileref())->setMileStone($project->getMileStone())->setIconref($project->getIconref())->setLinkref($project->getLinkref())->setType($project->getType());
+            // Render only the form HTML
+            $projectFormView = $this->renderView('EventLoading/create_Project.twig', [
+                'projectForm' => $projectForm->createView(),
+                'projectcur' => $project
+            ]);
 
-            $entityManager->persist($flushProject);
-            $entityManager->flush();
+            return new JsonResponse([
+                'status' => 'success',
+                'html' => $projectFormView
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'An error occurred: ' . $e->getMessage()
+            ], 500);
         }
-
-        // Render only the form HTML
-        $projectFormView = $this->renderView('EventLoading/create_Project.twig', [
-            'projectForm' => $projectForm->createView(),
-            'projectcur' => $project
-        ]);
-
-        return new Response($projectFormView);
     }
 }

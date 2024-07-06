@@ -37,20 +37,21 @@ class MileStoneFormType extends AbstractType
                 'row_attr' => ['class' => 'form-group'],
             ])
             ->add('bullets', CollectionType::class, [
-                'label' => false,
+                'label' => 'Bullet-Points',
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,
-                    'attr' => ['class' => 'form-control'],
-                    'row_attr' => ['class' => 'form-group'],
+                    'attr' => ['class' => 'form-control col-8'],
+                    'row_attr' => ['class' => 'form-group mt-1 row justify-content-center'],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
                 'by_reference' => false,
+                'row_attr' => ['class' => 'my-2'],
             ])
             ->add('tags', CollectionType::class, [
-                'label' => false,
+                'label' => 'Tags',
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,

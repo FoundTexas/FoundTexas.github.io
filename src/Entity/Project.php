@@ -35,6 +35,9 @@ class Project
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $linkref = null;
 
+    #[ORM\Column( nullable: true)]
+    private ?array $gallery = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class Project
     public function setLinkref(?string $linkref): static
     {
         $this->linkref = $linkref;
+
+        return $this;
+    }
+
+    public function getGallery(): ?array
+    {
+        return $this->gallery;
+    }
+
+    public function setGallery(?array $gallery): static
+    {
+        $this->gallery = $gallery;
 
         return $this;
     }
