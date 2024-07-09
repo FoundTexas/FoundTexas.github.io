@@ -19,22 +19,15 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        $queryBuilder1 = $entityManager->getRepository(Project::class)->createQueryBuilder('p1');
-        $queryBuilder2 = $entityManager->getRepository(Project::class)->createQueryBuilder('p2');
+        $query = $entityManager->createQuery(
+            'SELECT p1.id, p1.name, p1.description, p1.fileref, p1.iconref, p1.type, p1.linkref, mile.tags
+                FROM App\Entity\Project p1
+                INNER JOIN p1.mileStone mile
+                WHERE p1.type = :comparetype'
+        );;
 
-        $results1 = $queryBuilder1
-            ->select('p1.id, p1.name, p1.description, p1.fileref, p1.iconref, p1.type, p1.linkref')
-            ->where('p1.type = :type1')
-            ->setParameter('type1', 'game-main')
-            ->getQuery()
-            ->getResult();
-
-        $results2 = $queryBuilder2
-            ->select('p2.id, p2.name, p2.description, p2.fileref, p2.iconref, p2.type, p2.linkref')
-            ->where('p2.type = :type2')
-            ->setParameter('type2', 'web-main')
-            ->getQuery()
-            ->getResult();
+        $results1 = $query->setParameters(['comparetype' => 'game-main'])->setMaxResults(6)->getResult();
+        $results2 = $query->setParameters(['comparetype' => 'web-main'])->setMaxResults(6)->getResult();
 
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
@@ -76,11 +69,10 @@ class IndexController extends AbstractController
                 </body></html>");
 
             $mailer->send($sendmail);
-
         } catch (\Exception $e) {
             return new JsonResponse(['success' => false, 'message' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
-        
+
         return new JsonResponse(['success' => true, 'message' => 'Message sent successfully!'], JsonResponse::HTTP_OK);
     }
 }

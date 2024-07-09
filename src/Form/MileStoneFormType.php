@@ -41,14 +41,14 @@ class MileStoneFormType extends AbstractType
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,
-                    'attr' => ['class' => 'form-control col-8'],
-                    'row_attr' => ['class' => 'form-group mt-1 row justify-content-center'],
+                    'attr' => ['class' => 'form-control'],
+                    'row_attr' => ['class' => 'form-group my-1 row justify-content-center collection-entry'],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
                 'by_reference' => false,
-                'row_attr' => ['class' => 'my-2'],
+                'attr' => ['class' => 'collection'],
             ])
             ->add('tags', CollectionType::class, [
                 'label' => 'Tags',
@@ -56,12 +56,13 @@ class MileStoneFormType extends AbstractType
                 'entry_options' => [
                     'label' => false,
                     'attr' => ['class' => 'form-control'],
-                    'row_attr' => ['class' => 'form-group'],
+                    'row_attr' => ['class' => 'form-group my-1 row justify-content-center collection-entry'],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
                 'by_reference' => false,
+                'attr' => ['class' => 'collection'],
             ]);
     }
 

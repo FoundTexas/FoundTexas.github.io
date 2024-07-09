@@ -13,7 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
+use Psr\Log\LoggerInterface;
 
 #[Route('/admin')]
 class LoadEventsController extends AbstractController
@@ -89,45 +93,91 @@ class LoadEventsController extends AbstractController
     }
 
     #[Route('/new/project', name: 'project_new', methods: ['GET', 'POST'])]
-    public function newBulletPoints(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function newBulletPoints(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): JsonResponse
     {
+        $message = 'An error occurred: ';
         try {
             $id = $request->get('id') ?? null;
             $project = $id ? $entityManager->getRepository(Project::class)->find($id) : new Project();
 
             $projectForm = $this->createForm(ProjectType::class, $project);
             $projectForm->handleRequest($request);
+        } catch (\Exception $e) {
+            $logger->error('Form handling error: ' . $e->getMessage());
+            $message .= " FORM_ERROR: " . $e->getMessage();
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => $message,
+            ], 500);
+        }
 
-            if ($projectForm->isSubmitted() && $projectForm->isValid()) {
+        try {
+            if ($projectForm->isSubmitted()) {
                 $updateID = $request->get('updateID') ?? null;
                 $flushProject = $entityManager->getRepository(Project::class)->find($updateID) ?? new Project();
+                $formGallery = $projectForm->get('gallery')->getData();
+                $uploadedFiles = $projectForm->get('galleryuploads')->getData();
+                $newGallery = [];
 
-                $flushProject->setName($project->getName())
+                // Handle new file uploads
+                foreach ($uploadedFiles as $file) {
+                    if ($file instanceof UploadedFile) {
+                        $newFilename = md5(uniqid()) . '.' . $file->guessExtension();
+                        try {
+                            $file->move($this->getParameter('gallery_directory'), $newFilename);
+                            $newGallery[] = $newFilename;
+                        } catch (FileException $e) {
+                            $logger->error('File upload error: ' . $e->getMessage());
+                            $message .= " FILE_UPLOAD_ERROR: " . $e->getMessage();
+                        }
+                    }
+                }
+
+                $existingGallery = $flushProject->getGallery();
+
+                // Merge new uploads with existing gallery
+                $updatedGallery = array_merge($formGallery, $newGallery);
+
+                // Remove files not in the updated gallery
+                foreach ($existingGallery as $file) {
+                    $filePath = $this->getParameter('gallery_directory') . '/' . $file;
+                    if (file_exists($filePath) && !in_array($file, $updatedGallery)) {
+                        unlink($filePath);
+                    }
+                }
+
+                $flushProject->setGallery($updatedGallery)
+                    ->setName($project->getName())
                     ->setDescription($project->getDescription())
                     ->setFileref($project->getFileref())
                     ->setMileStone($project->getMileStone())
                     ->setIconref($project->getIconref())
-                    ->setLinkref($project->getLinkref())
-                    ->setType($project->getType());
+                    ->setType($project->getType())
+                    ->setLinkref($project->getLinkref());
 
+                // Save the project entity
                 $entityManager->persist($flushProject);
                 $entityManager->flush();
+                // Optionally handle success response or redirect
             }
 
             // Render only the form HTML
             $projectFormView = $this->renderView('EventLoading/create_Project.twig', [
                 'projectForm' => $projectForm->createView(),
-                'projectcur' => $project
+                'projectcur' => $project,
             ]);
 
             return new JsonResponse([
                 'status' => 'success',
-                'html' => $projectFormView
+                'message' => $message,
+                'html' => $projectFormView,
             ]);
         } catch (\Exception $e) {
+            $logger->error('Template rendering error: ' . $e->getMessage());
+            $message .= " TEMPLATE_ERROR: " . $e->getMessage();
             return new JsonResponse([
                 'status' => 'error',
-                'message' => 'An error occurred: ' . $e->getMessage()
+                'message' => $message,
             ], 500);
         }
     }

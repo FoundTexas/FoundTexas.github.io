@@ -14,23 +14,212 @@
 {% endblock %}
 
 {% block body %}
+	<style>
+		.number-slide {
+			background: black;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 50px;
+			color: #fff;
+			font-weight: 500;
+			height: 60vh;
+			max-height: 100vh;
+		}
+
+		.navigation-wrapper {
+			position: relative;
+		}
+
+		.dots {
+			display: flex;
+			padding: 10px 0;
+			justify-content: center;
+		}
+
+		.dot {
+			border: none;
+			width: 10px;
+			height: 10px;
+			background: #c5c5c5;
+			border-radius: 50%;
+			margin: 0 5px;
+			padding: 5px;
+			cursor: pointer;
+		}
+
+		.dot:focus {
+			outline: none;
+		}
+
+		.dot--active {
+			background: #000;
+		}
+
+		.arrow {
+			width: 30px;
+			height: 30px;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			-webkit-transform: translateY(-50%);
+			fill: #fff;
+			cursor: pointer;
+		}
+
+		.arrow--left {
+			left: 5px;
+			fill: "#fff";
+			background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' %3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z' %3E%3C/path%3E%3C/svg%3E");
+		}
+
+		.arrow--right {
+			left: auto;
+			right: 5px;
+			background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' %3E%3Cpath d='M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z'%3E%3C/path%3E%3C/svg%3E");
+		}
+
+		.arrow--disabled.arrow--left {
+			background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' fill='grey' viewBox='0 0 24 24' %3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z' %3E%3C/path%3E%3C/svg%3E");
+		}
+
+		.arrow--disabled.arrow--right {
+			background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' fill='grey' viewBox='0 0 24 24' %3E%3Cpath d='M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z'%3E%3C/path%3E%3C/svg%3E");
+		}
+	</style>
+
 	<hr>
 	<div class="mx-3">
-		<div class="card bg-dark">
+		<div class="card rounded-3 bg-dark">
 			<div class="card-header text-center bg-main-dark">
 				<h3>{{ project.name }}</h3>
 			</div>
-			<div class="card-body bg-dark d-flex justify-content-center align-items-center" style="overflow: hidden;">
+			<div class="card-body bg-dark row p-0 m-0 justify-content-center align-items-center" style="overflow: hidden;">
 				<div>
 					{{ project.fileref|raw }}
 				</div>
+				<div id="my-keen-slider" class="keen-slider">
+				{% for item in project.gallery %}
+					<div class="keen-slider__slide number-slide" style="aspect-ratio:0.5; background-image: url('{{ asset('uploads/gallery/' ~ item) }}'); background-repeat: no-repeat; background-size: contain; background-position: center;">1</div>
+				{% endfor %}
+					
+				</div>
+
+				{% if project.linkref is not empty and project.linkref is not null %}
+				<a target="blank" href="{{project.linkref}}" class="col-auto my-4 py-2">
+					<button type="button" class="custom-btn rounded-2 p-1 m-2 bg-accent text-white" data-bs-dismiss="modal">
+						<h5 class="p-0 m-0"> &nbsp;<i class="fa fa-file" aria-hidden="true"></i> Go to project! </h5>
+					</button>
+				</a>
+				{% endif %}
+
+				<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
+				
+				<script>
+					function navigation(slider) {
+						let wrapper, dots, arrowLeft, arrowRight
+
+						function markup(remove) {
+							wrapperMarkup(remove)
+							dotMarkup(remove)
+							arrowMarkup(remove)
+						}
+
+						function removeElement(elment) {
+							elment.parentNode.removeChild(elment)
+						}
+						function createDiv(className) {
+							var div = document.createElement("div")
+							var classNames = className.split(" ")
+							classNames.forEach((name) => div.classList.add(name))
+							return div
+						}
+
+						function arrowMarkup(remove) {
+							if (remove) {
+							removeElement(arrowLeft)
+							removeElement(arrowRight)
+							return
+							}
+							arrowLeft = createDiv("arrow arrow--left")
+							arrowLeft.addEventListener("click", () => slider.prev())
+							arrowRight = createDiv("arrow arrow--right")
+							arrowRight.addEventListener("click", () => slider.next())
+
+							wrapper.appendChild(arrowLeft)
+							wrapper.appendChild(arrowRight)
+						}
+
+						function wrapperMarkup(remove) {
+							if (remove) {
+							var parent = wrapper.parentNode
+							while (wrapper.firstChild)
+								parent.insertBefore(wrapper.firstChild, wrapper)
+							removeElement(wrapper)
+							return
+							}
+							wrapper = createDiv("navigation-wrapper")
+							slider.container.parentNode.appendChild(wrapper)
+							wrapper.appendChild(slider.container)
+						}
+
+						function dotMarkup(remove) {
+							if (remove) {
+							removeElement(dots)
+							return
+							}
+							dots = createDiv("dots")
+							slider.track.details.slides.forEach((_e, idx) => {
+							var dot = createDiv("dot")
+							dot.addEventListener("click", () => slider.moveToIdx(idx))
+							dots.appendChild(dot)
+							})
+							wrapper.appendChild(dots)
+						}
+
+						function updateClasses() {
+							var slide = slider.track.details.rel
+							slide === 0
+							? arrowLeft.classList.add("arrow--disabled")
+							: arrowLeft.classList.remove("arrow--disabled")
+							slide === slider.track.details.slides.length - 1
+							? arrowRight.classList.add("arrow--disabled")
+							: arrowRight.classList.remove("arrow--disabled")
+							Array.from(dots.children).forEach(function (dot, idx) {
+							idx === slide
+								? dot.classList.add("dot--active")
+								: dot.classList.remove("dot--active")
+							})
+						}
+
+						slider.on("created", () => {
+							markup()
+							updateClasses()
+						})
+						slider.on("optionsChanged", () => {
+							console.log(2)
+							markup(true)
+							markup()
+							updateClasses()
+						})
+						slider.on("slideChanged", () => {
+							updateClasses()
+						})
+						slider.on("destroyed", () => {
+							markup(true)
+						})
+					}
+
+					var slider = new KeenSlider("#my-keen-slider", {loop: true,}, [navigation])
+
+				</script>
 			</div>
 		</div>
 
 		<hr>
 
 		<div class="row">
-			<section id="comments container bg-dark" class="col-md-4">
+			<section id="comments container bg-dark" class="col-md-4 rounded-4">
 				<div class="card bg-dark">
 					<div class="card-body bg-dark">
 						<h3>{{ project.name }}</h3>

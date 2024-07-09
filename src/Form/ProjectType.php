@@ -1,5 +1,7 @@
 <?php
 
+// src/Form/ProjectType.php
+
 namespace App\Form;
 
 use App\Entity\MileStone;
@@ -12,10 +14,11 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProjectType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', TextType::class, [
@@ -27,6 +30,7 @@ class ProjectType extends AbstractType
                 'row_attr' => ['class' => 'form-group'],
             ])
             ->add('fileref', TextType::class, [
+                'required' => false,
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
             ])
@@ -60,21 +64,34 @@ class ProjectType extends AbstractType
                 'row_attr' => ['class' => 'form-group'],
             ])
             ->add('gallery', CollectionType::class, [
-                'label' => 'Gallery',
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'label' => false,
                     'attr' => ['class' => 'form-control'],
-                    'row_attr' => ['class' => 'form-group'],
+                    'row_attr' => [
+                        'class' => 'form-group my-1 row justify-content-center collection-entry'
+                    ],
                 ],
-                'allow_add' => true,
                 'allow_delete' => true,
-                'prototype' => true,
+                'allow_add' => true,
                 'by_reference' => false,
+                'prototype' => true,
+                'prototype_name' => '__name__',
+                'attr' => ['class' => 'collection no-add'],
+            ])
+            ->add('galleryuploads', FileType::class, [
+                'label' => 'Upload Images',
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'accept' => 'image/*',
+                ],
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Project::class,

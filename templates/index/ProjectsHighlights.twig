@@ -10,7 +10,7 @@
 <section id="projects" class=" p-lg-5" style="min-height: 100vh;">
 
 
-	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 70vh; width: 100%; opacity:0.9;">
+	<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 70vh; width: 100%; opacity:0.95;">
 
 		<div class="container rounded-5 bg-main-gradient  mx-3 my-md-1 p-3 shadow-custom">
 			<div class="w-100 d-flex justify-content-center ">
@@ -33,13 +33,19 @@
 								<div class=" w-100 h-50 p-0 d-flex align-items-center" style="overflow:hidden;">
 									<img src="{{ project.iconref }}" style="width:100%;" alt="project not loading">
 								</div>
-								<div class='px-1'>
+								<div class='row justify-content-center'>
 									<p class="m-0 accent-color text-center">
 										<strong>{{ project.name }}</strong>
 									</p>
-									<p class=" m-0 d-none d-md-block">{{ project.description }}</p>
+
+									<div class="col-auto btn-group m-2" role="group" aria-label="{{project.name}} {{project.id}}">
+										{% for tag in project.tags %}
+											<button type="button" class="btn btn-outline-primary">{{tag}}</button>
+										{% endfor %}
+									</div>
+
 								</div>
-								<a href="{{project.linkref ?? '#' }}" class="btn btn-main"></a>
+								<a href="{{ path('app_project_detail', {'id': project.id}) }}" class="btn btn-main"></a>
 							</div>
 						</div>
 

@@ -129,7 +129,7 @@ class Project
 
     public function getGallery(): ?array
     {
-        return $this->gallery;
+        return $this->gallery ?? [];
     }
 
     public function setGallery(?array $gallery): static

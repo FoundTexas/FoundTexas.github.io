@@ -10,7 +10,8 @@
 {{ form_row(mileStoneForm.bullets) }}
 
 <div class="d-flex justify-content-center my-2">
-	<button class="btn btn-primary" type="button" onclick="submitForm('{{path('milestone_new')}}', 'mileStoneForm', '{{ asset('loadgif.gif') }}', {{mileStonecur.id}})">Create</button>
+	<button class="btn btn-primary" type="button" onclick="submitForm('{{path('milestone_new')}}', 'MilestoneContainer', 'mileStoneForm', '{{ asset('loadgif.gif') }}', {{mileStonecur.id}})">Create</button>
 </div>
+
 {{ form_end(mileStoneForm) }}
 
