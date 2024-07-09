@@ -16,7 +16,7 @@
 {% block body %}
 	<style>
 		.number-slide {
-			background: black;
+			background: grey;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -53,7 +53,7 @@
 		}
 
 		.dot--active {
-			background: #000;
+			background: #3caa8b;
 		}
 
 		.arrow {
@@ -63,13 +63,13 @@
 			top: 50%;
 			transform: translateY(-50%);
 			-webkit-transform: translateY(-50%);
-			fill: #fff;
+			fill: #3caa8b;
 			cursor: pointer;
 		}
 
 		.arrow--left {
 			left: 5px;
-			fill: "#fff";
+			fill: "#3caa8b";
 			background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' %3E%3Cpath d='M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z' %3E%3C/path%3E%3C/svg%3E");
 		}
 
@@ -98,9 +98,9 @@
 				<div>
 					{{ project.fileref|raw }}
 				</div>
-				<div id="my-keen-slider" class="keen-slider">
+				<div id="my-keen-slider" class="keen-slider bg-dark">
 				{% for item in project.gallery %}
-					<div class="keen-slider__slide number-slide" style="aspect-ratio:0.5; background-image: url('{{ asset('uploads/gallery/' ~ item) }}'); background-repeat: no-repeat; background-size: contain; background-position: center;">1</div>
+					<div class="keen-slider__slide number-slide" style="aspect-ratio:0.5; background-image: url('{{ asset('uploads/gallery/' ~ item) }}'); background-repeat: no-repeat; background-size: contain; background-position: center;"></div>
 				{% endfor %}
 					
 				</div>
@@ -179,12 +179,6 @@
 
 						function updateClasses() {
 							var slide = slider.track.details.rel
-							slide === 0
-							? arrowLeft.classList.add("arrow--disabled")
-							: arrowLeft.classList.remove("arrow--disabled")
-							slide === slider.track.details.slides.length - 1
-							? arrowRight.classList.add("arrow--disabled")
-							: arrowRight.classList.remove("arrow--disabled")
 							Array.from(dots.children).forEach(function (dot, idx) {
 							idx === slide
 								? dot.classList.add("dot--active")
