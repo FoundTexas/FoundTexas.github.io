@@ -107,12 +107,12 @@ hideLoading(); // Hide the loading spinner after a short delay
 
 		{% endblock %}
 
-		<div class="w-100 p-0 mx-0" style="margin-top: 10vh;"> {% block body %}{% endblock %}
+		<div class="w-100 p-0 mx-0" style="margin-top: 13vh;"> {% block body %}{% endblock %}
 
 			</div>
 
 			{% block foot %}
-				{% include 'index/footer.twig' %}
+				{% include 'index/footer.twig' with {'bg':' bg-transparent'} %}
 			{% endblock %}
 
 		</body>

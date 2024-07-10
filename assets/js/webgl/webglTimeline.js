@@ -45,7 +45,7 @@ function init() {
     composer.addPass(bloomPass);
 
     // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0x101010); // Dark ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Dark ambient light
     scene.add(ambientLight);
 
     // Add directional light with subtle effect
@@ -130,12 +130,12 @@ function init() {
         fragmentShader: fragmentShader
     });
 
-    const vortexGeometry = new THREE.PlaneGeometry(window.innerWidth/3, window.innerHeight/3);
+    const vortexGeometry = new THREE.PlaneGeometry(window.innerWidth*0.23, window.innerHeight/3);
     const vortexMesh = new THREE.Mesh(vortexGeometry, vortexMaterial);
     vortexMesh.position.z = -30; // Adjust position in front of the camera
     vortexMesh.position.y = window.innerHeight/45;
     vortexMesh.rotation.x = -0.2;
-    scene.add(vortexMesh);
+    //scene.add(vortexMesh);
 
     window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('mousemove', onMouseMove, false);

@@ -14,6 +14,7 @@
 		.timeline-container:before {
 			content: '';
 			position: absolute;
+			opacity: 0.95;
 			left: 48.5vw;
 			top: 0;
 			bottom: 0;
@@ -24,17 +25,9 @@
 		}
 	</style>
 
-
+	<canvas id="bgcanvas"></canvas>
 	<div id="timeline" class="row pb-5 p-0 m-0 justify-content-center w-100 position-relative" style="min-height: 100vh; margin-top: -2vh; ">
 
-		<div class="col-auto position-absolute top-0 start-50">
-			<button class="btn btn-primary position-fixed " tyle="z-index: 1000000;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-				Button with data-bs-target
-			</button>
-
-		</div>
-
-		<canvas id="bgcanvas"></canvas>
 
 		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 			<div class="offcanvas-header">
@@ -192,7 +185,14 @@
 				Let's build together!</button>
 		</div>
 
+		<div class="position-fixed row ">
+			<button class="col-auto btn btn-primary" tyle="z-index: 1000000;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+				Button with data-bs-target
+			</button>
+
+		</div>
 	</div>
+
 
 	<script src="{{ asset('js/timeLine.js') }}"></script>
 {% endblock %}

@@ -27,7 +27,6 @@ function init() {
         { type: 'BoxGeometry', color: 0xff5733, position: { x: 2.5, y: 1, z: -4 } },    // Orange
         { type: 'SphereGeometry', color: 0x28a745, position: { x: 3.5, y: -2, z: -4 } },  // Green
         { type: 'TorusGeometry', color: 0x6f42c1, position: { x: -2, y: -2, z: -3 } },   // Purple
-        { type: 'TorusGeometry', color: 0xff5733, position: { x: -6, y: -1, z: -3 } }   // Orange
     ];
 
     geometryParams.forEach(params => {
