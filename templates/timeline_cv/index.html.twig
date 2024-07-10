@@ -31,11 +31,11 @@
 
 		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 			<div class="offcanvas-header">
-				<button type="button" class="" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+				<button type="button" class="  bg-accent text-white " data-bs-dismiss="offcanvas" aria-label="Close">X</button>
 				<h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
 			</div>
-			<div class="offcanvas-body">
-				<div class="col-12 row p-4 position-sticky bg-main-dark rounded-4" style="z-index: 10; top:11vh;">
+			<div class="offcanvas-body bg-gradient">
+				<div class="col-12 row p-2 position-sticky bg-main-dark rounded-4" style="z-index: 10; top:11vh;">
 
 					<div class="col-md-8 m-0 p-0">
 						{% set all_tags = [] %}
@@ -185,11 +185,12 @@
 				Let's build together!</button>
 		</div>
 
-		<div class="position-fixed row ">
-			<button class="col-auto btn btn-primary" tyle="z-index: 1000000;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-				Button with data-bs-target
+		<div class="position-fixed p-0 m-0" style=" top:30%; left: 0;">
+			<button class="custom-btn rounded-2 p-1 bg-main text-white"  type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+				<svg width="44" height="44" viewbox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M67.8333 9.25H6.16667L30.8333 38.4183V58.5833L43.1667 64.75V38.4183L67.8333 9.25Z" stroke="#F3F3F3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
 			</button>
-
 		</div>
 	</div>
 
