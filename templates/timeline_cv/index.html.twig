@@ -29,15 +29,15 @@
 	<div id="timeline" class="row pb-5 p-0 m-0 justify-content-center w-100 position-relative" style="min-height: 100vh; margin-top: -2vh; ">
 
 
-		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas offcanvas-start bg-main-gradient-circle" style="min-width:33vw;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 			<div class="offcanvas-header">
+				<h3 class="offcanvas-title" id="offcanvasExampleLabel">Timeline Filters:</h3>
 				<button type="button" class="  bg-accent text-white " data-bs-dismiss="offcanvas" aria-label="Close">X</button>
-				<h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
 			</div>
-			<div class="offcanvas-body bg-gradient">
-				<div class="col-12 row p-2 position-sticky bg-main-dark rounded-4" style="z-index: 10; top:11vh;">
+			<div class="offcanvas-body ">
+				<div class="row bg-main-dark p-3 roinded-3" style="z-index: 10; top:11vh;">
 
-					<div class="col-md-8 m-0 p-0">
+					<div class="col-12 m-0 p-0">
 						{% set all_tags = [] %}
 						{% for event in timeline_events %}
 							{% for tag in event.main.tags %}
@@ -63,7 +63,7 @@
 
 						</div>
 					</div>
-					<div class="col-md-4 m-0 p-0">
+					<div class="col-12 m-0 p-0">
 						<h6>Filter by Year:</h6>
 						<div class="btn-group" role="group" aria-label="Year buttons">
 							{% set years = [] %}
@@ -89,6 +89,7 @@
 
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>

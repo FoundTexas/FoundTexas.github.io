@@ -1,6 +1,7 @@
 body {
   width: 100vw;
-  background-color: #000000;
+  background: linear-gradient(to bottom right, #0a020a, #0d1817);
+  background-color: #090012;
   padding-right: 0px !important;
 }
 

@@ -135,7 +135,7 @@ function init() {
     vortexMesh.position.z = -30; // Adjust position in front of the camera
     vortexMesh.position.y = window.innerHeight/45;
     vortexMesh.rotation.x = -0.2;
-    //scene.add(vortexMesh);
+    scene.add(vortexMesh);
 
     window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('mousemove', onMouseMove, false);
