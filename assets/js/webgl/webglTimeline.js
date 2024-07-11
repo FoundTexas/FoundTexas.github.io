@@ -12,6 +12,103 @@ let scrollY = 0;
 let scrollDir = 1;
 let vortexMaterial; // Define vortexMaterial globally
 
+const vertexShader = `
+    varying vec2 vUv;
+
+    void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+`;
+
+const fragmentShader = `
+    float EPSILON = .0001;
+    uniform float iTime;
+    uniform vec2 iResolution;
+
+    mat2 rotate2d(float _angle){
+        return mat2(cos(_angle),-sin(_angle),
+                    sin(_angle),cos(_angle));
+    }
+
+    float sdCylinder( vec3 p, vec3 c )
+    {
+        return length(p.xz-c.xy)-c.z;
+    }
+
+    vec2 scene(vec3 p){
+        float res = 1.;
+        
+        p.xy += vec2(cos(p.z),sin(p.z));
+        
+        // Rings
+        for(int i = 0; i<12; i++){
+            vec3 q = p;
+            q.xy *= rotate2d(3.14159265359*float(i)/6.);
+            q.z = mod(q.z, .3);
+            res = min(res, sdCylinder(q-vec3(0.4, 0., .0), vec3(0., 0., .01)));
+        }
+        // Stripes
+        for(int i = 0; i<12; i++){
+            vec3 q = p;
+            q.xy *= rotate2d(3.14159265359*float(i)/6.);
+            q.yz *= rotate2d(3.14159265359*.5);
+            
+            res = min(res, sdCylinder(q, vec3(0.4, 0.11, 0.01)));
+        }
+        // ClippingTunnel
+        float clipping = sdCylinder(p.yzx, vec3(0., 0., .415));
+        
+        float mat = 0.;
+        
+        res = min(res, -clipping);
+        
+        if(res == -clipping ){mat = 1.;}
+        return vec2(res, mat);
+    }
+
+    vec2 march(vec3 ro, vec3 p){
+        float id = 0.;
+        float dist = .0;
+        for(int i = 0; i<64; i++){
+            vec2 depth = scene(ro + dist * p);
+            id = depth.y;
+            if(depth.x < EPSILON){
+                return vec2(dist, id);
+            }
+            dist += depth.x / 2.;
+        }
+        return vec2(dist, id);
+    }
+
+    void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+        // Camera setting
+        float angleLead = .5;
+        vec3 ro = vec3(0., .0, 1.0);
+        vec3 ta = vec3(-cos(iTime+angleLead), sin(iTime+angleLead), .0);
+        vec3 ww = normalize(ta - ro);
+        vec3 uu = normalize(cross(ww, vec3(0.0, 1.0, 0.0)));
+        vec3 vv = cross(uu, ww);
+        vec2 p = (-iResolution.xy + 2.0 * fragCoord) / iResolution.y;
+        vec3 rd = normalize(p.x * uu + p.y * vv + 1.5 * ww);
+        
+        // Camera Movement
+        ro.z -= iTime;
+        ro.xy = vec2(-cos(ro.z), -sin(ro.z));
+        
+        vec2 dist = march(ro, rd);
+        vec3 col = vec3(0.);
+        if(dist.y == 0.){
+            col = mix(vec3(1, 0.239, 0.051), vec3(1, 0.714, 0.286), smoothstep(.7, 3., dist.x));
+        }
+        fragColor = vec4(col, 1.0);
+    }
+
+    void main() {
+        mainImage(gl_FragColor, gl_FragCoord.xy);
+    }
+`;
+
 init();
 animate();
 
@@ -34,7 +131,7 @@ function init() {
     composer.addPass(renderPass);
 
     const params = {
-        threshold: 0.7,
+        threshold: 0.9,
         strength: 2,
         radius: 0,
         exposure: 3
@@ -72,68 +169,19 @@ function init() {
         }
     );
 
-    // Create vortex shader material with texture
-    const vertexShader = `
-        void main() {
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-    `;
-
-    const fragmentShader = `
-    uniform float time;
-    uniform vec2 resolution;
-
-    void main() {
-        vec2 uv = gl_FragCoord.xy / resolution.xy;
-        vec2 center = vec2(0.5, 0.5);
-        uv -= center;
-        uv *= vec2(resolution.x / resolution.y, 1.0);
-        
-        float angle = atan(uv.y, uv.x);
-        float radius = length(uv);
-        
-        // Continuous spiral effect
-        float speed = 0.8; // Adjust speed for desired rotation speed
-        
-        // Compute circular motion
-        float circleMotion = time * speed;
-        angle += circleMotion;
-        
-        uv = vec2(cos(angle), sin(angle)) * radius;
-        uv += center;
-        
-        // Define colors
-        vec3 black = vec3(0.0, 0.0, 0.0);
-        vec3 purple = vec3(0.3, 0.0, 0.3);
-        vec3 green = vec3(0.0, 0.3, 0.0);
-        vec3 orange = vec3(0.8, 0.4, 0.0);
-        
-        // Dark background with specific colors in spiral
-        float darkeningFactor = 0.9; // Darken the texture more
-        vec3 color = black; // Start with black background
-        color += darkeningFactor * mix(black, green, uv.x * uv.y); // Mix purple and green based on UV
-        color += darkeningFactor * purple * smoothstep(0.1, 0.8, radius); // Add orange based on radius
-        
-        gl_FragColor = vec4(color, 1.0); // Adjust color as needed
-    }
-`;
-
-
-
-
     vortexMaterial = new THREE.ShaderMaterial({
         uniforms: {
-            time: { value: 0 },
-            resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+            iTime: { value: 0 },
+            iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
         },
         vertexShader: vertexShader,
         fragmentShader: fragmentShader
     });
 
-    const vortexGeometry = new THREE.PlaneGeometry(window.innerWidth*0.23, window.innerHeight/3);
+    const vortexGeometry = new THREE.PlaneGeometry(window.innerWidth , window.innerHeight / 3);
     const vortexMesh = new THREE.Mesh(vortexGeometry, vortexMaterial);
     vortexMesh.position.z = -30; // Adjust position in front of the camera
-    vortexMesh.position.y = window.innerHeight/45;
+    vortexMesh.position.y = window.innerHeight / 45;
     vortexMesh.rotation.x = -0.2;
     scene.add(vortexMesh);
 
@@ -147,6 +195,7 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     composer.setSize(window.innerWidth, window.innerHeight);
+    vortexMaterial.uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
 }
 
 function onMouseMove(event) {
@@ -158,7 +207,7 @@ function onScroll() {
     const curscrollY = scrollY;
     scrollY = window.scrollY;
 
-    scrollDir = (scrollY > curscrollY) ? 10 : -10;
+    scrollDir = (scrollY > curscrollY) ? 6 : -6;
 }
 
 function animate() {
@@ -181,7 +230,7 @@ function animate() {
 
     // Update time uniform for vortex shader
     if (vortexMaterial) {
-        vortexMaterial.uniforms.time.value = performance.now() / 1000;
+        vortexMaterial.uniforms.iTime.value = performance.now() / 1000;
     }
 
     composer.render();
