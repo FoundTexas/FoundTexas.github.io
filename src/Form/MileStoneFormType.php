@@ -1,4 +1,5 @@
 <?php
+
 // src/Form/MileStoneFormType.php
 
 namespace App\Form;
@@ -36,27 +37,11 @@ class MileStoneFormType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
             ])
-            ->add('bullets', CollectionType::class, [
-                'label' => 'Bullet-Points',
-                'entry_type' => TextType::class,
+            ->add('bulletpoints', CollectionType::class, [
+                'label' => 'Bullet Points',
+                'entry_type' => BulletPointType::class,
                 'entry_options' => [
                     'label' => false,
-                    'attr' => ['class' => 'form-control'],
-                    'row_attr' => ['class' => 'form-group my-1 row justify-content-center collection-entry'],
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'prototype' => true,
-                'by_reference' => false,
-                'attr' => ['class' => 'collection'],
-            ])
-            ->add('tags', CollectionType::class, [
-                'label' => 'Tags',
-                'entry_type' => TextType::class,
-                'entry_options' => [
-                    'label' => false,
-                    'attr' => ['class' => 'form-control'],
-                    'row_attr' => ['class' => 'form-group my-1 row justify-content-center collection-entry'],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,

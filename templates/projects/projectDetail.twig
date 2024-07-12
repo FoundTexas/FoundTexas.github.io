@@ -87,6 +87,12 @@
 		}
 	</style>
 
+	<link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.css"
+    />
+	<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
+
 	<hr>
 	<div class="container mx-3">
 		<div class="card rounded-3 bg-dark">
@@ -97,110 +103,113 @@
 				<div class="col-auto py-3">
 					{{ project.fileref|raw }}
 				</div>
-				<div id="my-keen-slider" class="keen-slider col-12 col-md-10" >
+				<div id="my-keen-slider" class="keen-slider col-12 col-md-10">
 					{% for item in project.gallery %}
 						<div class="keen-slider__slide number-slide bg-accent-dark rounded-4" style="aspect-ratio:0.5; background-image: url('{{ asset('uploads/gallery/' ~ item) }}'); background-repeat: no-repeat; background-size: contain; background-position: center;"></div>
 					{% endfor %}
 				</div>
-				<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
 				<script>
 					function navigation(slider) {
 						let wrapper, dots, arrowLeft, arrowRight
 
 						function markup(remove) {
-							wrapperMarkup(remove)
-							dotMarkup(remove)
-							arrowMarkup(remove)
+						wrapperMarkup(remove)
+						dotMarkup(remove)
+						arrowMarkup(remove)
 						}
 
 						function removeElement(elment) {
-							elment.parentNode.removeChild(elment)
+						elment.parentNode.removeChild(elment)
 						}
 						function createDiv(className) {
-							var div = document.createElement("div")
-							var classNames = className.split(" ")
-							classNames.forEach((name) => div.classList.add(name))
-							return div
+						var div = document.createElement("div")
+						var classNames = className.split(" ")
+						classNames.forEach((name) => div.classList.add(name))
+						return div
 						}
 
 						function arrowMarkup(remove) {
-							if (remove) {
-							removeElement(arrowLeft)
-							removeElement(arrowRight)
-							return
-							}
-							arrowLeft = createDiv("arrow arrow--left p-2")
-							arrowLeft.addEventListener("click", () => slider.prev())
-							arrowRight = createDiv("arrow arrow--right p-2")
-							arrowRight.addEventListener("click", () => slider.next())
+						if (remove) {
+						removeElement(arrowLeft)
+						removeElement(arrowRight)
+						return
+						}
+						arrowLeft = createDiv("arrow arrow--left p-2")
+						arrowLeft.addEventListener("click", () => slider.prev())
+						arrowRight = createDiv("arrow arrow--right p-2")
+						arrowRight.addEventListener("click", () => slider.next())
 
-							wrapper.appendChild(arrowLeft)
-							wrapper.appendChild(arrowRight)
+						wrapper.appendChild(arrowLeft)
+						wrapper.appendChild(arrowRight)
 						}
 
 						function wrapperMarkup(remove) {
-							if (remove) {
-							var parent = wrapper.parentNode
-							while (wrapper.firstChild)
-								parent.insertBefore(wrapper.firstChild, wrapper)
-							removeElement(wrapper)
-							return
-							}
-							wrapper = createDiv("navigation-wrapper")
-							slider.container.parentNode.appendChild(wrapper)
-							wrapper.appendChild(slider.container)
+						if (remove) {
+						var parent = wrapper.parentNode
+						while (wrapper.firstChild) 
+						parent.insertBefore(wrapper.firstChild, wrapper)
+
+						removeElement(wrapper)
+						return
+						}
+						wrapper = createDiv("navigation-wrapper")
+						slider.container.parentNode.appendChild(wrapper)
+						wrapper.appendChild(slider.container)
 						}
 
 						function dotMarkup(remove) {
-							if (remove) {
-							removeElement(dots)
-							return
-							}
-							dots = createDiv("dots")
-							slider.track.details.slides.forEach((_e, idx) => {
-							var dot = createDiv("dot")
-							dot.addEventListener("click", () => slider.moveToIdx(idx))
-							dots.appendChild(dot)
-							})
-							wrapper.appendChild(dots)
+						if (remove) {
+						removeElement(dots)
+						return
+						}
+						dots = createDiv("dots")
+						slider.track.details.slides.forEach((_e, idx) => {
+						var dot = createDiv("dot")
+						dot.addEventListener("click", () => slider.moveToIdx(idx))
+						dots.appendChild(dot)
+						})
+						wrapper.appendChild(dots)
 						}
 
 						function updateClasses() {
-							var slide = slider.track.details.rel
-							Array.from(dots.children).forEach(function (dot, idx) {
-							idx === slide
-								? dot.classList.add("dot--active")
-								: dot.classList.remove("dot--active")
-							})
+						var slide = slider.track.details.rel
+						Array.from(dots.children).forEach(function (dot, idx) {
+						idx === slide ? dot.classList.add("dot--active") : dot.classList.remove("dot--active")
+						})
 						}
 
 						slider.on("created", () => {
-							markup()
-							updateClasses()
+						markup()
+						updateClasses()
 						})
 						slider.on("optionsChanged", () => {
-							console.log(2)
-							markup(true)
-							markup()
-							updateClasses()
+						console.log(2)
+						markup(true)
+						markup()
+						updateClasses()
 						})
 						slider.on("slideChanged", () => {
-							updateClasses()
+						updateClasses()
 						})
 						slider.on("destroyed", () => {
-							markup(true)
+						markup(true)
 						})
 					}
 
-					var slider = new KeenSlider("#my-keen-slider", {loop: true,}, [navigation])
+					var slider = new KeenSlider("#my-keen-slider", {
+						loop: true
+					}, [navigation])
 				</script>
 
 				{% if project.linkref is not empty and project.linkref is not null %}
-				<a target="blank" href="{{project.linkref}}" class="col-auto my-4 py-2">
-					<button type="button" class="custom-btn rounded-2 p-1 m-2 bg-accent text-white" data-bs-dismiss="modal">
-						<h5 class="p-0 m-0"> &nbsp;<i class="fa fa-file" aria-hidden="true"></i> Go to project! </h5>
-					</button>
-				</a>
+					<a target="blank" href="{{project.linkref}}" class="col-auto my-4 py-2">
+						<button type="button" class="custom-btn rounded-2 p-1 m-2 bg-accent text-white" data-bs-dismiss="modal">
+							<h5 class="p-0 m-0">
+								&nbsp;<i class="fa fa-file" aria-hidden="true"></i>
+								Go to project!
+							</h5>
+						</button>
+					</a>
 				{% endif %}
 			</div>
 		</div>

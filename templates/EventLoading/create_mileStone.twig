@@ -6,8 +6,7 @@
 {{ form_row(mileStoneForm.description) }}
 {{ form_row(mileStoneForm.startDate) }}
 {{ form_row(mileStoneForm.endDate) }}
-{{ form_row(mileStoneForm.tags) }}
-{{ form_row(mileStoneForm.bullets) }}
+{{ form_row(mileStoneForm.bulletpoints) }}
 
 <div class="d-flex justify-content-center my-2">
 	<button class="btn btn-primary" type="button" onclick="submitForm('{{path('milestone_new')}}', 'MilestoneContainer', 'mileStoneForm', '{{ asset('loadgif.gif') }}', {{mileStonecur.id}})">Create</button>

@@ -95,6 +95,7 @@ function initializeForm() {
                 collectionHolder.insertBefore(newFormElement, addButton);
 
                 addDeleteLink(newFormElement);
+                initializeForm();
             });
         }
 

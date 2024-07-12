@@ -40,7 +40,7 @@
 					<div class="col-12 m-0 p-0">
 						{% set all_tags = [] %}
 						{% for event in timeline_events %}
-							{% for tag in event.main.tags %}
+							{% for tag in event.main.bulletpoints %}
 								{% if tag not in all_tags %}
 									{% set all_tags = all_tags|merge([tag]) %}
 								{% endif %}

@@ -7,6 +7,8 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Entity\MileStone;
 use App\Form\ProjectType;
+use App\Entity\BulletPoint;
+use App\Entity\BulletPointTag;
 use App\Form\MileStoneFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +18,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Collections\ArrayCollection;
 use Psr\Log\LoggerInterface;
 
 #[Route('/admin')]
@@ -66,11 +67,29 @@ class LoadEventsController extends AbstractController
                 $flushMileStone->setName($mileStone->getName())
                     ->setDescription($mileStone->getDescription())
                     ->setStartDate($mileStone->getStartDate())
-                    ->setEndDate($mileStone->getEndDate())
-                    ->setTags($mileStone->getTags())
-                    ->setBullets($mileStone->getBullets());
+                    ->setEndDate($mileStone->getEndDate());
 
+                // Persist the milestone
                 $entityManager->persist($flushMileStone);
+
+                // Handle bullet points
+                foreach ($mileStone->getBulletpoints() as $bulletPoint) {
+                    $flushBulletPoint = $bulletPoint->getId() ? $entityManager->getRepository(BulletPoint::class)->find($bulletPoint->getId()) : new BulletPoint();
+                    $flushBulletPoint->setDescription($bulletPoint->getDescription());
+                    $flushBulletPoint->setMileStone($flushMileStone);
+
+                    $entityManager->persist($flushBulletPoint);
+
+                    // Handle bullet point tags
+                    foreach ($bulletPoint->getBulletPointTags() as $bulletPointTag) {
+                        $flushBulletPointTag = $bulletPointTag->getId() ? $entityManager->getRepository(BulletPointTag::class)->find($bulletPointTag->getId()) : new BulletPointTag();
+                        $flushBulletPointTag->setBulletpoint($flushBulletPoint);
+                        $flushBulletPointTag->setTag($bulletPointTag->getTag());
+
+                        $entityManager->persist($flushBulletPointTag);
+                    }
+                }
+
                 $entityManager->flush();
             }
 
@@ -91,6 +110,7 @@ class LoadEventsController extends AbstractController
             ], 500);
         }
     }
+
 
     #[Route('/new/project', name: 'project_new', methods: ['GET', 'POST'])]
     public function newBulletPoints(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): JsonResponse
