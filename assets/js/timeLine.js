@@ -45,14 +45,13 @@ function filterEvents() {
 
         var tags = tagsvalue.split(",");
 
-        console.log('tags:', tags);
-
         if (selectedTags.some(function (tag) {
             return tags.includes(tag);
         })) {
             event.style.setProperty('display', 'block', 'important');
             index++;
-        } else {
+        } 
+        else {
             event.style.setProperty('display', 'none', 'important');
         }
     });

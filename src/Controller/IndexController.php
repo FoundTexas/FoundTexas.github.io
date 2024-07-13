@@ -20,7 +20,7 @@ class IndexController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $query = $entityManager->createQuery(
-            'SELECT p1.id, p1.name, p1.description, p1.fileref, p1.iconref, p1.type, p1.linkref, mile.tags
+            'SELECT p1.id, p1.name, p1.description, p1.fileref, p1.iconref, p1.type, p1.linkref
                 FROM App\Entity\Project p1
                 INNER JOIN p1.mileStone mile
                 WHERE p1.type = :comparetype'

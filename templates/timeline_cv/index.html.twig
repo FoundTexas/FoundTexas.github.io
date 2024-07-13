@@ -38,14 +38,6 @@
 				<div class="row bg-main-dark p-3 roinded-3" style="z-index: 10; top:11vh;">
 
 					<div class="col-12 m-0 p-0">
-						{% set all_tags = [] %}
-						{% for event in timeline_events %}
-							{% for tag in event.main.bulletpoints %}
-								{% if tag not in all_tags %}
-									{% set all_tags = all_tags|merge([tag]) %}
-								{% endif %}
-							{% endfor %}
-						{% endfor %}
 						<div class="row">
 							<h6 class="col-auto ">Filter by Tags:</h6>
 
@@ -56,9 +48,9 @@
 							<label class="col-auto btn btn-outline-danger" for="danger-outlined" onclick="selectAllTags(false)">None</label>
 						</div>
 						<div class="row">
-							{% for tag in all_tags %}
-								<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag }}" name="tags" value="{{ tag }}" checked>
-								<label class="col-auto btn btn-outline-main" for="btn-check-outlined-{{ tag }}">{{ tag }}</label><br>
+							{% for tag in tags %}
+								<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag.name }}" name="tags" value="{{ tag.name }}" checked>
+								<label class="col-auto btn btn-outline-main" for="btn-check-outlined-{{ tag.name }}">{{ tag.name }}</label><br>
 							{% endfor %}
 
 						</div>
@@ -70,11 +62,8 @@
 
 							{# Loop through events to gather unique years from both start and end dates #}
 							{% for event in timeline_events %}
-								{% if event.main.startDate|date('Y') not in years %}
-									{% set years = years|merge([event.main.startDate|date('Y')]) %}
-								{% endif %}
-								{% if event.main.endDate|date('Y') not in years %}
-									{% set years = years|merge([event.main.endDate|date('Y')]) %}
+								{% if event.endDate|date('Y') not in years %}
+									{% set years = years|merge([event.endDate|date('Y')]) %}
 								{% endif %}
 							{% endfor %}
 
@@ -105,14 +94,14 @@
 		{% endif %}
 
 		{% for year in years %}
-			{% set events_in_year = timeline_events|filter(e => (e.main.endDate|date('Y') == year)) %}
+			{% set events_in_year = timeline_events|filter(e => (e.endDate|date('Y') == year)) %}
 
 			<div class="events-wrapper container-fluid row p-0 m-0 justify-content-center align-items-center m-0" id="events-{{ year }}" style="display: {{ loop.first ? 'block' : 'none' }};">
 				<div class="row justify-content-center mt-4">
 					<h4 class="col-auto bg-dark text-center shadow-custom px-5 py-3 text-warning border border-warning rounded-3">{{ year }}</h4>
 				</div>
 				<div class="timeline-container row justify-content-center p-0 m-0 ">
-					{% for event in events_in_year %}
+					{% for evkey, event in events_in_year %}
 						<div class=" col-12 row justify-content-center text-white">
 
 							<div class="timeline-event card rounded-4 m-5 shadow-custom bg-main-gradient{% if loop.index  % 2 == 0 %}-alter{% endif %}" style="width: 36rem; max-width: 90vw;">
@@ -120,30 +109,30 @@
 								<div class="card-body row m-0 justify-content-center text-center">
 
 									<h5 class="col-auto card-title">
-										<strong class='accent-color'>{{ event.main.startDate|date('F-Y') ~ ' - ' ~ event.main.endDate|date('F-Y') }}</strong>
+										<strong class='accent-color'>{{ event.startDate|date('F-Y') ~ ' - ' ~ event.endDate|date('F-Y') }}</strong>
 									</h5>
-									<h3 class="col-auto card-title">{{ event.main.name }}</h3>
+									<h3 class="col-auto card-title">{{ event.name }}</h3>
 
 									{% if event.main.description is defined %}
 										<div class="p-2 bg-dark rounded-3">
-											<p class="m-0">{{ event.main.description }}</p>
+											<p class="m-0">{{ event.description }}</p>
 										</div>
 									{% endif %}
 
 
-									{% if event.main.bullets is defined and event.main.bullets|length > 0 %}
+									{% if event.bullets is defined and event.bullets|length > 0 %}
 										<div class="row my-2">
 											<div class="col">
-												<button class="custom-btn rounded-2 p-1 m-2 bg-accent text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvent{{ event.main.id }}" aria-expanded="false" aria-controls="collapseEvent{{ event.main.id }}">
+												<button class="custom-btn rounded-2 p-1 m-2 bg-accent text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEvent{{ evkey }}" aria-expanded="false" aria-controls="collapseEvent{{ evkey }}">
 													<i class="fa fa-info-circle" aria-hidden="true"></i>
 													More Info
 												</button>
 											</div>
 										</div>
 										<div class="row">
-											<div class="col collapse" id="collapseEvent{{ event.main.id }}">
+											<div class="col collapse" id="collapseEvent{{ evkey }}">
 												<ul class="list-group list-group-flush">
-													{% for point in event.main.bullets %}
+													{% for point in event.bullets %}
 														<li class="list-group-item p-0 m-0">{{ point }}</li>
 													{% endfor %}
 												</ul>
@@ -155,9 +144,9 @@
 									{% if event.projects is defined %}
 										<h5 class="card-title">Asociated projects:</h5>
 										<div class="row">
-											{% for project in event.projects %}
+											{% for key, project in event.projects %}
 												<div class="col-auto">
-													<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; max-width: 7rem;" onclick="window.location.href='{{ path('app_project_detail', {'id': project.id}) }}'">
+													<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; max-width: 7rem;" onclick="window.location.href='{{ path('app_project_detail', {'id': key}) }}'">
 														<img src="{{ project.iconref }}" style="height: 100%; width: auto;" alt="{{ project.name }}">
 													</div>
 													<h6 class="card-title">{{project.name}}</h6>
@@ -167,7 +156,7 @@
 									{% endif %}
 								</div>
 
-								<div class="tags" style="display: none;">{{ event.main.tags|join(',') }}</div>
+								<div class="tags" style="display: none;">{{ event.tags|join(',') }}</div>
 							</div>
 						</div>
 					{% endfor %}
