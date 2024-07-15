@@ -50,43 +50,39 @@ class LoadEventsController extends AbstractController
         ]);
     }
 
-    #[Route('/new/milestone', name: 'milestone_new', methods: ['GET', 'POST'])]
-    public function newMilestone(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/new/milestone/{id}', name: 'milestone_new', methods: ['GET', 'POST'])]
+    public function newMilestone(Request $request, EntityManagerInterface $entityManager, string $id = null): JsonResponse
     {
         try {
-            $id = $request->get('id');
             $mileStone = $id ? $entityManager->getRepository(MileStone::class)->find($id) : new MileStone();
 
             $mileStoneForm = $this->createForm(MileStoneFormType::class, $mileStone);
             $mileStoneForm->handleRequest($request);
 
             if ($mileStoneForm->isSubmitted() && $mileStoneForm->isValid()) {
-                $updateID = $request->get('updateID') ?? null;
-                $flushMileStone = $entityManager->getRepository(MileStone::class)->find($updateID) ?? new MileStone();
+                $mileStoneupdate = $id ? $entityManager->getRepository(MileStone::class)->find($id) : new MileStone();
 
-                $flushMileStone->setName($mileStone->getName())
+                // Persist the milestone
+                $mileStoneupdate
+                    ->setName($mileStone->getName())
                     ->setDescription($mileStone->getDescription())
                     ->setStartDate($mileStone->getStartDate())
                     ->setEndDate($mileStone->getEndDate());
 
-                // Persist the milestone
-                $entityManager->persist($flushMileStone);
+                $entityManager->persist($mileStoneupdate);
 
                 // Handle bullet points
                 foreach ($mileStone->getBulletpoints() as $bulletPoint) {
-                    $flushBulletPoint = $bulletPoint->getId() ? $entityManager->getRepository(BulletPoint::class)->find($bulletPoint->getId()) : new BulletPoint();
-                    $flushBulletPoint->setDescription($bulletPoint->getDescription());
-                    $flushBulletPoint->setMileStone($flushMileStone);
+                    $bulletPoint->setMileStone($mileStoneupdate);
 
-                    $entityManager->persist($flushBulletPoint);
+                    $entityManager->persist($bulletPoint);
 
                     // Handle bullet point tags
                     foreach ($bulletPoint->getBulletPointTags() as $bulletPointTag) {
-                        $flushBulletPointTag = $bulletPointTag->getId() ? $entityManager->getRepository(BulletPointTag::class)->find($bulletPointTag->getId()) : new BulletPointTag();
-                        $flushBulletPointTag->setBulletpoint($flushBulletPoint);
-                        $flushBulletPointTag->setTag($bulletPointTag->getTag());
+                        $bulletPointTag->setBulletpoint($bulletPoint);
+                        $bulletPointTag->setTag($bulletPointTag->getTag());
 
-                        $entityManager->persist($flushBulletPointTag);
+                        $entityManager->persist($bulletPointTag);
                     }
                 }
 
@@ -96,7 +92,7 @@ class LoadEventsController extends AbstractController
             // Render only the form HTML
             $mileStoneFormView = $this->renderView('EventLoading/create_mileStone.twig', [
                 'mileStoneForm' => $mileStoneForm->createView(),
-                'mileStonecur' => $mileStone
+                'mileStonecur' => $id
             ]);
 
             return new JsonResponse([
@@ -112,12 +108,11 @@ class LoadEventsController extends AbstractController
     }
 
 
-    #[Route('/new/project', name: 'project_new', methods: ['GET', 'POST'])]
-    public function newBulletPoints(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): JsonResponse
+    #[Route('/new/project/{id}', name: 'project_new', methods: ['GET', 'POST'])]
+    public function newBulletPoints(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger, string $id = null): JsonResponse
     {
         $message = 'An error occurred: ';
         try {
-            $id = $request->get('id') ?? null;
             $project = $id ? $entityManager->getRepository(Project::class)->find($id) : new Project();
 
             $projectForm = $this->createForm(ProjectType::class, $project);
@@ -133,8 +128,8 @@ class LoadEventsController extends AbstractController
 
         try {
             if ($projectForm->isSubmitted()) {
-                $updateID = $request->get('updateID') ?? null;
-                $flushProject = $entityManager->getRepository(Project::class)->find($updateID) ?? new Project();
+                $flushProject = $id ? $entityManager->getRepository(Project::class)->find($id) : new Project();
+
                 $formGallery = $projectForm->get('gallery')->getData();
                 $uploadedFiles = $projectForm->get('galleryuploads')->getData();
                 $newGallery = [];

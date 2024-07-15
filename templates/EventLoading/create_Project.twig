@@ -28,7 +28,7 @@
 {{ form_row(projectForm.galleryuploads) }}
 
 <div class="d-flex justify-content-center my-2">
-    <button class="btn btn-primary" type="button" onclick="submitForm('{{ path('project_new') }}', 'ProjectContainer', 'projectForm', '{{ asset('loadgif.gif') }}', {{ projectcur.id }})">Create</button>
+    <button class="btn btn-primary" type="button" onclick="submitForm('{{ path('project_new', {'id': projectcur.id}) }}', 'ProjectContainer', 'projectForm', '{{ asset('loadgif.gif') }}')">Create</button>
 </div>
 
 </form>

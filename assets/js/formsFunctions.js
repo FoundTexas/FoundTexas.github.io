@@ -1,14 +1,9 @@
 
-function submitForm(url = 'admin/new/milestone', containerid = 'MilestoneContainer', id = 'mileStoneForm', loadingGif, updateID) {
-    var form = document.getElementById(id);
+function submitForm(url, containerid, formid, loadingGif) {
+    var form = document.getElementById(formid);
     var formData = new FormData(form);
 
-    var container = document.getElementById(containerid);
-
-    // Append the updateID to the formData
-    formData.append('updateID', updateID);
-
-    setLoadingGif(id, loadingGif);
+    setLoadingGif(containerid, loadingGif);
 
     fetch(url, {
         method: 'POST',
@@ -19,15 +14,9 @@ function submitForm(url = 'admin/new/milestone', containerid = 'MilestoneContain
             if (data.status !== 'success') {
                 throw new Error(data.message);
             }
-            // Handle success response
-            console.log(data);
-
-            removeLoadingGif(id);
-
-            //container.innerHTML = data.html;
-            newForm(url, containerid, loadingGif, updateID)
-
-            // Optionally, show a success message or perform other actions
+            
+            removeLoadingGif(containerid);
+            newForm(url, containerid, loadingGif)
             alert('Form submitted successfully!');
         })
         .catch(error => {
@@ -35,20 +24,18 @@ function submitForm(url = 'admin/new/milestone', containerid = 'MilestoneContain
             console.error('There was a problem with the fetch operation:', error);
 
             // Hide the loading GIF
-            removeLoadingGif(id);
+            removeLoadingGif(containerid);
 
             // Optionally, show an error message
             alert('Failed to submit form: ' + error.message);
         });
 }
 
-function newForm(url = 'admin/new/milestone', containerid = 'MilestoneContainer', loadingGif, selectedId) {
-    // Show the loading GIF
+function newForm(url, containerid, loadingGif) {
     var container = document.getElementById(containerid);
-
     setLoadingGif(containerid, loadingGif);
 
-    fetch(url + (selectedId ? '?id=' + selectedId : ''))
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
