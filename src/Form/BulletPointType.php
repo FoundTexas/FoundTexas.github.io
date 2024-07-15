@@ -25,12 +25,14 @@ class BulletPointType extends AbstractType
                 'entry_type' => BulletPointTagType::class,
                 'entry_options' => [
                     'label' => false,
+                    'attr' => ['class' => 'col-6'],
+                    'row_attr' => ['class' => 'row align-content-end'],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
                 'by_reference' => false,
-                'attr' => ['class' => 'collection'],
+                'attr' => ['class' => 'collection ps-3'],
             ]);
     }
 

@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -33,8 +34,8 @@ class MileStoneFormType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
             ])
-            ->add('description', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+            ->add('description', TextareaType::class, [
+                'attr' => ['class' => 'form-control', 'rows' => 5],
                 'row_attr' => ['class' => 'form-group'],
             ])
             ->add('bulletpoints', CollectionType::class, [
@@ -42,12 +43,13 @@ class MileStoneFormType extends AbstractType
                 'entry_type' => BulletPointType::class,
                 'entry_options' => [
                     'label' => false,
+                    'attr' => ['class' => 'ps-4'],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
                 'by_reference' => false,
-                'attr' => ['class' => 'collection'],
+                'attr' => ['class' => 'collection ps-2'],
             ]);
     }
 

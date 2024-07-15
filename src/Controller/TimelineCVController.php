@@ -17,8 +17,6 @@ class TimelineCVController extends AbstractController
     public function index(EntityManagerInterface $entityManager): Response
     {
         $tags = $entityManager->getRepository(Tag::class)->findAll();
-        $mileStones = $entityManager->getRepository(MileStone::class)->findBy([], ['startDate' => 'ASC']);
-
         $query = $entityManager->createQuery(
             'SELECT DISTINCT 
             ms.id as id, 
@@ -42,40 +40,35 @@ class TimelineCVController extends AbstractController
         $experiences = [];
 
         foreach ($values as $milestone) {
-
-            $experiences[$milestone['id']]['name'] = $milestone['name'];
-            $experiences[$milestone['id']]['description'] = $milestone['description'];
-            
-            $experiences[$milestone['id']]['endDate'] = $milestone['endDate'];
-            $experiences[$milestone['id']]['startDate'] = $milestone['startDate'];
-            
-
-            if (!isset($experiences[$milestone['id']]['projects'])) {
-                $experiences[$milestone['id']]['projects'] = [];
+            $id = $milestone['id'];
+    
+            if (!isset($experiences[$id])) {
+                $experiences[$id] = [
+                    'name' => $milestone['name'],
+                    'description' => $milestone['description'],
+                    'endDate' => $milestone['endDate'],
+                    'startDate' => $milestone['startDate'],
+                    'projects' => [],
+                    'tags' => [],
+                    'bullets' => []
+                ];
             }
-            if (!in_array($milestone['p_id'], $experiences[$milestone['id']]['projects']) && $milestone['p_id']) {
-                if ($milestone['p_nm']) {
-                    $experiences[$milestone['id']]['projects']['p_id']['name'] = $milestone['p_nm'];
-                }
-                if ($milestone['iconref']) {
-                    $experiences[$milestone['id']]['projects']['p_id']['iconref'] = $milestone['iconref'];
-                }
+    
+            if ($milestone['p_id'] && !isset($experiences[$id]['projects'][$milestone['p_id']])) {
+                $experiences[$id]['projects'][$milestone['p_id']] = [
+                    'name' => $milestone['p_nm'],
+                    'iconref' => $milestone['iconref']
+                ];
             }
-
-            if (!isset($experiences[$milestone['id']]['tags'])) {
-                $experiences[$milestone['id']]['tags'] = [];
+    
+            if ($milestone['tag'] && !in_array($milestone['tag'], $experiences[$id]['tags'])) {
+                $experiences[$id]['tags'][] = $milestone['tag'];
             }
-            if (!in_array($milestone['tag'], $experiences[$milestone['id']]['tags']) && $milestone['tag']) {
-                $experiences[$milestone['id']]['tags'][] = $milestone['tag'];
+    
+            if ($milestone['b_d'] && !in_array($milestone['b_d'], $experiences[$id]['bullets'])) {
+                $experiences[$id]['bullets'][] = $milestone['b_d'];
             }
-
-            if (!isset($experiences[$milestone['id']]['bullets'])) {
-                $experiences[$milestone['id']]['bullets'] = [];
-            }
-            if (!in_array($milestone['b_d'], $experiences[$milestone['id']]['bullets']) && $milestone['b_d']) {
-                $experiences[$milestone['id']]['bullets'][] = $milestone['b_d'];
-            }
-        }
+        }    
 
         return $this->render('timeline_cv/index.html.twig', [
             'timeline_events' => $experiences,

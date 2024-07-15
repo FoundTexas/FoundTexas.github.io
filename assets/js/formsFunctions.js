@@ -97,7 +97,7 @@ function initializeForm() {
 function addDeleteLink(contactForm) {
     var removeButton = document.createElement('button');
     removeButton.type = 'button';
-    removeButton.className = 'col-auto btn btn-danger';
+    removeButton.className = 'col-auto btn btn-danger rounded-pill my-auto';
     removeButton.innerText = 'Delete';
 
     contactForm.appendChild(removeButton);
