@@ -1,0 +1,72 @@
+{# templates/timeline_cv/pdf.html.twig #}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CV</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+			}
+			.milestone {
+				margin-bottom: 20px;
+			}
+			.project,
+			.tag,
+			.bullet {
+				margin-left: 20px;
+			}
+			.clearfix::after {
+				content: "";
+				clear: both;
+				display: table;
+			}
+			.left {
+				float: left;
+			}
+			.right {
+				float: right;
+			}
+		</style>
+	</head>
+	<body>
+		<h3>Rodolfo León Gasca - Computer Science Engineer</h3>
+
+        <p>rolega01@gmail.com |  55 4913 8324 | GitHub | LinkedIn | Portfolio</p>
+
+        <p>I'm Rodolfo, computer scientist specialized in 3D Graphics, with skill on Project Management, Web and Game Development. I`m a team player and believe that diverse perspectives fuel innovation, leading to significant and immersive experiences for the users.</p>
+		{% for id, milestone in timeline_events %}
+			<div class="milestone clearfix">
+				<div class="clearfix">
+					<strong class="left">{{ milestone.organization }}</strong>
+					<p class="right">{{ milestone.location }}</p>
+				</div>
+
+				<div class="clearfix">
+					<p class="left">{{ milestone.name }}</p>
+
+					<div class="right">
+						<p >{{ milestone.startDate|date('Y-m-d') }} - {{ milestone.endDate ? milestone.endDate|date('Y-m-d') : 'Current'}}</p>
+					</div>
+				</div>
+
+				<ul class="bullets">
+					{% for bullet in milestone.bullets %}
+						<li class="bullet">
+							<p>{{ bullet }}</p>
+						</li>
+					{% endfor %}
+				</ul>
+
+				<div class="tags">
+					<h3>Tags:</h3>
+					{% for tag in milestone.tags %}
+						<div class="tag">
+							<p>{{ tag }}</p>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+	</body>
+</html>

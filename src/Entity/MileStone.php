@@ -40,6 +40,9 @@ class MileStone
     #[ORM\OneToMany(mappedBy: 'mileStone', targetEntity: BulletPoint::class, cascade: ["persist"])]
     private Collection $bulletpoints;
 
+    #[ORM\ManyToOne(inversedBy: 'mileStones')]
+    private ?Organization $organization = null;
+
     public function __construct()
     {
         $this->asociatedprojects = new ArrayCollection();
@@ -162,6 +165,18 @@ class MileStone
                 $bulletpoint->setMileStone(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): static
+    {
+        $this->organization = $organization;
 
         return $this;
     }

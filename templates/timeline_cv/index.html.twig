@@ -28,7 +28,6 @@
 	<canvas id="bgcanvas"></canvas>
 	<div id="timeline" class="row pb-5 p-0 m-0 justify-content-center w-100 position-relative" style="min-height: 100vh; margin-top: -2vh; ">
 
-
 		<div class="offcanvas offcanvas-start bg-main-gradient-circle" style="min-width:33vw;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 			<div class="offcanvas-header">
 				<h3 class="offcanvas-title" id="offcanvasExampleLabel">Timeline Filters:</h3>
@@ -77,6 +76,10 @@
 							{% endfor %}
 
 						</div>
+
+						<form action="{{ path('app_timeline_cv') }}" method="post" target="_blank">
+							<button type="submit">Generate PDF</button>
+						</form>
 					</div>
 
 				</div>
@@ -176,14 +179,13 @@
 		</div>
 
 		<div class="position-fixed p-0 m-0" style=" top:30%; left: 0;">
-			<button class="custom-btn rounded-2 p-1 bg-main text-white"  type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+			<button class="custom-btn rounded-2 p-1 bg-main text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
 				<svg width="44" height="44" viewbox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M67.8333 9.25H6.16667L30.8333 38.4183V58.5833L43.1667 64.75V38.4183L67.8333 9.25Z" stroke="#F3F3F3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 				</svg>
 			</button>
 		</div>
 	</div>
-
 
 	<script src="{{ asset('js/timeLine.js') }}"></script>
 {% endblock %}

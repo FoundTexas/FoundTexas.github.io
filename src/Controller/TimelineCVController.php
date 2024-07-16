@@ -23,14 +23,15 @@ class TimelineCVController extends AbstractController
         $tags = $entityManager->getRepository(Tag::class)->findAll();
         $query = $entityManager->createQuery(
             'SELECT DISTINCT 
-            ms.id as id, 
-            ms.name, 
-            ms.description, 
+            ms.id as id, ms.name, ms.description, 
+            org.name as org_n, loc.name as loc_n,
             p.id as p_id, 
             p.name as p_nm, 
-            p.iconref,
+            p.iconref, 
             t.name as tag, bp.id as b_id, bp.description as b_d, ms.endDate, ms.startDate
             FROM App\Entity\MileStone ms 
+            LEFT JOIN ms.organization org
+            LEFT JOIN org.location loc
             LEFT JOIN App\Entity\Project p WITH p.mileStone = ms.id
             LEFT JOIN App\Entity\BulletPoint bp WITH bp.mileStone = ms.id 
             LEFT JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
@@ -52,6 +53,8 @@ class TimelineCVController extends AbstractController
                     'description' => $milestone['description'],
                     'endDate' => $milestone['endDate'],
                     'startDate' => $milestone['startDate'],
+                    'organization' => $milestone['org_n'],
+                    'location' => $milestone['loc_n'],
                     'projects' => [],
                     'tags' => [],
                     'bullets' => []
@@ -80,40 +83,28 @@ class TimelineCVController extends AbstractController
         ]);
     }
 
-    #[Route('/timeline-cv', name: 'app_timeline_cv')]
-    public function getCV(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/generate-cv', name: 'app_timeline_cv')]
+    public function generateCv(EntityManagerInterface $entityManager): Response
     {
-        $tagsArray = $request->query->get('tags', []);
+        $tags = $entityManager->getRepository(Tag::class)->findAll();
+        $query = $entityManager->createQuery(
+            'SELECT DISTINCT 
+            ms.id as id, ms.name, ms.description, 
+            org.name as org_n, loc.name as loc_n, 
+            p.id as p_id, 
+            p.name as p_nm, 
+            p.iconref,
+            t.name as tag, bp.id as b_id, bp.description as b_d, ms.endDate, ms.startDate
+            FROM App\Entity\MileStone ms 
+            LEFT JOIN ms.organization org
+            LEFT JOIN org.location loc
+            LEFT JOIN App\Entity\Project p WITH p.mileStone = ms.id
+            LEFT JOIN App\Entity\BulletPoint bp WITH bp.mileStone = ms.id 
+            LEFT JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
+            LEFT JOIN App\Entity\Tag t WITH t = bpt.tag
 
-        $dql = 'SELECT DISTINCT 
-                    ms.id as id, 
-                    ms.name, 
-                    ms.description, 
-                    p.id as p_id, 
-                    p.name as p_nm, 
-                    p.iconref,
-                    t.name as tag, 
-                    bp.id as b_id, 
-                    bp.description as b_d, 
-                    ms.endDate, 
-                    ms.startDate
-                FROM App\Entity\MileStone ms 
-                LEFT JOIN App\Entity\Project p WITH p.mileStone = ms.id
-                LEFT JOIN App\Entity\BulletPoint bp WITH bp.mileStone = ms.id 
-                LEFT JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
-                LEFT JOIN App\Entity\Tag t WITH t = bpt.tag';
-
-        if (!empty($tagsArray)) {
-            $dql .= ' WHERE t.name IN (:tags)';
-        }
-
-        $dql .= ' ORDER BY ms.startDate ASC';
-
-        $query = $entityManager->createQuery($dql);
-
-        if (!empty($tagsArray)) {
-            $query->setParameter('tags', $tagsArray);
-        }
+            ORDER BY ms.startDate DESC'
+        );
 
         $values = $query->getResult();
 
@@ -128,6 +119,8 @@ class TimelineCVController extends AbstractController
                     'description' => $milestone['description'],
                     'endDate' => $milestone['endDate'],
                     'startDate' => $milestone['startDate'],
+                    'organization' => $milestone['org_n']??'',
+                    'location' => $milestone['loc_n']??'',
                     'projects' => [],
                     'tags' => [],
                     'bullets' => []
@@ -150,28 +143,25 @@ class TimelineCVController extends AbstractController
             }
         }
 
-        // Render the HTML template
-        $html = $this->renderView('timeline_cv/cv_template.twig', [
+        // Generate HTML content for the PDF
+        $html = $this->renderView('timeline_cv/pdf.html.twig', [
             'timeline_events' => $experiences,
-            'tags' => $tagsArray
+            'tags' => $tags
         ]);
 
-        // Generate the PDF
+        // Setup Dompdf
         $options = new Options();
-        $options->set('isHtml5ParserEnabled', true);
-        $options->set('isRemoteEnabled', true);
+        $options->set('defaultFont', 'Arial');
         $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        // Output the generated PDF
-        $pdfOutput = $dompdf->output();
+        // Output the generated PDF to Browser
+        $response = new Response($dompdf->output());
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment; filename="cv.pdf"');
 
-        // Create and return the response
-        return new Response($pdfOutput, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="timeline_cv.pdf"'
-        ]);
+        return $response;
     }
 }
