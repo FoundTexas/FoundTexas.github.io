@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timeline CV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .cv-section {
+            margin-bottom: 20px;
+        }
+        .cv-header {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .cv-subheader {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        .cv-item {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Timeline CV</h1>
+    <div id="cv-content">
+        {% for event in timeline_events %}
+            <div class="cv-section">
+                <div class="cv-header">{{ event.name }}</div>
+                <div class="cv-subheader">{{ event.startDate|date('Y') }} - {{ event.endDate ? event.endDate|date('Y') : 'Present' }}</div>
+                <p>{{ event.description }}</p>
+                {% if event.projects %}
+                    <div class="cv-subheader">Projects</div>
+                    <ul>
+                        {% for project in event.projects %}
+                            <li class="cv-item">{{ project.name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if event.tags %}
+                    <div class="cv-subheader">Tags</div>
+                    <ul>
+                        {% for tag in event.tags %}
+                            <li class="cv-item">{{ tag }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if event.bullets %}
+                    <div class="cv-subheader">Key Points</div>
+                    <ul>
+                        {% for bullet in event.bullets %}
+                            <li class="cv-item">{{ bullet }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
