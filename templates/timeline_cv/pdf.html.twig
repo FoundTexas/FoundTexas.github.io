@@ -1,111 +1,158 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>CV</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<title>CV</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				font-size: 13px;
+			}
 
-        .container {
-            width: 100%;
-        }
+			.container {
+				width: 100%;
+			}
 
-        .header, .footer {
-            text-align: center;
-        }
+			.header,
+			.footer {
+				text-align: center;
+			}
 
-        .content {
-            width: 100%;
-            display: table;
-            clear: both;
-        }
+			.content {
+				width: 100%;
+				display: table;
+				clear: both;
+			}
 
-        .row {
-            width: 100%;
-            clear: both;
-            padding: 0 0;
-        }
+			.row {
+				width: 100%;
+				clear: both;
+				padding: 0;
+			}
 
-        .left {
-            float: left;
-            width: 49%;
-        }
+			.left {
+				float: left;
+				width: 49%;
+			}
 
-        .right {
-            float: right;
-            width: 49%;
-            text-align: right;
-        }
+			.right {
+				float: right;
+				width: 49%;
+				text-align: right;
+			}
 
-        .center {
-            text-align: center;
-            width: 100%;
-        }
+			.center {
+				text-align: center;
+				width: 100%;
+			}
 
-        .p-0 {
-            padding: 0 !important;
-        }
+			.p-0 {
+				padding: 0 !important;
+			}
 
-        .m-0 {
-            margin: 0 !important;
-        }
+			.m-0 {
+				margin: 0 !important;
+			}
 
-        ul {
-            padding-left: 2rem !important;
-        }
+			ul {
+				padding-left: 2rem !important;
+			}
 
-        ul li {
-            margin-bottom: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h3>Rodolfo León Gasca - Computer Science Engineer</h3>
-        </div>
+			ul li {
+				margin-bottom: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<h3>Rodolfo León Gasca - Computer Science Engineer</h3>
+			</div>
 
-        <p class="center">
-            <a href="mailto:rolega01@gmail.com">rolega01@gmail.com</a> |
-            +52 55 4913 8324 |
-            <a href="https://github.com/FoundTexas?tab=repositories">GitHub</a> |
-            <a href="https://www.linkedin.com/in/rodolfo-le%C3%B3n-13a10a236/">LinkedIn</a> |
-            <a href="https://foundtexas.mx">Portfolio</a>
-        </p>
+			<p class="center">
+				<a href="mailto:rolega01@gmail.com">rolega01@gmail.com</a>
+				| +52 55 49138324 |
+				<a href="https://github.com/FoundTexas?tab=repositories">GitHub</a>
+				|
+				<a href="https://www.linkedin.com/in/rodolfo-le%C3%B3n-13a10a236/">LinkedIn</a>
+				|
+				<a href="https://foundtexas.mx">Portfolio</a>
+			</p>
 
-        <p>I'm Rodolfo, a computer scientist specialized in 3D Graphics, with skills in Project Management, Web and Game Development. I’m a team player and believe that diverse perspectives fuel innovation, leading to significant and immersive experiences for users.</p>
+			<p>I'm Rodolfo, a computer scientist specialized in 3D Graphics, with skills in Project Management, Web and Game Development. I’m a team player and believe that diverse perspectives fuel innovation, leading to significant and immersive experiences for users.</p>
 
-        <div class="row center">
-            <strong>Education</strong>
-        </div>
 
-        <div class="row center">
-            <strong>Experience</strong>
-        </div>
+			<div>
+				<div class="row center">
+					<strong>Education</strong>
+				</div>
+				<div class="row">
+					<strong class="left">Tecnológico de Monterrey (ITESM)</strong>
+					<div class="right">México, CDMX</div>
+				</div>
+				<div class="row">
+					<div class="left">Bachelor, Computer Science Specialized in Computer Graphics and Game Design.  GPA [9.3]</div>
+					<div class="right">
+						Graduation: Jun 2023
+					</div>
+				</div>
+				<ul class="row">
+					<li>Nova Orion Startup Award for Learning With Whe Sea educational video game 2020.</li>
+				</ul>
 
-        {% for id, milestone in timeline_events %}
-        <div class="row">
-            <strong class="left">{{ milestone.organization }}</strong>
-            <div class="right">{{ milestone.location }}</div>
-        </div>
+				<div class="row">
+					<strong class="left">Tecnológico de Monterrey (ITESM)</strong>
+					<div class="right">México, CDMX</div>
+				</div>
+				<div class="row">
+					<div class="left">Multicultural High School Program. GPA [8.9]</div>
+					<div class="right">
+						Graduation: Jun 2019
+					</div>
+				</div>
+				<ul class="row">
+					<li>Exchange to Shanghai, China No.2 Secondary School Attached to Tongji University 2018.</li>
+				</ul>
+			</div>
 
-        <div class="row">
-            <div class="left">{{ milestone.name }}</div>
-            <div class="right">
-                {{ milestone.startDate|date('Y-m-d') }} - {{ milestone.endDate ? milestone.endDate|date('Y-m-d') : 'Current'}}
-            </div>
-        </div>
 
-        <ul class="row">
-            {% for bullet in milestone.bullets %}
-            <li>{{ bullet }}</li>
-            {% endfor %}
-        </ul>
-        {% endfor %}
+			<div class="row center">
+				<strong>Experience</strong>
+			</div>
 
-    </div>
-</body>
+			{% for id, milestone in timeline_events %}
+				<div class="row">
+					<strong class="left">{{ milestone.organization }}</strong>
+					<div class="right">{{ milestone.location }}</div>
+				</div>
+
+				<div class="row">
+					<div class="left">{{ milestone.name }}</div>
+					<div class="right">
+						{{ milestone.startDate|date('Y-m-d') }}
+						-
+						{{ milestone.endDate ? milestone.endDate|date('Y-m-d') : 'Current'}}
+					</div>
+				</div>
+
+				<ul class="row">
+					{% for bullet in milestone.bullets %}
+						<li>{{ bullet }}</li>
+					{% endfor %}
+				</ul>
+			{% endfor %}
+
+			<div class="row center">
+				<strong>Leadership & Activities</strong>
+			</div>
+			<div class="row center">
+				<strong>Skills & Interests</strong>
+			</div>
+
+			<strong>Technical:</strong>
+			<strong>Language:</strong>
+			<strong>Interest:</strong>
+
+		</div>
+	</body>
 </html>

@@ -15,7 +15,7 @@
 		<div id="project_gallery" class="collection no-add" data-prototype="<div class=&quot;form-group my-1 row justify-content-center collection-entry&quot;> <img src=&quot;{{ asset('uploads/gallery/__name__placeholder__') }}&quot; alt=&quot;Image Preview&quot; class=&quot;img-thumbnail&quot; style=&quot;width: 30rem; height: auto;&quot;> <input type=&quot;text&quot; id=&quot;project_gallery___name__&quot; name=&quot;project[gallery][__name__]&quot; class=&quot;form-control&quot; readonly /> </div>" data-index="{{ projectcur.gallery|length }}">
 			{% for key, image in projectcur.gallery %}
 				<div class="form-group my-1 row justify-content-center collection-entry">
-					<img src="{{ asset('uploads/gallery/' ~ image) }}" alt="Image Preview" class="img-thumbnail" style="width: 30rem; height: auto;">
+					<img src="{{ asset(gallery_directory ~ image) }}" alt="Image Preview" class="img-thumbnail" style="width: 30rem; height: auto;">
 					<input type="text" id="project_gallery_{{ key }}" name="project[gallery][{{ key }}]" class="form-control text-center" value="{{ image }}" readonly>
 				</div>
 			{% endfor %}
