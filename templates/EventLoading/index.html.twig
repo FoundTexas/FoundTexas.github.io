@@ -15,7 +15,7 @@
 					<select id="milestoneDropdown" class="dropdown-center col-auto" onchange="newForm(this.value,'MilestoneContainer', '{{ asset('loadgif.gif') }}')">
 						<option value="">Select Milestone</option>
 						{% for milestone in milestoneIds %}
-							<option value="{{ path('milestone_new', {'id': milestone.id}) }}">{{ milestone.id }}-{{ milestone.name }}</option>
+							<option value="{{ path('milestone_new', {'id': milestone.id}) }}">{{ milestone.id }} | {{ milestone.org_n }} - {{ milestone.name }}</option>
 						{% endfor %}
 					</select>
 					<button class="btn btn-success col-auto" onclick="newForm('{{path('milestone_new')}}','MilestoneContainer', '{{ asset('loadgif.gif') }}')">+</button>

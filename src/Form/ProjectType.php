@@ -58,7 +58,7 @@ class ProjectType extends AbstractType
             ->add('mileStone', EntityType::class, [
                 'class' => MileStone::class,
                 'choice_label' => function (MileStone $mileStone) {
-                    return $mileStone->getId() . ' - ' . $mileStone->getName();
+                    return $mileStone->getId() . ' - ' . $mileStone->getOrganization()->getName();
                 },
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],

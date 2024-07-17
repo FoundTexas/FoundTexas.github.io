@@ -29,7 +29,8 @@ class LoadEventsController extends AbstractController
     {
         // Create a query builder to select only the IDs of milestones
         $queryBuilder = $entityManager->getRepository(MileStone::class)->createQueryBuilder('m');
-        $queryBuilder->select('m.id, m.name');
+        $queryBuilder->select('m.id, m.name, org.name as org_n');
+        $queryBuilder->leftjoin('m.organization', 'org');
         $queryBuilder->orderBy('m.startDate', 'ASC');
         $query = $queryBuilder->getQuery();
 

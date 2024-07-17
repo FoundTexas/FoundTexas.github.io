@@ -30,57 +30,58 @@
 
 		<div class="offcanvas offcanvas-start bg-main-gradient-circle" style="min-width:33vw;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 			<div class="offcanvas-header">
-				<h3 class="offcanvas-title" id="offcanvasExampleLabel">Timeline Filters:</h3>
 				<button type="button" class="  bg-accent text-white " data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+				<h3 class="offcanvas-title" id="offcanvasExampleLabel">Timeline Filters:</h3>
 			</div>
 			<div class="offcanvas-body ">
 				<div class="row bg-main-dark p-3 roinded-3" style="z-index: 10; top:11vh;">
 
-					<div class="col-12 m-0 p-0">
-						<div class="row">
-							<h6 class="col-auto ">Filter by Tags:</h6>
+					<form action="{{ path('app_timeline_cv') }}" method="post" target="_blank">
+						<div class="col-12 m-0 p-0">
+							<div class="row">
+								<h6 class="col-auto ">Filter by Tags:</h6>
 
-							<input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
-							<label class="col-auto btn btn-outline-success" for="success-outlined" onclick="selectAllTags(true)">All</label>
+								<input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
+								<label class="col-auto btn btn-outline-success" for="success-outlined" onclick="selectAllTags(true)">All</label>
 
-							<input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
-							<label class="col-auto btn btn-outline-danger" for="danger-outlined" onclick="selectAllTags(false)">None</label>
+								<input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
+								<label class="col-auto btn btn-outline-danger" for="danger-outlined" onclick="selectAllTags(false)">None</label>
+							</div>
+							<div class="row">
+								{% for tag in tags %}
+									<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag.name }}" name="tags" value="{{ tag.name }}" checked>
+									<label class="col-auto btn btn-outline-main" for="btn-check-outlined-{{ tag.name }}">{{ tag.name }}</label><br>
+								{% endfor %}
+
+							</div>
 						</div>
-						<div class="row">
-							{% for tag in tags %}
-								<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag.name }}" name="tags" value="{{ tag.name }}" checked>
-								<label class="col-auto btn btn-outline-main" for="btn-check-outlined-{{ tag.name }}">{{ tag.name }}</label><br>
-							{% endfor %}
+						<div class="col-12 m-0 p-0">
+							<h6>Filter by Year:</h6>
+							<div class="btn-group" role="group" aria-label="Year buttons">
+								{% set years = [] %}
+
+								{# Loop through events to gather unique years from both start and end dates #}
+								{% for event in timeline_events %}
+									{% if event.endDate|date('Y') not in years %}
+										{% set years = years|merge([event.endDate|date('Y')]) %}
+									{% endif %}
+								{% endfor %}
+
+								{# Sort the years in ascending order #}
+								{% set years = years|sort %}
+
+								{# Generate radio buttons for each year #}
+								{% for year in years %}
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio{{ loop.index }}" autocomplete="off" {% if loop.index == 1 %} checked {% endif %}>
+									<label class="btn btn-outline-main" for="btnradio{{ loop.index }}" onclick="showEvents('{{ year }}')">{{ year }}</label>
+								{% endfor %}
+
+							</div>
+
 
 						</div>
-					</div>
-					<div class="col-12 m-0 p-0">
-						<h6>Filter by Year:</h6>
-						<div class="btn-group" role="group" aria-label="Year buttons">
-							{% set years = [] %}
-
-							{# Loop through events to gather unique years from both start and end dates #}
-							{% for event in timeline_events %}
-								{% if event.endDate|date('Y') not in years %}
-									{% set years = years|merge([event.endDate|date('Y')]) %}
-								{% endif %}
-							{% endfor %}
-
-							{# Sort the years in ascending order #}
-							{% set years = years|sort %}
-
-							{# Generate radio buttons for each year #}
-							{% for year in years %}
-								<input type="radio" class="btn-check" name="btnradio" id="btnradio{{ loop.index }}" autocomplete="off" {% if loop.index == 1 %} checked {% endif %}>
-								<label class="btn btn-outline-main" for="btnradio{{ loop.index }}" onclick="showEvents('{{ year }}')">{{ year }}</label>
-							{% endfor %}
-
-						</div>
-
-						<form action="{{ path('app_timeline_cv') }}" method="post" target="_blank">
-							<button type="submit">Generate PDF</button>
-						</form>
-					</div>
+						<button type="submit">Generate PDF</button>
+					</form>
 
 				</div>
 			</div>
