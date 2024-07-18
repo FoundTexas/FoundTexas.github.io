@@ -84,9 +84,10 @@ class TimelineCVController extends AbstractController
     }
 
     #[Route('/generate-cv', name: 'app_timeline_cv')]
-    public function generateCv(EntityManagerInterface $entityManager): Response
+    public function generateCv(EntityManagerInterface $entityManager, Request $request): Response
     {
-        $tags = $entityManager->getRepository(Tag::class)->findAll();
+        $tags = $request->query->all('tags', []);
+
         $query = $entityManager->createQuery(
             'SELECT DISTINCT 
             ms.id as id, ms.name, ms.description, 
@@ -102,9 +103,10 @@ class TimelineCVController extends AbstractController
             LEFT JOIN App\Entity\BulletPoint bp WITH bp.mileStone = ms.id 
             LEFT JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
             LEFT JOIN App\Entity\Tag t WITH t = bpt.tag
+            WHERE t.name IN (:tags)
 
             ORDER BY ms.startDate DESC'
-        );
+        )->setParameter('tags', $tags)->setMaxResults(4);
 
         $values = $query->getResult();
 
@@ -145,8 +147,7 @@ class TimelineCVController extends AbstractController
 
         // Generate HTML content for the PDF
         $html = $this->renderView('timeline_cv/pdf.html.twig', [
-            'timeline_events' => $experiences,
-            'tags' => $tags
+            'timeline_events' => $experiences
         ]);
 
         // Setup Dompdf
