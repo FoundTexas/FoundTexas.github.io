@@ -43,6 +43,9 @@ class MileStone
     #[ORM\ManyToOne(inversedBy: 'mileStones')]
     private ?Organization $organization = null;
 
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $type = null;
+
     public function __construct()
     {
         $this->asociatedprojects = new ArrayCollection();
@@ -177,6 +180,18 @@ class MileStone
     public function setOrganization(?Organization $organization): static
     {
         $this->organization = $organization;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

@@ -37,45 +37,11 @@ class TimelineCVController extends AbstractController
             LEFT JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
             LEFT JOIN App\Entity\Tag t WITH t = bpt.tag
 
-            ORDER BY ms.startDate ASC'
+            ORDER BY ms.startDate DESC'
         );
 
         $values = $query->getResult();
-
-        $experiences = [];
-
-        foreach ($values as $milestone) {
-            $id = $milestone['id'];
-
-            if (!isset($experiences[$id])) {
-                $experiences[$id] = [
-                    'name' => $milestone['name'],
-                    'description' => $milestone['description'],
-                    'endDate' => $milestone['endDate'],
-                    'startDate' => $milestone['startDate'],
-                    'organization' => $milestone['org_n'],
-                    'location' => $milestone['loc_n'],
-                    'projects' => [],
-                    'tags' => [],
-                    'bullets' => []
-                ];
-            }
-
-            if ($milestone['p_id'] && !isset($experiences[$id]['projects'][$milestone['p_id']])) {
-                $experiences[$id]['projects'][$milestone['p_id']] = [
-                    'name' => $milestone['p_nm'],
-                    'iconref' => $milestone['iconref']
-                ];
-            }
-
-            if ($milestone['tag'] && !in_array($milestone['tag'], $experiences[$id]['tags'])) {
-                $experiences[$id]['tags'][] = $milestone['tag'];
-            }
-
-            if ($milestone['b_d'] && !in_array($milestone['b_d'], $experiences[$id]['bullets'])) {
-                $experiences[$id]['bullets'][] = $milestone['b_d'];
-            }
-        }
+        $experiences = $this->formatExperiences($values);
 
         return $this->render('timeline_cv/index.html.twig', [
             'timeline_events' => $experiences,
@@ -86,15 +52,15 @@ class TimelineCVController extends AbstractController
     #[Route('/generate-cv', name: 'app_timeline_cv')]
     public function generateCv(EntityManagerInterface $entityManager, Request $request): Response
     {
-        $tags = $request->query->all('tags', []);
+        $tags = $request->query->all('tags');
 
         $query = $entityManager->createQuery(
             'SELECT DISTINCT 
             ms.id as id, ms.name, ms.description, 
-            org.name as org_n, loc.name as loc_n, 
+            org.name as org_n, loc.name as loc_n,
             p.id as p_id, 
             p.name as p_nm, 
-            p.iconref,
+            p.iconref, 
             t.name as tag, bp.id as b_id, bp.description as b_d, ms.endDate, ms.startDate
             FROM App\Entity\MileStone ms 
             LEFT JOIN ms.organization org
@@ -102,52 +68,26 @@ class TimelineCVController extends AbstractController
             LEFT JOIN App\Entity\Project p WITH p.mileStone = ms.id
             LEFT JOIN App\Entity\BulletPoint bp WITH bp.mileStone = ms.id 
             LEFT JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
-            LEFT JOIN App\Entity\Tag t WITH t = bpt.tag
-            WHERE t.name IN (:tags)
+            INNER JOIN App\Entity\Tag t WITH t = bpt.tag
 
+            WHERE t.name IN (:tags) AND ms.type = :mstype
             ORDER BY ms.startDate DESC'
-        )->setParameter('tags', $tags)->setMaxResults(4);
+        )->setParameter('tags', ['UNITY','WEB-DEV']);
 
-        $values = $query->getResult();
+        $queryWkexp = $query
+            ->setParameter('mstype', 'wkexp')
+            ->setMaxResults(4);
+        $queryLedac = $query
+            ->setParameter('mstype', 'ledac');
 
-        $experiences = [];
-
-        foreach ($values as $milestone) {
-            $id = $milestone['id'];
-
-            if (!isset($experiences[$id])) {
-                $experiences[$id] = [
-                    'name' => $milestone['name'],
-                    'description' => $milestone['description'],
-                    'endDate' => $milestone['endDate'],
-                    'startDate' => $milestone['startDate'],
-                    'organization' => $milestone['org_n']??'',
-                    'location' => $milestone['loc_n']??'',
-                    'projects' => [],
-                    'tags' => [],
-                    'bullets' => []
-                ];
-            }
-
-            if ($milestone['p_id'] && !isset($experiences[$id]['projects'][$milestone['p_id']])) {
-                $experiences[$id]['projects'][$milestone['p_id']] = [
-                    'name' => $milestone['p_nm'],
-                    'iconref' => $milestone['iconref']
-                ];
-            }
-
-            if ($milestone['tag'] && !in_array($milestone['tag'], $experiences[$id]['tags'])) {
-                $experiences[$id]['tags'][] = $milestone['tag'];
-            }
-
-            if ($milestone['b_d'] && !in_array($milestone['b_d'], $experiences[$id]['bullets'])) {
-                $experiences[$id]['bullets'][] = $milestone['b_d'];
-            }
-        }
+        $values_wkexp = $this->formatExperiences($queryWkexp);
+        //$values_ledac = $this->formatExperiences($queryLedac);
 
         // Generate HTML content for the PDF
         $html = $this->renderView('timeline_cv/pdf.html.twig', [
-            'timeline_events' => $experiences
+            'values_wkexp' => $values_wkexp,
+            'tags' => $tags,
+            //'values_ledac' => $values_ledac,
         ]);
 
         // Setup Dompdf
@@ -164,5 +104,45 @@ class TimelineCVController extends AbstractController
         $response->headers->set('Content-Disposition', 'attachment; filename="cv.pdf"');
 
         return $response;
+    }
+
+    public function formatExperiences($values)
+    {
+        $experiences = [];
+
+        foreach ($values as $milestone) {
+            $id = $milestone['id'];
+
+            if (!isset($experiences[$id])) {
+                $experiences[$id] = [
+                    'name' => $milestone['name'],
+                    'description' => $milestone['description'],
+                    'endDate' => $milestone['endDate'],
+                    'startDate' => $milestone['startDate'],
+                    'organization' => $milestone['org_n'] ?? '',
+                    'location' => $milestone['loc_n'] ?? '',
+                    'projects' => [],
+                    'tags' => [],
+                    'bullets' => []
+                ];
+            }
+
+            if ($milestone['p_id'] && !isset($experiences[$id]['projects'][$milestone['p_id']])) {
+                $experiences[$id]['projects'][$milestone['p_id']] = [
+                    'name' => $milestone['p_nm'],
+                    'iconref' => $milestone['iconref']
+                ];
+            }
+
+            if ($milestone['tag'] && !in_array($milestone['tag'], $experiences[$id]['tags'])) {
+                $experiences[$id]['tags'][] = $milestone['tag'];
+            }
+
+            if ($milestone['b_d'] && !in_array($milestone['b_d'], $experiences[$id]['bullets'])) {
+                $experiences[$id]['bullets'][] = $milestone['b_d'];
+            }
+        }
+
+        return $experiences;
     }
 }

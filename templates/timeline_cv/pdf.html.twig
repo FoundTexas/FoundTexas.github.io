@@ -79,7 +79,7 @@
 				<a href="https://foundtexas.mx">Portfolio</a>
 			</p>
 
-			<p>I'm Rodolfo, a computer scientist specialized in 3D Graphics, with skills in Project Management, Web and Game Development. I’m a team player and believe that diverse perspectives fuel innovation, leading to significant and immersive experiences for users.</p>
+			<p>I'm Rodolfo, a computer scientist specialized in Graphics engineering, with skills in Project Management, Web and Game Development. I’m a team player and believe that diverse perspectives fuel innovation, leading to significant and immersive experiences for users.</p>
 
 
 			<div>
@@ -116,12 +116,11 @@
 				</ul>
 			</div>
 
-
 			<div class="row center">
 				<strong>Experience</strong>
 			</div>
-
-			{% for id, milestone in timeline_events %}
+			{{ dump(tags) }}
+			{% for id, milestone in values_wkexp %}
 				<div class="row">
 					<strong class="left">{{ milestone.organization }}</strong>
 					<div class="right">{{ milestone.location }}</div>
@@ -146,6 +145,7 @@
 			<div class="row center">
 				<strong>Leadership & Activities</strong>
 			</div>
+
 			<div class="row center">
 				<strong>Skills & Interests</strong>
 			</div>
