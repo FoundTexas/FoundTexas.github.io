@@ -1,0 +1,41 @@
+<div class="offcanvas offcanvas-start bg-main-gradient-circle" style="min-width:33vw;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+	<div class="offcanvas-header justify-content-evenly">
+		<button type="button" class="  bg-accent text-white " data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+		<h3 class="offcanvas-title" id="offcanvasExampleLabel">Timeline Filters:</h3>
+	</div>
+	<div class="offcanvas-body ">
+		<div class="row bg-main-dark p-3 rounded-4" style="z-index: 10; top:11vh;">
+
+			<form action="{{ path('app_timeline_cv') }}" method="get" target="blank">
+				<div class="col-12 m-0 p-0">
+					<div class="row">
+						<h6 class="col-auto ">Filter by Tags:</h6>
+					</div>
+					<div class="row">
+						{% for tag in tags %}
+							<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag.name }}" name="tags[]" value="{{ tag.name }}" checked>
+							<label class="col-auto btn btn-outline-main m-1" for="btn-check-outlined-{{ tag.name }}">{{ tag.name }}</label><br>
+						{% endfor %}
+
+					</div>
+				</div>
+				<div class="col-12 m-0 p-0">
+					<h6>Filter by Year:</h6>
+					<div class="btn-group" role="group" aria-label="Year buttons">
+
+						{% for year in years %}
+							<input type="checkbox" class="col-auto btn-check rounded-3" id="btn-check-outlined-{{ year }}" name="years[]" value="{{ year }}" checked>
+							<label class="col-auto btn btn-outline-main rounded-3 m-1" for="btn-check-outlined-{{ year }}">{{ year }}</label><br>
+						{% endfor %}
+
+					</div>
+
+				</div>
+				<div class="col-12 my-2 p-0 row justify-content-center">
+					<button class="col-auto custom-btn rounded-4 bg-accent d-flex align-items-center text-white p-2" type="submit">Generate PDF</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>

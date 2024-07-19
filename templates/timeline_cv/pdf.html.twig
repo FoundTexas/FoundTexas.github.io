@@ -81,7 +81,6 @@
 
 			<p>I'm Rodolfo, a computer scientist specialized in Graphics engineering, with skills in Project Management, Web and Game Development. I’m a team player and believe that diverse perspectives fuel innovation, leading to significant and immersive experiences for users.</p>
 
-
 			<div>
 				<div class="row center">
 					<strong>Education</strong>
@@ -119,7 +118,6 @@
 			<div class="row center">
 				<strong>Experience</strong>
 			</div>
-			{{ dump(tags) }}
 			{% for id, milestone in values_wkexp %}
 				<div class="row">
 					<strong class="left">{{ milestone.organization }}</strong>
@@ -146,13 +144,40 @@
 				<strong>Leadership & Activities</strong>
 			</div>
 
+			{% for id, milestone in values_ledac %}
+				<div class="row">
+					<strong class="left">{{ milestone.organization }}</strong>
+					<div class="right">{{ milestone.location }}</div>
+				</div>
+
+				<div class="row">
+					<div class="left">{{ milestone.name }}</div>
+					<div class="right">
+						{{ milestone.startDate|date('Y-m-d') }}
+						-
+						{{ milestone.endDate ? milestone.endDate|date('Y-m-d') : 'Current'}}
+					</div>
+				</div>
+
+				<ul class="row">
+					{% for bullet in milestone.bullets %}
+						<li>{{ bullet }}</li>
+					{% endfor %}
+				</ul>
+			{% endfor %}
+
 			<div class="row center">
 				<strong>Skills & Interests</strong>
 			</div>
 
-			<strong>Technical:</strong>
-			<strong>Language:</strong>
-			<strong>Interest:</strong>
+			<p class="center">
+				{% for index, tag in tags %}
+					{{ tag }}
+					{% if index != tags|length and tags|length > 1 %}
+						|
+					{% endif %}
+				{% endfor %}
+			</p>
 
 		</div>
 	</body>

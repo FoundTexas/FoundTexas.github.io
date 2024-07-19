@@ -68,26 +68,28 @@ class TimelineCVController extends AbstractController
             LEFT JOIN App\Entity\Project p WITH p.mileStone = ms.id
             LEFT JOIN App\Entity\BulletPoint bp WITH bp.mileStone = ms.id 
             LEFT JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
-            INNER JOIN App\Entity\Tag t WITH t = bpt.tag
+            LEFT JOIN App\Entity\Tag t WITH t = bpt.tag
 
-            WHERE t.name IN (:tags) AND ms.type = :mstype
+            WHERE t.name IN (:tagsvalues) AND ms.type = :mstype
             ORDER BY ms.startDate DESC'
-        )->setParameter('tags', ['UNITY','WEB-DEV']);
+        )->setParameter('tagsvalues', $tags);
 
         $queryWkexp = $query
             ->setParameter('mstype', 'wkexp')
-            ->setMaxResults(4);
+            ->setMaxResults(4)->getResult();
+
         $queryLedac = $query
-            ->setParameter('mstype', 'ledac');
+            ->setParameter('mstype', 'ledac')
+            ->setMaxResults(4)->getResult();
 
         $values_wkexp = $this->formatExperiences($queryWkexp);
-        //$values_ledac = $this->formatExperiences($queryLedac);
+        $values_ledac = $this->formatExperiences($queryLedac);
 
         // Generate HTML content for the PDF
         $html = $this->renderView('timeline_cv/pdf.html.twig', [
             'values_wkexp' => $values_wkexp,
+            'values_ledac' => $values_ledac,
             'tags' => $tags,
-            //'values_ledac' => $values_ledac,
         ]);
 
         // Setup Dompdf
