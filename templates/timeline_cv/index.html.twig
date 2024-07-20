@@ -39,7 +39,6 @@
 
 		{# Sort the years in ascending order #}
 		{% set years = years|sort|reverse %}
-		{% include 'timeline_cv/timelineFilter.twig' with {'tags': tags, 'years': years} %}
 
 		<h3 class="text-center text-capitalize my-5 white-text ">TIMELINE</h3>
 
@@ -141,6 +140,8 @@
 			</button>
 		</div>
 	</div>
+
+	{% include 'timeline_cv/timelineFilter.twig' with {'tags': tags, 'years': years} %}
 
 	<script src="{{ asset('js/timeLine.js') }}"></script>
 {% endblock %}

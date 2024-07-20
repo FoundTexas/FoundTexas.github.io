@@ -1,5 +1,5 @@
 <!-- Collapsible Navbar -->
-<div class=" position-fixed fixed-top row p-0 m-0 justify-content-center" style="width:100%; z-index: 1040;">
+<div class=" position-fixed fixed-top row p-0 m-0 justify-content-center" style="width:100%; z-index: 1000;">
 	{% for label, messages in app.flashes %}
 		{% for message in messages %}
 			<div class="alert alert-{{ label }} d-flex justify-content-center m-0">
@@ -13,7 +13,7 @@
 				<img style="height: 7vh; width: auto;" src="{{ asset('foundtexaspanda.svg') }}" alt="foundtexaspanda"/>
 			</button>
 			<div class="align-items-center row p-0 m-0 w-100">
-				<a class="bg-dark rounded-circle col-12 col-lg-auto p-1 m-0 d-none d-lg-block position-absolute top-0 start-0" href="/" style="height: 7rem; aspect-ratio:1; z-index: 1040;">
+				<a class="bg-dark rounded-circle col-12 col-lg-auto p-1 m-0 d-none d-lg-block position-absolute top-0 start-0" href="/" style="height: 7rem; aspect-ratio:1; z-index: 1001;">
 					<img style="height: 100%; width: auto;" src="{{ asset('foundtexaspanda.svg') }}" alt="foundtexaspanda"/>
 				</a>
 				<div class="col-12 col-lg">
@@ -29,7 +29,7 @@
 </div>
 
 
-<button class="custom-btn position-fixed rounded-4 bg-accent d-flex align-items-center" style="z-index: 1050; top: 1rem; right: 1rem;" onclick="playSound('audiopress')" data-bs-target="#pauseMenuModal" aria-label="Pause menu button" data-bs-toggle="modal" type="button">
+<button class="custom-btn position-fixed rounded-4 bg-accent d-flex align-items-center" style="z-index: 1055; top: 1rem; right: 1rem;" onclick="playSound('audiopress')" data-bs-target="#pauseMenuModal" aria-label="Pause menu button" data-bs-toggle="modal" type="button">
 	<i class="fa fa-home my-2 mx-1 fa-2xl" aria-hidden="true" style="color: #ffffff;"></i>
 	<p class="p-0 m-0 d-none d-md-block">PAUSE</p>
 </button>

@@ -1,4 +1,4 @@
-<div class="offcanvas offcanvas-start bg-main-gradient-circle" style="min-width:33vw;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas offcanvas-start bg-main-gradient-circle" style="min-width:33vw; z-index:1050;" tabindex="1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 	<div class="offcanvas-header justify-content-evenly">
 		<button type="button" class="  bg-accent text-white " data-bs-dismiss="offcanvas" aria-label="Close">X</button>
 		<h3 class="offcanvas-title" id="offcanvasExampleLabel">Timeline Filters:</h3>
@@ -13,7 +13,7 @@
 					</div>
 					<div class="row">
 						{% for tag in tags %}
-							<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag.name }}" name="tags[]" value="{{ tag.name }}" checked>
+							<input type="checkbox" class="col-auto btn-check" id="btn-check-outlined-{{ tag.name }}" name="tags[]" value="{{ tag.name }}" onchange="filter();" checked>
 							<label class="col-auto btn btn-outline-main m-1" for="btn-check-outlined-{{ tag.name }}">{{ tag.name }}</label><br>
 						{% endfor %}
 
@@ -24,7 +24,7 @@
 					<div class="btn-group" role="group" aria-label="Year buttons">
 
 						{% for year in years %}
-							<input type="checkbox" class="col-auto btn-check rounded-3" id="btn-check-outlined-{{ year }}" name="years[]" value="{{ year }}" checked>
+							<input type="checkbox" class="col-auto btn-check rounded-3" id="btn-check-outlined-{{ year }}" name="years[]" value="{{ year }}" onchange="filter();" checked>
 							<label class="col-auto btn btn-outline-main rounded-3 m-1" for="btn-check-outlined-{{ year }}">{{ year }}</label><br>
 						{% endfor %}
 

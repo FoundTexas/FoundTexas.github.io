@@ -107,9 +107,9 @@ const fragmentShader = `
         vec2 dist = march(ro, rd); // Get the distance to the nearest surface
         vec3 col = vec3(0.0); // Initialize color to black
         if (dist.y == 0.0) { // If the surface is hit
-            col = mix(vec3(0.0, 1.0, 1.0), vec3(0.84, 0.26, 0.9), smoothstep(0.5, 1.3, dist.x)); // Color the surface
+            col = mix(vec3(0.0, 0.6, 0.6) , vec3(0.42, 0.13, 0.45), smoothstep(0.5, 1.3, dist.x)); // Color the surface
         }
-        fragColor = vec4(col, 1.0); // Set the final fragment color
+        fragColor = vec4(col, 7.0); // Set the final fragment color
     }
 
     // Main function
@@ -218,7 +218,7 @@ function onScroll() {
     const curscrollY = scrollY;
     scrollY = window.scrollY;
 
-    scrollDir = (scrollY > curscrollY) ? 6 : -6;
+    scrollDir = (scrollY > curscrollY) ? 8 : -8;
 }
 
 function animate() {

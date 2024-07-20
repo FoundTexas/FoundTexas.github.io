@@ -1,31 +1,32 @@
 // timeLine.js
 
 function filter() {
-
-    var selectedTags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(function (tag) {
+    // Get selected tags
+    var selectedTags = Array.from(document.querySelectorAll('input[name="tags[]"]:checked')).map(function (tag) {
         return tag.value;
     });
-    var selectedYears = Array.from(document.querySelectorAll('input[name="years"]')).map(function (year) {
+
+    // Print selected tags
+    console.log("Selected Tags: ", selectedTags);
+
+    // Get selected years (assuming there are input checkboxes for years as well)
+    var selectedYears = Array.from(document.querySelectorAll('input[name="years[]"]:checked')).map(function (year) {
+        return year.value;
+    });
+    var years = Array.from(document.querySelectorAll('input[name="years[]"]')).map(function (year) {
         return year.value;
     });
 
-    events.forEach(function (event) {
-        year = event.value;
-        console.log(year);
-        var yearvalue = document.getElementById(year);
-        if(yearvalue)
-        {if (year) {
-            yearvalue.style.setProperty('display', 'block', 'important');
-        } 
-        else {
-            yearvalue.style.setProperty('display', 'none', 'important');
-        }}
+    // Print selected years
+    console.log("Selected Years: ", selectedYears);
+
+    // Show or hide year sections based on selection (if applicable)
+    years.forEach(function (year) {
+        var yearElement = document.getElementById(year);
+        if (yearElement) {
+            yearElement.style.setProperty('display', selectedYears.includes(year) ? 'block' : 'none', 'important');
+        }
     });
-
-    console.log(selectedTags);
-    console.log(selectedYears);
-
-    return
 
     var events = document.querySelectorAll('.timeline-event');
     var index = 0;
@@ -66,16 +67,4 @@ function selectAllTags(value = true) {
 
     filter();
 }
-
-document.querySelectorAll('input[name="tags"]').forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
-        filter();
-    });
-});
-
-document.querySelectorAll('input[name="years"]').forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
-        filter();
-    });
-});
 
