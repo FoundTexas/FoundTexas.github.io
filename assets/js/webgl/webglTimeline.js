@@ -11,103 +11,114 @@ let scrollY = 0;
 
 let scrollDir = 1;
 let vortexMaterial; // Define vortexMaterial globally
+/* Stripes
+ for(int i = 0; i < 12; i++) {
+    vec3 q = p;
+    q.xy *= rotate2d(3.14159265359 * float(i) / 6.0);
+    q.yz *= rotate2d(3.14159265359 * 0.5);
+    res = min(res, sdCylinder(q, vec3(0.4, 0.11, 0.005)));
+}*/
 
 const vertexShader = `
     varying vec2 vUv;
 
     void main() {
+        // Pass the texture coordinates to the fragment shader
         vUv = uv;
+        // Compute the vertex position in clip space
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
 `;
 
 const fragmentShader = `
-    float EPSILON = .0001;
-    uniform float iTime;
-    uniform vec2 iResolution;
+    float EPSILON = .0001; // Small value used for distance comparisons
+    float time_mult = .6;  // Multiplier to control the speed of the animation
+    uniform float iTime;   // Time uniform for animation
+    uniform vec2 iResolution; // Resolution of the viewport
 
-    mat2 rotate2d(float _angle){
-        return mat2(cos(_angle),-sin(_angle),
-                    sin(_angle),cos(_angle));
+    // Function to rotate a 2D vector by a given angle
+    mat2 rotate2d(float _angle) {
+        return mat2(cos(_angle), -sin(_angle), sin(_angle), cos(_angle));
     }
 
-    float sdCylinder( vec3 p, vec3 c )
-    {
-        return length(p.xz-c.xy)-c.z;
+    // Signed distance function for a cylinder
+    float sdCylinder(vec3 p, vec3 c) {
+        return length(p.xz - c.xy) - c.z;
     }
 
-    vec2 scene(vec3 p){
-        float res = 1.;
-        
-        p.xy += vec2(cos(p.z),sin(p.z));
-        
-        // Rings
-        for(int i = 0; i<12; i++){
+    // Scene definition
+    vec2 scene(vec3 p) {
+        float res = 1.0; // Initialize the result to a large value
+
+        // Apply some distortion to the position
+        p.xy += vec2(cos(p.z), sin(p.z));
+
+        // Create rings
+        for (int i = 0; i < 12; i++) {
             vec3 q = p;
-            q.xy *= rotate2d(3.14159265359*float(i)/6.);
-            q.z = mod(q.z, .3);
-            res = min(res, sdCylinder(q-vec3(0.4, 0., .0), vec3(0., 0., .01)));
+            q.xy *= rotate2d(3.14159265359 * float(i) / 6.0); // Rotate the position
+            q.z = mod(q.z, 0.3); // Repeat the pattern along the z-axis
+            res = min(res, sdCylinder(q - vec3(0.4, 0.0, 0.0), vec3(0.0, 0.0, 0.02))); // Thinner rings
         }
-        // Stripes
-        for(int i = 0; i<12; i++){
-            vec3 q = p;
-            q.xy *= rotate2d(3.14159265359*float(i)/6.);
-            q.yz *= rotate2d(3.14159265359*.5);
-            
-            res = min(res, sdCylinder(q, vec3(0.4, 0.11, 0.01)));
+
+        // Clipping tunnel to limit the scene
+        float clipping = sdCylinder(p.yzx, vec3(0.0, 0.0, 0.415));
+        float mat = 0.0;
+        res = min(res, -clipping); // Combine with the clipping tunnel
+
+        if (res == -clipping) {
+            mat = 1.0;
         }
-        // ClippingTunnel
-        float clipping = sdCylinder(p.yzx, vec3(0., 0., .415));
-        
-        float mat = 0.;
-        
-        res = min(res, -clipping);
-        
-        if(res == -clipping ){mat = 1.;}
         return vec2(res, mat);
     }
 
-    vec2 march(vec3 ro, vec3 p){
-        float id = 0.;
-        float dist = .0;
-        for(int i = 0; i<64; i++){
-            vec2 depth = scene(ro + dist * p);
+    // Ray marching function
+    vec2 march(vec3 ro, vec3 rd) {
+        float id = 0.0;
+        float dist = 0.0;
+        for (int i = 0; i < 64; i++) {
+            vec2 depth = scene(ro + dist * rd); // Sample the scene along the ray
             id = depth.y;
-            if(depth.x < EPSILON){
+            if (depth.x < EPSILON) { // If close enough to a surface
                 return vec2(dist, id);
             }
-            dist += depth.x / 2.;
+            dist += depth.x / 2.0; // Advance the ray
         }
         return vec2(dist, id);
     }
 
+    // Main function to generate the fragment color
     void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-        // Camera setting
-        float angleLead = .5;
-        vec3 ro = vec3(0., .0, 1.0);
-        vec3 ta = vec3(-cos(iTime+angleLead), sin(iTime+angleLead), .0);
-        vec3 ww = normalize(ta - ro);
-        vec3 uu = normalize(cross(ww, vec3(0.0, 1.0, 0.0)));
-        vec3 vv = cross(uu, ww);
-        vec2 p = (-iResolution.xy + 2.0 * fragCoord) / iResolution.y;
-        vec3 rd = normalize(p.x * uu + p.y * vv + 1.5 * ww);
-        
-        // Camera Movement
-        ro.z -= iTime;
-        ro.xy = vec2(-cos(ro.z), -sin(ro.z));
-        
-        vec2 dist = march(ro, rd);
-        vec3 col = vec3(0.);
-        if(dist.y == 0.){
-            col = mix(vec3(1, 0.239, 0.051), vec3(1, 0.714, 0.286), smoothstep(.7, 3., dist.x));
+        // Camera setup
+        float angleLead = 0.5;
+        vec3 ro = vec3(0.0, 0.0, 1.0); // Camera position
+        vec3 ta = vec3(-cos(iTime * time_mult + angleLead), sin(iTime * time_mult + angleLead), 0.0); // Target position
+        vec3 ww = normalize(ta - ro); // Forward vector
+        vec3 uu = normalize(cross(ww, vec3(0.0, 1.0, 0.0))); // Right vector
+        vec3 vv = cross(uu, ww); // Up vector
+        vec2 p = (-iResolution.xy + 2.0 * fragCoord) / iResolution.y; // Normalized screen coordinates
+        vec3 rd = normalize(p.x * uu + p.y * vv + 1.5 * ww); // Ray direction
+
+        // Camera movement
+        ro.z -= iTime * time_mult; // Move the camera along the z-axis
+        ro.xy = vec2(-cos(ro.z), -sin(ro.z)); // Circular movement in the xy-plane
+
+        // Perform ray marching
+        vec2 dist = march(ro, rd); // Get the distance to the nearest surface
+        vec3 col = vec3(0.0); // Initialize color to black
+        if (dist.y == 0.0) { // If the surface is hit
+            col = mix(vec3(0.0, 1.0, 1.0), vec3(0.84, 0.26, 0.9), smoothstep(0.5, 1.3, dist.x)); // Color the surface
         }
-        fragColor = vec4(col, 1.0);
+        fragColor = vec4(col, 1.0); // Set the final fragment color
     }
 
+    // Main function
     void main() {
         mainImage(gl_FragColor, gl_FragCoord.xy);
     }
 `;
+
+
 
 init();
 animate();
