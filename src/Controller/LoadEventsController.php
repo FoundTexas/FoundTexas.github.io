@@ -72,18 +72,34 @@ class LoadEventsController extends AbstractController
 
                 $entityManager->persist($mileStoneupdate);
 
+                // Fetch existing bullet points if updating
+                $existingBulletPoints = $id ? $entityManager->getRepository(BulletPoint::class)->findBy(['mileStone' => $mileStoneupdate]) : [];
+
                 // Handle bullet points
                 foreach ($mileStone->getBulletpoints() as $bulletPoint) {
-                    $bulletPoint->setMileStone($mileStoneupdate);
-
-                    $entityManager->persist($bulletPoint);
+                    if ($bulletPoint->getId()) {
+                        $existingBulletPoint = $entityManager->getRepository(BulletPoint::class)->find($bulletPoint->getId());
+                        if ($existingBulletPoint) {
+                            $existingBulletPoint->setDescription($bulletPoint->getDescription());
+                            $entityManager->persist($existingBulletPoint);
+                            $bulletPoint = $existingBulletPoint;
+                        }
+                    } else {
+                        $bulletPoint->setMileStone($mileStoneupdate);
+                        $entityManager->persist($bulletPoint);
+                    }
 
                     // Handle bullet point tags
                     foreach ($bulletPoint->getBulletPointTags() as $bulletPointTag) {
                         $bulletPointTag->setBulletpoint($bulletPoint);
-                        $bulletPointTag->setTag($bulletPointTag->getTag());
-
                         $entityManager->persist($bulletPointTag);
+                    }
+                }
+
+                // Remove bullet points that are no longer in the submitted form
+                foreach ($existingBulletPoints as $existingBulletPoint) {
+                    if (!$mileStone->getBulletpoints()->contains($existingBulletPoint)) {
+                        $entityManager->remove($existingBulletPoint);
                     }
                 }
 

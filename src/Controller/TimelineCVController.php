@@ -28,7 +28,8 @@ class TimelineCVController extends AbstractController
             p.id as p_id, 
             p.name as p_nm, 
             p.iconref, 
-            t.name as tag, bp.id as b_id, bp.description as b_d, ms.endDate, ms.startDate
+            t.name as tag, 
+            bp.id as b_id, bp.description as b_d, ms.endDate, ms.startDate
             FROM App\Entity\MileStone ms 
             LEFT JOIN ms.organization org
             LEFT JOIN org.location loc
@@ -56,19 +57,16 @@ class TimelineCVController extends AbstractController
 
         $query = $entityManager->createQuery(
             'SELECT DISTINCT 
-            ms.id as id, ms.name, ms.description, 
+            ms.id as id, ms.name, ms.description, ms.startDate,
             org.name as org_n, loc.name as loc_n,
-            p.id as p_id, 
-            p.name as p_nm, 
-            p.iconref, 
-            t.name as tag, bp.id as b_id, bp.description as b_d, ms.endDate, ms.startDate
+            t.name as tag, 
+            bp.id as b_id, bp.description as b_d, ms.endDate
             FROM App\Entity\MileStone ms 
-            LEFT JOIN ms.organization org
-            LEFT JOIN org.location loc
-            LEFT JOIN App\Entity\Project p WITH p.mileStone = ms.id
-            LEFT JOIN App\Entity\BulletPoint bp WITH bp.mileStone = ms.id 
-            LEFT JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
-            LEFT JOIN App\Entity\Tag t WITH t = bpt.tag
+            INNER JOIN ms.organization org
+            INNER JOIN org.location loc
+            INNER JOIN App\Entity\BulletPoint bp WITH bp.mileStone = ms.id 
+            INNER JOIN App\Entity\BulletPointTag bpt WITH bpt.bulletpoint = bp.id
+            INNER JOIN App\Entity\Tag t WITH t = bpt.tag
 
             WHERE t.name IN (:tagsvalues) AND ms.type = :mstype
             ORDER BY ms.startDate DESC'
@@ -76,13 +74,13 @@ class TimelineCVController extends AbstractController
 
         $queryWkexp = $query
             ->setParameter('mstype', 'wkexp')
-            ->setMaxResults(4)->getResult();
+            ->getResult();
 
         $queryLedac = $query
             ->setParameter('mstype', 'ledac')
-            ->setMaxResults(4)->getResult();
+            ->getResult();
 
-        $values_wkexp = $this->formatExperiences($queryWkexp);
+        $values_wkexp = array_slice($this->formatExperiences($queryWkexp), 0, 3);
         $values_ledac = $this->formatExperiences($queryLedac);
 
         // Generate HTML content for the PDF
@@ -129,7 +127,7 @@ class TimelineCVController extends AbstractController
                 ];
             }
 
-            if ($milestone['p_id'] && !isset($experiences[$id]['projects'][$milestone['p_id']])) {
+            if (isset($milestone['p_id']) && $milestone['p_id'] && !isset($experiences[$id]['projects'][$milestone['p_id']])) {
                 $experiences[$id]['projects'][$milestone['p_id']] = [
                     'name' => $milestone['p_nm'],
                     'iconref' => $milestone['iconref']
