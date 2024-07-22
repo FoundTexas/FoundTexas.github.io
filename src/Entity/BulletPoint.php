@@ -26,7 +26,7 @@ class BulletPoint
     /**
      * @var Collection<int, BulletPointTag>
      */
-    #[ORM\OneToMany(mappedBy: 'bulletpoint', targetEntity: BulletPointTag::class)]
+    #[ORM\OneToMany(mappedBy: 'bulletpoint', targetEntity: BulletPointTag::class, orphanRemoval: true)]
     private Collection $bulletPointTags;
 
     public function __construct()
