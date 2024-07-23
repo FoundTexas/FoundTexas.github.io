@@ -5,6 +5,7 @@
 namespace App\Form;
 
 use App\Entity\MileStone;
+use App\Entity\Organization;
 use App\Entity\Project;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -58,7 +59,8 @@ class ProjectType extends AbstractType
             ->add('mileStone', EntityType::class, [
                 'class' => MileStone::class,
                 'choice_label' => function (MileStone $mileStone) {
-                    return $mileStone->getId() . ' - ' . $mileStone->getOrganization()->getName();
+                    $organization = $mileStone->getOrganization();
+                    return $mileStone->getId() . ' - ' . ($organization ? $organization->getName() : 'No Organization');
                 },
                 'attr' => ['class' => 'form-control'],
                 'row_attr' => ['class' => 'form-group'],
