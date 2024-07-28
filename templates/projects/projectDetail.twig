@@ -23,7 +23,7 @@
 			color: #fff;
 			font-weight: 500;
 			height: 30rem;
-			max-height: 100vh;
+			aspect-ratio: 0.8;
 		}
 
 		.navigation-wrapper {
@@ -94,18 +94,15 @@
 	<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.5/keen-slider.min.js"></script>
 
 	<hr>
-	<div class="container mx-3">
+	<div class="container-xl">
 		<div class="card rounded-3 bg-dark">
 			<div class="card-header text-center bg-main-dark">
 				<h3>{{ project.name }}</h3>
 			</div>
 			<div class="card-body bg-dark row p-0 m-0 justify-content-center align-items-center" style="overflow: hidden;">
-				<div class="col-auto py-3">
-					{{ project.fileref|raw }}
-				</div>
-				<div id="my-keen-slider" class="keen-slider col-12 col-md-10">
+				<div id="my-keen-slider" class="keen-slider">
 					{% for item in project.gallery %}
-						<div class="keen-slider__slide number-slide bg-accent-dark rounded-4" style="aspect-ratio:0.5; background-image: url('{{ asset(gallery_directory ~ item) }}'); background-repeat: no-repeat; background-size: contain; background-position: center;"></div>
+						<div class="keen-slider__slide number-slide bg-accent-dark rounded-4" style=" background-image: url('{{ asset(gallery_directory ~ item) }}'); background-repeat: no-repeat; background-size: contain; background-position: center;"></div>
 					{% endfor %}
 				</div>
 				<script>
@@ -200,6 +197,10 @@
 						loop: true
 					}, [navigation])
 				</script>
+
+				<div class="col-auto py-3">
+					{{ project.fileref|raw }}
+				</div>
 
 				{% if project.linkref is not empty and project.linkref is not null %}
 					<a target="blank" href="{{project.linkref}}" class="col-auto my-4 py-2">
