@@ -1,33 +1,103 @@
-{# templates/contact.html.twig #}
+<section id="contact" class="w-100 m-0 p-0 bg-accent-dark rounded-top-5" style="min-height: 50vh;">
 
-<section id="contact" class="bg-accent-dark" style="min-height: 86vh;">
-    {% include 'index/IndexHeader.twig' with {'upRef': 'projects', 'textRef': 'contact', 'headText': "Let's Chat! 🐼", 'darkbg': true} %}
-
+    <div class="w-100 d-flex justify-content-center ">
+		<div class="bg-main rounded-4 col-12 col-md-6  py-2 d-flex justify-content-center" >
+			<div class=" p-0 m-0 stack" style="--stacks: 3;">
+				<span class="p-3 text-center" style="--index: 0;">Let's Chat! 🐼</span>
+				<span class="p-3 text-center" style="--index: 1;">Let's Chat! 🐼</span>
+				<span class="p-3 text-center" style="--index: 2;">Let's Chat! 🐼</span>
+			</div>
+		</div>
+	</div>
     <div class="container px-3 py-4">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form id="contactForm" action="{{ path('app_email') }}" method="post" class="needs-validation row justify-content-center" novalidate>
+                <form id="contact-form" class="needs-validation row justify-content-center">
                     <div class="mb-3 col-12 col-md-6">
                         <label for="name" class="form-label">Name:</label>
                         <input type="text" class="form-control" id="name" name="name" required>
-                        <div class="invalid-feedback">Please enter your name.</div>
                     </div>
-
                     <div class="mb-3 col-12 col-md-6">
                         <label for="email" class="form-label">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" required>
-                        <div class="invalid-feedback">Please enter a valid email address.</div>
                     </div>
-
+                    <div class="mb-3 col-12">
+                        <label for="subject" class="form-label">Subject:</label>
+                        <input type="text" class="form-control" id="subject" name="subject" maxlength="50" required>
+                    </div>
                     <div class="mb-3">
                         <label for="message" class="form-label">Message:</label>
                         <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-                        <div class="invalid-feedback">Please enter a message.</div>
                     </div>
-
-                    <button type="submit" class="rounded-pill w-50 btn custom-btn bg-accent text-white">Submit</button>
+                    <button type="submit" id="send-button" class="rounded-pill w-50 custom-btn bg-accent text-white p-2">Submit</button>
                 </form>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.getElementById('contact-form');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get the form data
+        const formData = new FormData(form);
+
+        // Validate the form data (optional)
+        if (formData.get('name') && formData.get('email') && formData.get('subject') && formData.get('message')) {
+            // Perform the AJAX POST request
+            fetch("{{ path('app_email') }}", { // Replace 'your-server-endpoint' with your actual endpoint URL
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show SweetAlert success message
+                    Swal.fire({
+                        title: 'Form Submitted!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Optionally reset the form
+                            form.reset();
+                        }
+                    });
+                } else {
+                    // Show SweetAlert error message
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                // Show SweetAlert error message
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'There was a problem submitting your form. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        } else {
+            // Show SweetAlert error message
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please fill out all fields.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+});
+</script>
+
+

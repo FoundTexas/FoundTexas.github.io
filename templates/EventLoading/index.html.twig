@@ -7,15 +7,15 @@
 
 {% block body %}
 	<div class="row">
-		<div class="col-12 col-md-6" style="min-height:100vh;">
+		<div class="col-12 col-md-6" style="min-height:66vh;">
 			<div class="row p-2 justify-content-center">
 				<h2 class="text-center bg-main p-2 rounded-pill">Milestone Load:</h2>
 				<div class="d-flex justify-content-center align-content-evenly">
 
-					<select id="milestoneDropdown" class="dropdown-center col-auto" onchange="newForm('{{path('milestone_new')}}','MilestoneContainer', '{{ asset('loadgif.gif') }}', this.value)">
+					<select id="milestoneDropdown" class="dropdown-center col-auto" onchange="newForm(this.value,'MilestoneContainer', '{{ asset('loadgif.gif') }}')">
 						<option value="">Select Milestone</option>
 						{% for milestone in milestoneIds %}
-							<option value="{{ milestone.id }}">{{ milestone.id }}-{{ milestone.name }}</option>
+							<option value="{{ path('milestone_new', {'id': milestone.id}) }}">{{ milestone.id }} | {{ milestone.org_n }} - {{ milestone.name }}</option>
 						{% endfor %}
 					</select>
 					<button class="btn btn-success col-auto" onclick="newForm('{{path('milestone_new')}}','MilestoneContainer', '{{ asset('loadgif.gif') }}')">+</button>
@@ -33,10 +33,10 @@
 				<h2 class="text-center bg-main p-2 rounded-pill">Project Load:</h2>
 				<div class="d-flex justify-content-center align-content-evenly">
 
-					<select id="ProjectDropdown" class="dropdown-center col-auto" onchange="newForm('{{path('project_new')}}','ProjectContainer', '{{ asset('loadgif.gif') }}', this.value)">
+					<select id="ProjectDropdown" class="dropdown-center col-auto" onchange="newForm( this.value, 'ProjectContainer', '{{ asset('loadgif.gif') }}')">
 						<option value="">Select Project</option>
 						{% for project in projectsIds %}
-							<option value="{{ project.id }}">{{ project.id }}-{{ project.name }}</option>
+							<option value="{{ path('project_new', {'id': project.id}) }}">{{ project.id }}-{{ project.name }}</option>
 						{% endfor %}
 					</select>
 					<button class="btn btn-success col-auto" onclick="newForm('{{path('project_new')}}', 'ProjectContainer', '{{ asset('loadgif.gif') }}')">+</button>
@@ -50,5 +50,8 @@
 		</div>
 	</div>
 
+	
+
 	<script src="{{ asset('js/formsFunctions.js') }}"></script>
+
 {% endblock %}

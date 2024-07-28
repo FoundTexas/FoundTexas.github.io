@@ -18,7 +18,7 @@ function playSound(elementId) {
 // Function to set the volume of all audio elements
 function setVolume(value, group) {
     const audioElements = document.getElementsByClassName(group);
-    const volume = Math.pow(value, 1.1);
+    const volume = Math.pow(value, 1.3);
 
     // Update volume percentage display
     document.getElementById('volumeValue').textContent = `${Math.round(volume * 100)}%`;

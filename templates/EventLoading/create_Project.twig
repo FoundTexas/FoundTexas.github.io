@@ -1,18 +1,31 @@
 <h4>Create Project</h4>
 
-{{ form_start(projectForm, {'attr': {'id': 'projectForm'}}) }}
 
-{{ form_row(projectForm.name) }}
-{{ form_row(projectForm.description) }}
-{{ form_row(projectForm.fileref) }}
-{{ form_row(projectForm.iconref) }}
-{{ form_row(projectForm.linkref) }}
-{{ form_row(projectForm.type) }}
-{{ form_row(projectForm.mileStone) }}
+<form name="project" method="post" id="projectForm" enctype="multipart/form-data">
+	{{ form_row(projectForm.name) }}
+	{{ form_row(projectForm.description) }}
+	{{ form_row(projectForm.fileref) }}
+	{{ form_row(projectForm.iconref) }}
+	{{ form_row(projectForm.linkref) }}
+	{{ form_row(projectForm.type) }}
+	{{ form_row(projectForm.mileStone) }}
 
-<div class="d-flex justify-content-center my-2">
-	<button class="btn btn-primary" type="button" onclick="submitForm('{{path('project_new')}}', 'projectForm', {{projectcur.id}})">Create</button>
-</div>
+	{# Gallery preview section #}
+	<div class="ps-4">
+		<div id="project_gallery" class="collection no-add" data-prototype="<div class=&quot;form-group my-1 row justify-content-center collection-entry&quot;> <img src=&quot;{{ asset('uploads/gallery/__name__placeholder__') }}&quot; alt=&quot;Image Preview&quot; class=&quot;img-thumbnail&quot; style=&quot;width: 30rem; height: auto;&quot;> <input type=&quot;text&quot; id=&quot;project_gallery___name__&quot; name=&quot;project[gallery][__name__]&quot; class=&quot;form-control&quot; readonly /> </div>" data-index="{{ projectcur.gallery|length }}">
+			{% for key, image in projectcur.gallery %}
+				<div class="form-group my-1 row justify-content-center collection-entry">
+					<img src="{{ asset(gallery_directory ~ image) }}" alt="Image Preview" class="img-thumbnail" style="width: 30rem; height: auto;">
+					<input type="text" id="project_gallery_{{ key }}" name="project[gallery][{{ key }}]" class="form-control text-center" value="{{ image }}" readonly>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 
+	{{ form_row(projectForm.galleryuploads) }}
 
-{{ form_end(projectForm) }}
+	<div class="d-flex justify-content-center my-2">
+		<button class="btn btn-primary" type="button" onclick="submitForm('{{ path('project_new', {'id': projectcur.id}) }}', 'ProjectContainer', 'projectForm', '{{ asset('loadgif.gif') }}')">Create</button>
+	</div>
+
+</form>

@@ -1,9 +1,8 @@
 body {
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100%;
-  background-color: #000000;
-  
+  width: 100vw;
+  background: linear-gradient(to bottom right, #0a020a, #0d1817);
+  background-color: #090012;
+  padding-right: 0px !important;
 }
 
 a, label, p, h1, h2, h3, h4, h5, h6, li, span {
@@ -112,7 +111,7 @@ a, label, p, h1, h2, h3, h4, h5, h6, li, span {
 
 /* Style for WebKit-based browsers (e.g., Chrome, Safari) */
 ::-webkit-scrollbar {
-  background-color: #252b29; /* Sets the background color of the scrollbar to transparent */
+  background-color: #1b1f1d; /* Sets the background color of the scrollbar to transparent */
 }
 
 /* Style for the scrollbar handle */
@@ -121,7 +120,7 @@ a, label, p, h1, h2, h3, h4, h5, h6, li, span {
 }
 
 html {
-  scrollbar-color: #812181 #252b29; /* Sets the scrollbar handle color to red */
+  scrollbar-color: #812181 #1b1f1d; /* Sets the scrollbar handle color to red */
 }
 
 .shadow-custom {
@@ -162,14 +161,15 @@ html {
 .sin-down-div{
   width:100%;
   background: linear-gradient(0deg, rgb(43, 10, 43) 50%, rgb(0, 0, 0) 100%); 
+  /*
   clip-path: polygon( 17.428% 99.296%,17.428% 99.296%,14.394% 98.632%,11.6% 96.943%,9.063% 94.486%,6.804% 91.518%,4.84% 88.3%,3.191% 85.087%,1.876% 82.14%,0.913% 79.715%,0.322% 78.07%,0.12% 77.465%,0.12% 0.704%,99.88% 0.704%,99.88% 77.465%,99.88% 77.465%,99.719% 78.076%,99.24% 79.735%,98.442% 82.18%,97.329% 85.149%,95.903% 88.38%,94.165% 91.611%,92.117% 94.58%,89.761% 97.025%,87.1% 98.685%,84.135% 99.296%,84.135% 99.296%,81.418% 99.022%,79.386% 98.275%,77.869% 97.172%,76.694% 95.826%,75.691% 94.352%,74.688% 92.866%,73.513% 91.481%,71.996% 90.313%,69.964% 89.475%,67.248% 89.085%,67.248% 89.085%,64.535% 89.239%,62.545% 89.887%,61.097% 90.917%,60.01% 92.214%,59.104% 93.666%,58.198% 95.161%,57.111% 96.584%,55.663% 97.823%,53.674% 98.765%,50.962% 99.296%,50.962% 99.296%,48.192% 99.235%,46.116% 98.566%,44.558% 97.438%,43.346% 95.998%,42.308% 94.394%,41.27% 92.774%,40.058% 91.285%,38.5% 90.075%,36.423% 89.292%,33.654% 89.085%,33.654% 89.085%,30.927% 89.48%,28.937% 90.331%,27.498% 91.519%,26.428% 92.925%,25.541% 94.431%,24.654% 95.917%,23.584% 97.266%,22.145% 98.358%,20.154% 99.074%,17.428% 99.296% );
+  */
 }
 
-.sin-down-div.expanded{
-  background: linear-gradient(0deg, rgba(43,10,43,1) 0%, rgba(43,10,43,1) 100%);;
-  background-color: rgba(43,10,43,1);
-  clip-path: polygon(0 1%, 100% 0, 100% 100%, 0% 100%);
-  transition: 0.5s background-color ease;
+.sin-down-div.expanded {
+  background: linear-gradient(0deg, rgba(43, 10, 43, 1) 0%, rgba(43, 10, 43, 1) 100%);
+  background-color: rgba(43, 10, 43, 1);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
 
 .rounded-trapezoid{
@@ -189,7 +189,7 @@ html {
   /*font-weight: bold;*/
   grid-row-start: 1;
   grid-column-start: 1;
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   --stack-height: calc(100% / var(--stacks) - 1px);
   --inverse-index: calc(calc(var(--stacks) - 1) - var(--index));
   --clip-top: calc(var(--stack-height) * var(--index));
@@ -230,4 +230,73 @@ html {
     text-shadow: 2px -3px 0 red, -2px 3px 0 blue;
   }
   4%, 100% {  text-shadow: none; transform: none; }
+}
+
+
+.wrapper::before {
+  top: 0;
+  content: "+";
+}
+
+.wrapper::after {
+  content: "−";
+  bottom: 0;
+}
+
+input[type="range"].cool-range {
+  -webkit-appearance: none;
+  background-color: rgba(255, 255, 255, 0.296);
+  margin: 0;
+  padding: 0;
+  width: 80%;
+  height: 2.5rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: row-resize;
+}
+
+input[type="range"][step].cool-range {
+  background-color: black;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.2) calc(12.5% - 3px),
+    #000000 12.5%
+  );
+}
+
+input[type="range"].cool-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0;
+  box-shadow: -20rem 0 0 20rem rgba(145, 255, 222, 0.555);
+}
+
+input[type="range"].cool-range::-moz-range-thumb {
+  border: none;
+  width: 0;
+  box-shadow: -20rem 0 0 20rem rgba(249, 0, 0, 0.711);
+}
+
+.swal2-modal
+{
+  border-radius: 20% !important;
+  background-color: #1f2020 !important;
+  color: #FFFFFF;
+}
+
+#bgcanvas, #other-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 20px;
+  overflow-y: auto;
 }

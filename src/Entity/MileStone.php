@@ -28,18 +28,28 @@ class MileStone
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $endDate = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?array $tags = null;
-
+    /**
+     * @var Collection<int, Project>
+     */
     #[ORM\OneToMany(mappedBy: 'mileStone', targetEntity: Project::class)]
     private Collection $asociatedprojects;
 
-    #[ORM\Column( nullable: true)]
-    private ?array $bullets = null;
+    /**
+     * @var Collection<int, BulletPoint>
+     */
+    #[ORM\OneToMany(mappedBy: 'mileStone', targetEntity: BulletPoint::class, cascade: ["persist"])]
+    private Collection $bulletpoints;
+
+    #[ORM\ManyToOne(inversedBy: 'mileStones')]
+    private ?Organization $organization = null;
+
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $type = null;
 
     public function __construct()
     {
         $this->asociatedprojects = new ArrayCollection();
+        $this->bulletpoints = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,18 +112,6 @@ class MileStone
         return $this;
     }
 
-    public function getTags(): ?array
-    {
-        return $this->tags;
-    }
-
-    public function setTags(?array $tags): static
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Project>
      */
@@ -144,14 +142,56 @@ class MileStone
         return $this;
     }
 
-    public function getBullets(): ?array
+    /**
+     * @return Collection<int, BulletPoint>
+     */
+    public function getBulletpoints(): Collection
     {
-        return $this->bullets;
+        return $this->bulletpoints;
     }
 
-    public function setBullets(?array $bullets): static
+    public function addBulletpoint(BulletPoint $bulletpoint): static
     {
-        $this->bullets = $bullets;
+        if (!$this->bulletpoints->contains($bulletpoint)) {
+            $this->bulletpoints->add($bulletpoint);
+            $bulletpoint->setMileStone($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBulletpoint(BulletPoint $bulletpoint): static
+    {
+        if ($this->bulletpoints->removeElement($bulletpoint)) {
+            // set the owning side to null (unless already changed)
+            if ($bulletpoint->getMileStone() === $this) {
+                $bulletpoint->setMileStone(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): static
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

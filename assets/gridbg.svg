@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  style="margin: auto; background: rgb(0, 0, 0); display: block; z-index: 1; position: relative; shape-rendering: auto;"
+  width="500" height="350" preserveAspectRatio="xMidYMid" viewBox="0 0 500 350">
+  <g transform="translate(250,175) scale(1,1) translate(-250,-175)">
+    <defs>
+      <linearGradient id="lg-0.17064652333029828" x1="0" x2="0" y1="0" y2="1">
+        <stop stop-color="#000000" offset="0"></stop>
+        <stop stop-color="#0a2222" offset="0.3"></stop>
+        <stop stop-color="#000000" offset="0.55"></stop>
+        <stop stop-color="#391539" offset="0.57"></stop>
+        <stop stop-color="#391539" offset="0.85"></stop>
+        <stop stop-color="#000000" offset="1"></stop>
+      </linearGradient>
+      <linearGradient id="fg-lg-0.17064652333029828" x1="0" x2="0" y1="0" y2="1">
+        <stop stop-color="#391539" stop-opacity="0" offset="0.47"></stop>
+        <stop stop-color="#A4A4A4" stop-opacity="0.55" offset="0.57"></stop>
+        <stop stop-color="#391539" stop-opacity="0.13" offset="0.75"></stop>
+        <stop stop-color="#391539" stop-opacity="0" offset="1"></stop>
+      </linearGradient>
+      <linearGradient id="paint0_linear_238_97" x1="250" y1="24" x2="250" y2="134" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#FFA800"/>
+        <stop offset="1" stop-color="#FF008A"/>
+      </linearGradient>
+      <style type="text/css">
+        path.main { fill: #0fdda3; stroke: #0fdda3; stroke-width: 1px }
+        path.line { fill: black; stroke: #ff00ff; stroke-width: 1px }
+      </style>
+    </defs>
+
+    <!--Animated
+    lines-->
+    <rect x="0" y="0" width="500" height="350" fill="url(#lg-0.17064652333029828)"></rect>
+
+    <!--Animated
+    lines-->
+
+    <g style="mix-blend-mode:lighten">
+      <path d="M198.617 75.5C198.982 70.0548 200.193 64.8458 202.117 60H297.883C299.807 64.8458 301.018 70.0548 301.383 75.5H198.617ZM294.465 53H205.535C208.068 48.6779 211.214 44.7566 214.854 41.3561H285.146C288.786 44.7566 291.932 48.6779 294.465 53ZM275.693 34.3561H224.307C231.869 29.9942 240.641 27.5 250 27.5C259.359 27.5 268.131 29.9942 275.693 34.3561ZM198.617 82.5H301.383C299.584 109.31 277.266 130.5 250 130.5C222.734 130.5 200.416 109.31 198.617 82.5Z"
+        stroke="black" stroke-width="4" fill="url(#paint0_linear_238_97)"/>
+    </g>
+      <path d="M138 198.5H117L88.5 199L98 180.5L115.5 164.5L140.5 159.5L162.5 147.5L205.5 118L210 109.5H218.5L222.5 102L227.5 99L232 100.5L245 99L258.5 94.5L273 87L294.5 99L306.5 109L320.5 117.5L330.5 128L342 132L357 144L377.5 149L403 172L412 198.5H387H356H317.5H308H295H287H262.5H236.5H211H152.5H138Z"
+        fill="black" />
+      <path d="M162.5 147.5L179 162M162.5 147.5L155.5 180.5M162.5 147.5L205.5 118M162.5 147.5L140.5 159.5M179 162L228.5 142M179 162L203.5 164.5M179 162L205.5 118M179 162L155.5 180.5M228.5 142L236.5 117M228.5 142L260.5 147.5M228.5 142L262.5 119.5M228.5 142L275 117M228.5 142L207.5 195M228.5 142L239 179.5M228.5 142L205.5 118M236.5 117L205.5 118M236.5 117L232 100.5M236.5 117L222.5 111.167M236.5 117L245 115.583M257.5 113.5L262.5 119.5M257.5 113.5L245 115.583M257.5 113.5L261 107M257.5 113.5L245 99M262.5 119.5L275 117M275 117L260.5 147.5M275 117L261 107M275 117L278.5 102L273 87M275 117L279.727 137M275 117L277 117.357M275 117L296.5 130M288 172L260.5 147.5M288 172L242.5 195M288 172L239 179.5M288 172L331.5 168.5M288 172L305 179.5L309 178M288 172L289 186.5M288 172L279.727 137M155.5 180.5L169 184.5M155.5 180.5L141.5 177M155.5 180.5L153 189.475M207.5 195H242.5M207.5 195L239 179.5M207.5 195L203.5 164.5M207.5 195L178 195.5M207.5 195L211 198.5M242.5 195L239 179.5M203.5 164.5L197 179.5L176.5 177L169 184.5M205.5 118L218.5 109.5M205.5 118L210 109.5H218.5M218.5 109.5L222.5 111.167M218.5 109.5L222.5 102M169 184.5L156.5 194M156.5 194L169 194.872M156.5 194L153 189.475M156.5 194L152.5 198.5M178 195.5L182 187M178 195.5L169 194.872M178 195.5L192 192.5M182 187L169 194.872M182 187L186.5 189.475M192 192.5L186.5 189.475M192 192.5L196 191.5L191.5 186.5L186.5 189.475M153 189.475L141.5 177M153 189.475L138 198.5M141.5 177L135.5 186.5M135.5 186.5L138 198.5M135.5 186.5L113 187M138 198.5L126.5 189.475M138 198.5H117M138 198.5H152.5M88.5 199L117 191.5M88.5 199L113 187M88.5 199L117 198.5M88.5 199L106.5 183.5L115.5 164.5M88.5 199L98 180.5L115.5 164.5M117 191.5L113 187M117 191.5V198.5M117 191.5L126.5 189.475M126.5 189.475L117 198.5M152.5 198.5H211M232 100.5L245 115.583M232 100.5L227.5 106.074M232 100.5L227.5 99M232 100.5L245 99M222.5 111.167L227.5 106.074M227.5 106.074V99M227.5 106.074L222.5 102M227.5 99L222.5 102M261 107L273 87M261 107L258.5 94.5M273 87L258.5 94.5M273 87L294.5 99M258.5 94.5L245 99M296.5 130L289 119.5L277 117.357M296.5 130L311 135M296.5 130L331.5 168.5M296.5 130L279.727 137M296.5 130L306.5 109M296.5 130L320.5 117.5M311 135L330.5 128M311 135L331.5 168.5M330.5 128L342 132M330.5 128L320.5 117.5M342 132L331.5 168.5M342 132L357 144M331.5 168.5L353.5 176.5M331.5 168.5L343.5 162.714M357 144L359.5 155M357 144L377.5 149M359.5 155L356 157M359.5 155L377.5 149M289 186.5L294 185.5L287 198.5M289 186.5L267 192L262.5 198.5M287 198.5H262.5M287 198.5H295M262.5 198.5H236.5H211M295 198.5L298.5 195C301.5 196 307.6 198.5 308 198.5M295 198.5H308M308 198.5C308.4 198.5 314.333 198.5 317.5 198.5M317.5 198.5L309 178M317.5 198.5L331.5 181.5M317.5 198.5L350 189M317.5 198.5H356M309 178L318 176L331.5 181.5M331.5 181.5L353.5 176.5M353.5 176.5L343.5 162.714M353.5 176.5L372.5 189.5M353.5 176.5L350 189M353.5 176.5L366.5 173.5L378.5 171M343.5 162.714L356 157M294.5 99L277 117.357M294.5 99L306.5 109M306.5 109L320.5 117.5M356 157L378.5 171M378.5 171L372.5 189.5M378.5 171L403 172M378.5 171L412 198.5M378.5 171L387 198.5M372.5 189.5L356 198.5M372.5 189.5L387 198.5M372.5 189.5L350 189M377.5 149L403 172M403 172L412 198.5M412 198.5H387M356 198.5H387M356 198.5L350 189M140.5 159.5L130.5 174.5L115.5 164.5M140.5 159.5L115.5 164.5"
+        stroke="#0FDDA3" stroke-width="0.3" />
+    <g style="mix-blend-mode:lighten">
+      <path d="M378.5 149.5L358 144.5L342 132L330.5 127.5L321 117.5L307.5 109.8L295.554 98.9429L272.858 87L258.5 94L245.118 98.9429L233.95 101.114L227.465 98.9429L221.34 102.2L217.738 109.8H210.172L204.048 118.486L163.338 146.714L140.281 159.743L115.784 164.448L98 181L88 200L113.5 187L140.281 177L155 181L181.5 187L187.5 184.5L192 187L196.5 192.5H204.048L211.5 198.5M378.5 149.5L403.633 172.41L413 201M378.5 149.5L356.5 157L344 163.5L330.5 169.5L318 176.5L309 178.5L293.5 186L267 192.5L244 198.5"
+        stroke="#0FDDA3" />
+    </g>
+
+    <!--Animated
+    lines-->
+    
+    <path class="line" d="M50  200 L-450 350"></path>
+    <path class="line" d="M70  200 L-380 350"></path>
+    <path class="line" d="M90  200 L-310 350"></path>
+    <path class="line" d="M110 200 L-240 350"></path>
+    <path class="line" d="M130 200 L-170 350"></path>
+    <path class="line" d="M150 200 L-100 350"></path>
+    <path class="line" d="M170 200 L-30  350"></path>
+    <path class="line" d="M190 200 L40   350"></path>
+    <path class="line" d="M210 200 L110  350"></path>
+    <path class="line" d="M230 200 L180  350"></path>
+    <path class="line" d="M250 200 L250  350"></path> //middle 
+    <path class="line" d="M270 200 L320  350"></path>
+    <path class="line" d="M290 200 L390  350"></path>
+    <path class="line" d="M310 200 L460  350"></path>
+    <path class="line" d="M330 200 L530  350"></path>
+    <path class="line" d="M350 200 L600  350"></path>
+    <path class="line" d="M370 200 L670  350"></path>
+    <path class="line" d="M390 200 L740  350"></path>
+    <path class="line" d="M410 200 L810  350"></path>
+    <path class="line" d="M430 200 L880  350"></path>
+    <path class="line" d="M450 200 L950  350"></path>
+
+    <!--Animated
+    lines-->
+    <g>
+      <path class="main" d="M0 199.5 L500 199.5"></path>
+    </g>
+    
+    <g>
+      <path class="line" d="M0 200 L500 200"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 1" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path class="line" d="M0 201 L500 201"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 2" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path class="line" d="M0 203 L500 203"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 3" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path class="line" d="M0 206 L500 206"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 4" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path class="line" d="M0 210 L500 210"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 5" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path class="line" d="M0 215 L500 215"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 6" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path class="line" d="M0 221 L500 221"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 7" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path class="line" d="M0 228 L500 228"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 8" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path class="line" d="M0 236 L500 236"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 9" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+   
+    <g>
+      <path class="line" d="M0 245 L500 245"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 10" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path class="line" d="M0 255 L500 255"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 11" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path class="line" d="M0 266 L500 266"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 13" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path class="line" d="M0 279 L500 279"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 16" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    <g>
+      <path class="line" d="M0 295 L500 295"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 19" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+
+    <g>
+      <path class="line" d="M0 314 L500 314"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 23" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+     <g>
+      <path class="line" d="M0 337 L500 337"></path>
+      <animateTransform attributeName="transform" type="translate" repeatCount="indefinite"
+        calcMode="linear" keyTimes="0;1" values="0 0;0 26" begin="0s"
+        dur="1s"></animateTransform>
+
+    </g>
+    
+    <rect x="0" y="0" width="500" height="350"
+      fill="url(#fg-lg-0.17064652333029828)"></rect>
+  </g>
+</svg>

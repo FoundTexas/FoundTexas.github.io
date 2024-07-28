@@ -2,36 +2,16 @@
 
 {{ form_start(mileStoneForm, {'attr': {'id': 'mileStoneForm'}}) }}
 
+{{ form_row(mileStoneForm.organization) }}
 {{ form_row(mileStoneForm.name) }}
 {{ form_row(mileStoneForm.description) }}
-projectForm
 {{ form_row(mileStoneForm.startDate) }}
 {{ form_row(mileStoneForm.endDate) }}
-
-
-<div id="mile_stone_form_tags">
-	<label>Tags:</label>
-	{% for tagForm in mileStoneForm.tags %}
-		<div class="form-group">
-			{{ form_widget(tagForm, {'attr': {'class': ''}}) }}
-			<button type="button" class="delete-btn" onclick="deleteField(this, 'mile_stone_form_tags')">Delete</button>
-		</div>
-	{% endfor %}
-</div>
-<button type="button" onclick="addField('mile_stone_form', 'tags')">Add Tag</button>
-
-<div id="mile_stone_form_bullets">
-	<label>BulletPoints:</label>
-	{% for bulletform in mileStoneForm.bullets %}
-		<div class="form-group">
-			{{ form_widget(bulletform, {'attr': {'class': ''}}) }}
-			<button type="button" class="delete-btn" onclick="deleteField(this, 'mile_stone_form_bullets')">Delete</button>
-		</div>
-	{% endfor %}
-</div>
-<button type="button" onclick="addField('mile_stone_form', 'bullets')">Add BulletPoint</button>
+{{ form_row(mileStoneForm.bulletpoints) }}
 
 <div class="d-flex justify-content-center my-2">
-	<button class="btn btn-primary" type="button" onclick="submitForm('{{path('milestone_new')}}', 'mileStoneForm', {{mileStonecur.id}})">Create</button>
+	<button class="btn btn-primary" type="button" onclick="submitForm('{{ path('milestone_new', {'id': mileStonecur}) }}', 'MilestoneContainer', 'mileStoneForm', '{{ asset('loadgif.gif') }}')">Create</button>
 </div>
+
 {{ form_end(mileStoneForm) }}
+

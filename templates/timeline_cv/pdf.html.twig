@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CV</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				font-size: 13px;
+			}
+
+			.container {
+				width: 100%;
+			}
+
+			.header,
+			.footer {
+				text-align: center;
+			}
+
+			.content {
+				width: 100%;
+				display: table;
+				clear: both;
+			}
+
+			.row {
+				width: 100%;
+				clear: both;
+				padding: 0;
+			}
+
+			.left {
+				float: left;
+				width: 49%;
+			}
+
+			.right {
+				float: right;
+				width: 49%;
+				text-align: right;
+			}
+
+			.center {
+				text-align: center;
+				width: 100%;
+			}
+
+			.p-0 {
+				padding: 0 !important;
+			}
+
+			.m-0 {
+				margin: 0 !important;
+			}
+
+			ul {
+				padding-left: 2rem !important;
+			}
+
+			ul li {
+				margin-bottom: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<h3>Rodolfo León Gasca - Computer Science Engineer</h3>
+			</div>
+
+			<p class="center">
+				<a href="mailto:rolega01@gmail.com">rolega01@gmail.com</a>
+				| +52 55 49138324 |
+				<a href="https://github.com/FoundTexas?tab=repositories">GitHub</a>
+				|
+				<a href="https://www.linkedin.com/in/rodolfo-le%C3%B3n-13a10a236/">LinkedIn</a>
+				|
+				<a href="https://foundtexas.mx">Portfolio</a>
+			</p>
+
+			<p>I'm a passionate computer scientist specialized in 3D Graphics, with skill on Agile Iterative, Web and Game Development. I`m a team player and believe that diverse perspectives fuel innovation, leading to immersive experiences for the users.</p>
+
+			<div>
+				<div class="row center">
+					<strong>Education</strong>
+				</div>
+				<div class="row">
+					<strong class="left">Tecnológico de Monterrey (ITESM)</strong>
+					<div class="right">México, CDMX</div>
+				</div>
+				<div class="row">
+					<div class="left">Bachelor in Computer Science GPA [9.3]</div>
+					<div class="right">
+						Graduation: Jun 2023
+					</div>
+				</div>
+				<ul class="row">
+					<li>Nova Orion Startup Award for Learning With Whe Sea educational video game 2020.</li>
+					<li>Specialization in Computer Graphics and Game Design.</li>
+				</ul>
+
+				<div class="row">
+					<strong class="left">Tecnológico de Monterrey (ITESM)</strong>
+					<div class="right">México, CDMX</div>
+				</div>
+				<div class="row">
+					<div class="left">Multicultural High School Program. GPA [8.9]</div>
+					<div class="right">
+						Graduation: Jun 2019
+					</div>
+				</div>
+				<ul class="row">
+					<li>Exchange to Shanghai, China No.2 Secondary School Attached to Tongji University 2018.</li>
+				</ul>
+			</div>
+
+			<div class="row center">
+				<strong>Experience</strong>
+			</div>
+			{% for id, milestone in values_wkexp %}
+				<div class="row">
+					<strong class="left">{{ milestone.organization }}</strong>
+					<div class="right">{{ milestone.location }}</div>
+				</div>
+
+				<div class="row">
+					<div class="left">{{ milestone.name }}</div>
+					<div class="right">
+						{{ milestone.startDate|date('Y-m-d') }}
+						-
+						{{ milestone.endDate ? milestone.endDate|date('Y-m-d') : 'Current'}}
+					</div>
+				</div>
+
+				<ul class="row">
+					{% for bullet in milestone.bullets %}
+						<li>{{ bullet }}</li>
+					{% endfor %}
+				</ul>
+			{% endfor %}
+
+			<div class="row center">
+				<strong>Leadership & Activities</strong>
+			</div>
+
+			{% for id, milestone in values_ledac %}
+				<div class="row">
+					<strong class="left">{{ milestone.organization }}</strong>
+					<div class="right">{{ milestone.location }}</div>
+				</div>
+
+				<div class="row">
+					<div class="left">{{ milestone.name }}</div>
+					<div class="right">
+						{{ milestone.startDate|date('Y-m-d') }}
+						-
+						{{ milestone.endDate ? milestone.endDate|date('Y-m-d') : 'Current'}}
+					</div>
+				</div>
+
+				<ul class="row">
+					{% for bullet in milestone.bullets %}
+						<li>{{ bullet }}</li>
+					{% endfor %}
+				</ul>
+			{% endfor %}
+
+			<div class="row center">
+				<strong>Skills & Interests</strong>
+			</div>
+
+			<p class="center">
+				{% for index, tag in tags %}
+					{{ tag }}
+					{% if index != tags|length and tags|length > 1 %}
+						|
+					{% endif %}
+				{% endfor %}
+			</p>
+
+		</div>
+	</body>
+</html>

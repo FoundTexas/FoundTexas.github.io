@@ -1,0 +1,28 @@
+<div class="modal fade " id="cookiePolicyModal" tabindex="-1" aria-labelledby="cookiePolicyModalLabel" aria-hidden="true">
+
+	<div class="modal-dialog">
+		<div class="modal-content bg-black">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="cookiePolicyModalLabel">Cookie Policy</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				{% include 'index/cookies.twig' %}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="{{bg ?? 'bg-transparent'}}">
+
+<footer class="sin-up-div bg-dark text-white text-center p-5" style="min-height: 20vh;">
+	<p>&copy; 2024 . All Rights Reserved.</p>
+
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cookiePolicyModal">
+		cookies-policy
+	</button>
+</footer>
+</div>

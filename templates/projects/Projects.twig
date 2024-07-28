@@ -5,20 +5,23 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('js/audioPlayer.js') }}"></script>
 {% endblock %}
 
 {% block body %}
 
-	<section id="projects" class="bg-main-dark px-2" style="min-height: 100vh;">
-		{% include 'index/IndexHeader.twig' with {'textRef': textRef, 'headText': headText, 'darkbg': true} %}
+	<section class="px-2" style="min-height: 100vh;">
+		<div class="w-100 d-flex justify-content-center ">
+			<div class="bg-accent rounded-4 col-12 col-md-6  py-5 d-flex justify-content-center" href="#{{ textRef }}">
+				<span class="text-center text-capitalize white-text" style="font-size: 2.5rem;">{{ headText }}</span>
+			</div>
+		</div>
 		<div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 75vh; width: 100%;">
 			<div class="container rounded-5 bg-main-gradient m-3 my-md-4 shadow-custom">
 				<div class="row justify-content-center m-2">
 					{% for project in projects %}
 						<a class="col-6 col-md-3 col-lg-2 my-2 " href="{{project.linkref ?? path('app_project_detail', {'id': project.id}) }}">
 							<div class="rounded-4 d-flex justify-content-center bg-dark mx-auto shadow-custom cursor-pointer" style="overflow: hidden; aspect-ratio: 1; cursor: pointer; ">
-								<img src="{{ project.iconref }}" style="height: 100%; width: auto;" alt="Gallery Image 1">
+								<img src="{{ project.iconref }}" style="height: auto; width: 100%;" alt="Gallery Image 1">
 							</div>
 						</a>
 					{% endfor %}

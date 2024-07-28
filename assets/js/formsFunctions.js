@@ -1,82 +1,108 @@
-// JavaScript function to add new tag fields
-function addField(formcollection = 'mile_stone_form', formvalue = 'tags') {
-    var tagsContainer = document.getElementById((formcollection + '_' + formvalue));
-    var index = tagsContainer.children.length; // Get the number of existing tag fields
 
-    var newTagField = document.createElement('div');
-    newTagField.innerHTML = `
-                        <input type="text" id="${formcollection}_${formvalue}_${index}" name="${formcollection}[${formvalue}][${index}]" required >
-                        <button type="button" class="delete-btn" onclick="deleteField(this, ${formcollection}_${formvalue})">Delete</button>
-                    `;
-    tagsContainer.appendChild(newTagField);
-}
-
-// JavaScript function to delete tag fields
-function deleteField(button, container = 'mile_stone_form_tags') {
-    var tagContainer = button.parentElement; // Get the parent container
-
-    tagContainer.remove();
-    // Remove the tag container
-
-    // Update the indexes of remaining tag fields
-    var tagsContainer = document.getElementById(container);
-    var remainingTags = tagsContainer.children;
-    for (var i = 0; i < tagsContainer.children.length; i++) {
-        var input = remainingTags[i].querySelector('input');
-        var button = remainingTags[i].querySelector('.delete-btn');
-        input.name = `mile_stone_form[tags][${i}]`; // Update input name
-    }
-}
-
-function submitForm(url = 'admin/new/milestone', id = 'mileStoneForm', updateID) {
-    var form = document.getElementById(id);
+function submitForm(url, containerid, formid, loadingGif) {
+    var form = document.getElementById(formid);
     var formData = new FormData(form);
 
-    // Append the updateID to the formData
-    formData.append('updateID', updateID);
+    setLoadingGif(containerid, loadingGif);
 
     fetch(url, {
         method: 'POST',
         body: formData
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            // Handle success response
-            console.log(data);
-            // Optionally, redirect to another page or perform other actions
+            if (data.status !== 'success') {
+                throw new Error(data.message);
+            }
+            
+            removeLoadingGif(containerid);
+            newForm(url, containerid, loadingGif)
+            alert('Form submitted successfully!');
         })
         .catch(error => {
             // Handle error
             console.error('There was a problem with the fetch operation:', error);
+
+            // Hide the loading GIF
+            removeLoadingGif(containerid);
+
+            // Optionally, show an error message
+            alert('Failed to submit form: ' + error.message);
         });
 }
 
-function newForm(url = 'admin/new/milestone', containerid = 'MilestoneContainer', loadingGif, selectedId ) {
-    // Show the loading GIF
+function newForm(url, containerid, loadingGif) {
     var container = document.getElementById(containerid);
-
     setLoadingGif(containerid, loadingGif);
-    
-    fetch(url + (selectedId ? '?id=' + selectedId : ''))
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Hide the loading GIF and update the container with the fetched content
+                container.innerHTML = data.html;
+
+                // Call the initialize function after the HTML is loaded
+                initializeForm();
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch(error => {
+            // Hide the loading GIF and handle error
+            container.innerHTML = '<div class="error">Failed to fetch form: ' + error.message + '</div>';
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+
+function initializeForm() {
+    var collectionHolders = Array.from(document.querySelectorAll('.collection'))
+        .filter(function (collectionHolder) {
+            return !collectionHolder.querySelector('.collection-add');
+        });
+
+    collectionHolders.forEach(function (collectionHolder) {
+
+        if (collectionHolder.classList.contains('no-add') == false) {
+            var addButton = document.createElement('button');
+            addButton.type = 'button';
+            addButton.className = 'collection-add btn btn-secondary my-3 w-50 rounded-pill';
+            addButton.innerText = 'Add';
+
+            collectionHolder.appendChild(addButton);
+
+            addButton.addEventListener('click', function () {
+                var newForm = collectionHolder.dataset.prototype;
+                var index = collectionHolder.dataset.index * 1;
+                newForm = newForm.replace(/__name__/g, index);
+                collectionHolder.dataset.index = index + 1;
+
+                var newFormElement = document.createElement('div');
+                newFormElement.innerHTML = newForm;
+                collectionHolder.insertBefore(newFormElement, addButton);
+
+                addDeleteLink(newFormElement);
+                initializeForm();
+            });
         }
-        return response.text();
-    })
-    .then(html => {
-        // Hide the loading GIF and update the container with the fetched content
-        container.innerHTML = html;
-    })
-    .catch(error => {
-        // Hide the loading GIF and handle error
-        container.innerHTML = '<div class="error">Failed to fetch form: ' + error.message + '</div>';
-        console.error('There was a problem with the fetch operation:', error);
+
+        collectionHolder.dataset.index = collectionHolder.querySelectorAll(':scope > div').length;
+
+        collectionHolder.querySelectorAll(':scope > div').forEach(function (contactForm) {
+            addDeleteLink(contactForm);
+        });
     });
 }
 
+function addDeleteLink(contactForm) {
+    var removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.className = 'col-auto btn btn-danger rounded-pill my-auto';
+    removeButton.innerText = 'Delete';
+
+    contactForm.appendChild(removeButton);
+
+    removeButton.addEventListener('click', function () {
+        contactForm.remove();
+    });
+}

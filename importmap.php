@@ -16,13 +16,56 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    '@symfony/stimulus-bundle' => [
-        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.3',
+        'type' => 'css',
+    ],
+    'bootstrap' => [
+        'version' => '5.3.3',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'three' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/loaders/GLTFLoader.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/postprocessing/UnrealBloomPass.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/postprocessing/OutputPass.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/postprocessing/RenderPass.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/postprocessing/EffectComposer.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/addons/renderers/SVGRenderer.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/examples/jsm/loaders/GLTFLoader.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/examples/jsm/postprocessing/EffectComposer.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/examples/jsm/postprocessing/RenderPass.js' => [
+        'version' => '0.166.1',
+    ],
+    'three/examples/jsm/postprocessing/UnrealBloomPass.js' => [
+        'version' => '0.166.1',
     ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
+    '@symfony/stimulus-bundle' => [
+        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    ],
     '@hotwired/turbo' => [
-        'version' => '8.0.4',
+        'version' => '7.3.0',
     ],
 ];

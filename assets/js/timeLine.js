@@ -1,40 +1,31 @@
 // timeLine.js
-function showEvents(year) {
-    var allEvents = document.querySelectorAll('.events-wrapper');
-    for (var i = 0; i < allEvents.length; i++) {
-        allEvents[i].style.display = 'none';
-    }
-    document.getElementById('events-' + year).style.display = 'block';
-    checkScrollButtons();
-}
 
-function scrollToEvent(year, index) {
-    var eventCard = document.querySelectorAll('#events-' + year + ' .card')[index];
-    eventCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-function checkScrollButtons() {
-    var allEvents = document.querySelectorAll('.events-wrapper');
-    allEvents.forEach(function (eventsWrapper) {
-        var scrollable = eventsWrapper.scrollWidth > eventsWrapper.clientWidth;
-        var scrollButtons = eventsWrapper.querySelector('.scroll-buttons');
-        if (scrollButtons) { // Check if scrollButtons is not null
-            if (scrollable) {
-                scrollButtons.style.display = 'block';
-            } else {
-                scrollButtons.style.display = 'none';
-            }
-        }
-    });
-}
-
-function filterEvents() {
-    var existTags = Array.from(document.querySelectorAll('input[name="tags"]'));
-
-    if (existTags.length <= 0) return;
-
-    var selectedTags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(function (tag) {
+function filter() {
+    // Get selected tags
+    var selectedTags = Array.from(document.querySelectorAll('input[name="tags[]"]:checked')).map(function (tag) {
         return tag.value;
+    });
+
+    // Print selected tags
+    console.log("Selected Tags: ", selectedTags);
+
+    // Get selected years (assuming there are input checkboxes for years as well)
+    var selectedYears = Array.from(document.querySelectorAll('input[name="years[]"]:checked')).map(function (year) {
+        return year.value;
+    });
+    var years = Array.from(document.querySelectorAll('input[name="years[]"]')).map(function (year) {
+        return year.value;
+    });
+
+    // Print selected years
+    console.log("Selected Years: ", selectedYears);
+
+    // Show or hide year sections based on selection (if applicable)
+    years.forEach(function (year) {
+        var yearElement = document.getElementById(year);
+        if (yearElement) {
+            yearElement.style.setProperty('display', selectedYears.includes(year) ? 'block' : 'none', 'important');
+        }
     });
 
     var events = document.querySelectorAll('.timeline-event');
@@ -45,14 +36,13 @@ function filterEvents() {
 
         var tags = tagsvalue.split(",");
 
-        console.log('tags:', tags);
-
         if (selectedTags.some(function (tag) {
             return tags.includes(tag);
         })) {
             event.style.setProperty('display', 'block', 'important');
             index++;
-        } else {
+        } 
+        else {
             event.style.setProperty('display', 'none', 'important');
         }
     });
@@ -75,12 +65,6 @@ function selectAllTags(value = true) {
         noEventsElement.style.display = value ? 'none' : 'block';
     }
 
-    filterEvents();
+    filter();
 }
-
-document.querySelectorAll('input[name="tags"]').forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
-        filterEvents();
-    });
-});
 

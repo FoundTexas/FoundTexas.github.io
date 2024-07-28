@@ -19,7 +19,13 @@ class ProjectController extends AbstractController
     #[Route('/projects/{type}', name: 'app_game_projects')]
     public function gameProjects(Request $request, EntityManagerInterface $entityManager, string $type = null): Response
     {
-        $projects = $entityManager->getRepository(Project::class)->findAll();
+        $query = $entityManager->createQuery(
+            'SELECT p 
+            FROM App\Entity\Project p 
+            WHERE p.type LIKE :type'
+        )->setParameter('type', '%' . $type . '%');
+        
+        $projects = $query->getResult();
 
         return $this->render('projects/Projects.twig', [
             'controller_name' => 'IndexController',
