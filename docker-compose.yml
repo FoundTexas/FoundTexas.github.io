@@ -14,6 +14,9 @@ services:
       - ./templates:/var/www/html/templates
       - ./config:/var/www/html/config
       - ./assets:/var/www/html/assets
+      - ./var:/var/www/html/var
+      - ./vendor:/var/www/html/vendor
+
       #- .:/var/www/html
 
     env_file: .docker/env/docker.env
